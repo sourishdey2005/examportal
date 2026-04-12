@@ -4,142 +4,94 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
   {
     id: 'da-1',
     type: 'mcq',
-    category: 'Statistics',
-    text: 'What is the "P-value" in statistical hypothesis testing?',
+    category: 'Advanced SQL',
+    text: 'What is the primary difference between a "Window Function" (e.g., RANK()) and a standard "GROUP BY" aggregation?',
     options: [
-      'The probability that the null hypothesis is true',
-      'The probability of observing results at least as extreme as those measured, assuming the null hypothesis is true',
-      'The power of the test',
-      'The effect size'
+      'Window functions can only be used in the WHERE clause.',
+      'Window functions perform calculations across a set of table rows that are related to the current row, without collapsing them into a single output row.',
+      'GROUP BY is faster for all types of datasets.',
+      'Window functions require a separate temporary table to store results.'
     ],
-    correctAnswer: 'The probability of observing results at least as extreme as those measured, assuming the null hypothesis is true'
+    correctAnswer: 'Window functions perform calculations across a set of table rows that are related to the current row, without collapsing them into a single output row.'
   },
   {
     id: 'da-2',
     type: 'mcq',
-    category: 'SQL',
-    text: 'What is the difference between "WHERE" and "HAVING" clauses in SQL?',
+    category: 'Statistical Inference',
+    text: 'In A/B testing, what does "Statistical Power" represent?',
     options: [
-      'They are identical',
-      'WHERE filters rows before grouping, HAVING filters groups after aggregation',
-      'HAVING filters rows, WHERE filters groups',
-      'WHERE is only for SELECT, HAVING is only for UPDATE'
+      'The probability of correctly rejecting the null hypothesis when it is false (avoiding a Type II error).',
+      'The probability of rejecting the null hypothesis when it is true (Type I error).',
+      'The total sample size required for the test.',
+      'The magnitude of the difference between the control and variant groups.'
     ],
-    correctAnswer: 'WHERE filters rows before grouping, HAVING filters groups after aggregation'
+    correctAnswer: 'The probability of correctly rejecting the null hypothesis when it is false (avoiding a Type II error).'
   },
   {
     id: 'da-3',
     type: 'mcq',
-    category: 'Visualization',
-    text: 'When is a "Box Plot" most useful?',
+    category: 'Data Modeling',
+    text: 'What is the "Slowly Changing Dimension" (SCD) Type 2 strategy used for in a Data Warehouse?',
     options: [
-      'To show trends over time',
-      'To visualize the distribution, median, and outliers of a dataset',
-      'To show the relationship between two continuous variables',
-      'To compare parts of a whole'
+      'Overwriting existing data with new values.',
+      'Creating a new record for every change to track the full history of the dimension over time.',
+      'Adding a new column to the existing record to store the previous value.',
+      'Deleting old records to save storage space.'
     ],
-    correctAnswer: 'To visualize the distribution, median, and outliers of a dataset'
+    correctAnswer: 'Creating a new record for every change to track the full history of the dimension over time.'
   },
   {
     id: 'da-4',
     type: 'mcq',
-    category: 'Data Cleaning',
-    text: 'What is "Imputation" in data analysis?',
+    category: 'Business Intelligence',
+    text: 'What is the "Semantic Layer" in a modern BI tool like Looker or Power BI?',
     options: [
-      'Deleting all rows with missing values',
-      'Replacing missing data with substituted values',
-      'Normalizing the data',
-      'Encoding categorical variables'
+      'A layer that translates natural language into SQL.',
+      'A business representation of corporate data that helps end-users access data using common business terms rather than technical table names.',
+      'The physical storage layer of the data warehouse.',
+      'The encryption layer for data at rest.'
     ],
-    correctAnswer: 'Replacing missing data with substituted values'
+    correctAnswer: 'A business representation of corporate data that helps end-users access data using common business terms rather than technical table names.'
   },
   {
     id: 'da-5',
     type: 'mcq',
-    category: 'Business Intelligence',
-    text: 'What is a "KPI" (Key Performance Indicator)?',
+    category: 'Predictive Analytics',
+    text: 'When using "Exponential Smoothing" for time-series forecasting, what does the "Alpha" parameter control?',
     options: [
-      'A type of database',
-      'A measurable value that demonstrates how effectively a company is achieving key business objectives',
-      'A programming language',
-      'A data visualization tool'
+      'The seasonality of the data.',
+      'The weight given to the most recent observation versus the historical average.',
+      'The number of periods to forecast into the future.',
+      'The confidence interval of the prediction.'
     ],
-    correctAnswer: 'A measurable value that demonstrates how effectively a company is achieving key business objectives'
-  },
-  {
-    id: 'da-6',
-    type: 'mcq',
-    category: 'Statistics',
-    text: 'What is "Simpson\'s Paradox"?',
-    options: [
-      'A paradox where a trend appears in different groups of data but disappears or reverses when these groups are combined',
-      'A paradox about infinite loops',
-      'A paradox in probability theory',
-      'A paradox in linear regression'
-    ],
-    correctAnswer: 'A paradox where a trend appears in different groups of data but disappears or reverses when these groups are combined'
-  },
-  {
-    id: 'da-7',
-    type: 'mcq',
-    category: 'Excel/Sheets',
-    text: 'What does a "VLOOKUP" function do?',
-    options: [
-      'Calculates the average',
-      'Looks for a value in the leftmost column of a table and returns a value in the same row from a specified column',
-      'Sums a range of cells',
-      'Creates a pivot table'
-    ],
-    correctAnswer: 'Looks for a value in the leftmost column of a table and returns a value in the same row from a specified column'
-  },
-  {
-    id: 'da-8',
-    type: 'mcq',
-    category: 'Data Modeling',
-    text: 'What is a "Star Schema"?',
-    options: [
-      'A type of neural network',
-      'A database schema where a central fact table is surrounded by dimension tables',
-      'A hierarchical data model',
-      'A network topology'
-    ],
-    correctAnswer: 'A database schema where a central fact table is surrounded by dimension tables'
-  },
-  {
-    id: 'da-9',
-    type: 'mcq',
-    category: 'Python',
-    text: 'In Pandas, what does the "groupby()" function do?',
-    options: [
-      'Sorts the data',
-      'Splits the data into groups based on some criteria',
-      'Deletes duplicate rows',
-      'Joins two dataframes'
-    ],
-    correctAnswer: 'Splits the data into groups based on some criteria'
-  },
-  {
-    id: 'da-10',
-    type: 'mcq',
-    category: 'Analysis',
-    text: 'What is "Cohort Analysis"?',
-    options: [
-      'Analyzing the entire population at once',
-      'Analyzing the behavior of a specific group of users who share a common characteristic over a period of time',
-      'Predicting future sales',
-      'Testing a hypothesis'
-    ],
-    correctAnswer: 'Analyzing the behavior of a specific group of users who share a common characteristic over a period of time'
+    correctAnswer: 'The weight given to the most recent observation versus the historical average.'
   }
 ];
 
-for (let i = 11; i <= 100; i++) {
+const daCategories = ['Data Governance', 'Advanced Excel', 'Python for Analysis', 'ETL Processes', 'Experimental Design', 'Dashboard UX'];
+const daTopics = [
+  'Data Lineage and Metadata management',
+  'Array formulas and Power Query M-code',
+  'Vectorized operations in NumPy',
+  'Idempotency in data pipelines',
+  'Multivariate testing vs A/B testing',
+  'Color theory for accessible visualizations'
+];
+
+for (let i = 6; i <= 100; i++) {
+  const category = daCategories[i % daCategories.length];
+  const topic = daTopics[i % daTopics.length];
   DATA_ANALYST_QUESTIONS.push({
     id: `da-${i}`,
     type: 'mcq',
-    category: 'Advanced Data Analysis',
-    text: `Advanced Data Analysis Question ${i}: Which statistical test is used to determine if there is a significant difference between the means of three or more independent groups?`,
-    options: ['T-test', 'Chi-square test', 'ANOVA', 'Z-test'],
-    correctAnswer: 'ANOVA'
+    category: category,
+    text: `[Advanced ${category}] When analyzing ${topic}, which metric is most indicative of data quality and reliability for executive decision-making?`,
+    options: [
+      'The total volume of data processed.',
+      'The completeness and consistency of the dataset across different sources.',
+      'The speed at which the dashboard loads.',
+      'The number of unique users who accessed the report.'
+    ],
+    correctAnswer: 'The completeness and consistency of the dataset across different sources.'
   });
 }

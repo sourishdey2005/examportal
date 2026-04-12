@@ -4,142 +4,94 @@ export const DATA_SCIENCE_QUESTIONS: Question[] = [
   {
     id: 'ds-1',
     type: 'mcq',
-    category: 'Big Data',
-    text: 'What is the "MapReduce" paradigm?',
+    category: 'Information Theory',
+    text: 'What is the "Kullback-Leibler (KL) Divergence" primarily used to measure in Data Science?',
     options: [
-      'A way to compress data',
-      'A programming model for processing large datasets with a parallel, distributed algorithm on a cluster',
-      'A database indexing technique',
-      'A data visualization framework'
+      'The correlation between two independent variables.',
+      'The difference between two probability distributions.',
+      'The distance between two clusters in a high-dimensional space.',
+      'The error rate of a regression model.'
     ],
-    correctAnswer: 'A programming model for processing large datasets with a parallel, distributed algorithm on a cluster'
+    correctAnswer: 'The difference between two probability distributions.'
   },
   {
     id: 'ds-2',
     type: 'mcq',
-    category: 'Algorithms',
-    text: 'How does "Random Forest" reduce variance compared to a single Decision Tree?',
+    category: 'Ensemble Methods',
+    text: 'In "Gradient Boosting Machines" (GBM), how are subsequent trees added to the ensemble?',
     options: [
-      'By increasing the depth of the trees',
-      'By averaging the predictions of multiple trees trained on different subsets of the data (Bagging)',
-      'By using a better loss function',
-      'By pruning the trees'
+      'By training each tree independently on a random subset of features.',
+      'By training each new tree to predict the residual errors (gradients) of the existing ensemble.',
+      'By averaging the weights of all previous trees.',
+      'By using a voting mechanism where the majority class wins.'
     ],
-    correctAnswer: 'By averaging the predictions of multiple trees trained on different subsets of the data (Bagging)'
+    correctAnswer: 'By training each new tree to predict the residual errors (gradients) of the existing ensemble.'
   },
   {
     id: 'ds-3',
     type: 'mcq',
     category: 'Dimensionality Reduction',
-    text: 'What is the primary goal of "Principal Component Analysis" (PCA)?',
+    text: 'What is the "Curse of Dimensionality" and how does it affect distance-based algorithms like K-Nearest Neighbors?',
     options: [
-      'To increase the number of features',
-      'To find the directions (principal components) that maximize the variance in the data',
-      'To cluster the data into groups',
-      'To predict a continuous target variable'
+      'It makes the algorithm run faster due to more features.',
+      'As the number of dimensions increases, the volume of the space grows so fast that the data becomes sparse, making the concept of "nearest" less meaningful.',
+      'It increases the accuracy of the model by providing more context.',
+      'It only affects categorical data, not numerical data.'
     ],
-    correctAnswer: 'To find the directions (principal components) that maximize the variance in the data'
+    correctAnswer: 'As the number of dimensions increases, the volume of the space grows so fast that the data becomes sparse, making the concept of "nearest" less meaningful.'
   },
   {
     id: 'ds-4',
     type: 'mcq',
-    category: 'Evaluation',
-    text: 'What is the "ROC-AUC" score used for?',
+    category: 'Causal Inference',
+    text: 'What is the purpose of "Propensity Score Matching" (PSM)?',
     options: [
-      'To measure the accuracy of a regression model',
-      'To evaluate the performance of a binary classification model at various threshold settings',
-      'To calculate the distance between clusters',
-      'To measure the speed of an algorithm'
+      'To predict the probability of an event occurring.',
+      'To reduce selection bias by equating groups based on their covariates in non-experimental studies.',
+      'To increase the sample size of a study.',
+      'To visualize the relationship between multiple variables.'
     ],
-    correctAnswer: 'To evaluate the performance of a binary classification model at various threshold settings'
+    correctAnswer: 'To reduce selection bias by equating groups based on their covariates in non-experimental studies.'
   },
   {
     id: 'ds-5',
     type: 'mcq',
-    category: 'Feature Engineering',
-    text: 'What is "One-Hot Encoding"?',
+    category: 'Model Evaluation',
+    text: 'What is the "Precision-Recall Curve" better than the "ROC Curve" for evaluating models on highly imbalanced datasets?',
     options: [
-      'Normalizing numerical features',
-      'Converting categorical variables into a binary vector representation',
-      'Scaling features to have a mean of 0',
-      'Reducing the number of features'
+      'It is easier to calculate.',
+      'The ROC curve can be misleadingly optimistic if the number of negative samples is very large, whereas the PR curve focuses on the minority (positive) class.',
+      'It works better for regression problems.',
+      'It doesn\'t require a threshold.'
     ],
-    correctAnswer: 'Converting categorical variables into a binary vector representation'
-  },
-  {
-    id: 'ds-6',
-    type: 'mcq',
-    category: 'Time Series',
-    text: 'What is "Stationarity" in time series analysis?',
-    options: [
-      'When the data is constant over time',
-      'When the statistical properties of the series (mean, variance) do not change over time',
-      'When the series has a clear trend',
-      'When the series has no seasonality'
-    ],
-    correctAnswer: 'When the statistical properties of the series (mean, variance) do not change over time'
-  },
-  {
-    id: 'ds-7',
-    type: 'mcq',
-    category: 'Optimization',
-    text: 'What is "Stochastic Gradient Descent" (SGD)?',
-    options: [
-      'An optimization algorithm that uses the entire dataset to calculate the gradient',
-      'An optimization algorithm that uses a single random sample to calculate the gradient at each step',
-      'A way to initialize weights',
-      'A type of activation function'
-    ],
-    correctAnswer: 'An optimization algorithm that uses a single random sample to calculate the gradient at each step'
-  },
-  {
-    id: 'ds-8',
-    type: 'mcq',
-    category: 'Clustering',
-    text: 'How does the "K-Means" algorithm work?',
-    options: [
-      'By building a hierarchy of clusters',
-      'By iteratively assigning points to the nearest cluster center and updating the centers',
-      'By finding dense regions of points',
-      'By using a neural network'
-    ],
-    correctAnswer: 'By iteratively assigning points to the nearest cluster center and updating the centers'
-  },
-  {
-    id: 'ds-9',
-    type: 'mcq',
-    category: 'Natural Language Processing',
-    text: 'What is "TF-IDF"?',
-    options: [
-      'A deep learning model for text',
-      'A numerical statistic that reflects how important a word is to a document in a collection or corpus',
-      'A way to tokenize text',
-      'A type of recurrent neural network'
-    ],
-    correctAnswer: 'A numerical statistic that reflects how important a word is to a document in a collection or corpus'
-  },
-  {
-    id: 'ds-10',
-    type: 'mcq',
-    category: 'Ensemble Learning',
-    text: 'What is "Boosting" in machine learning?',
-    options: [
-      'Training models in parallel',
-      'A technique that combines multiple weak learners sequentially to create a strong learner',
-      'Reducing the size of the model',
-      'Increasing the learning rate'
-    ],
-    correctAnswer: 'A technique that combines multiple weak learners sequentially to create a strong learner'
+    correctAnswer: 'The ROC curve can be misleadingly optimistic if the number of negative samples is very large, whereas the PR curve focuses on the minority (positive) class.'
   }
 ];
 
-for (let i = 11; i <= 100; i++) {
+const dsCategories = ['Feature Selection', 'Hyperparameter Tuning', 'Model Interpretability', 'Big Data Ecosystem', 'Bayesian Modeling', 'Deep Learning'];
+const dsTopics = [
+  'Recursive Feature Elimination (RFE)',
+  'Bayesian Optimization using Gaussian Processes',
+  'SHAP (SHapley Additive exPlanations) values',
+  'Spark Catalyst Optimizer and Tungsten engine',
+  'Probabilistic Programming with PyMC3',
+  'Autoencoders for anomaly detection'
+];
+
+for (let i = 6; i <= 100; i++) {
+  const category = dsCategories[i % dsCategories.length];
+  const topic = dsTopics[i % dsTopics.length];
   DATA_SCIENCE_QUESTIONS.push({
     id: `ds-${i}`,
     type: 'mcq',
-    category: 'Advanced Data Science',
-    text: `Advanced Data Science Question ${i}: Which metric is commonly used to measure the "purity" of a node in a Decision Tree?`,
-    options: ['Gini Impurity', 'Mean Squared Error', 'R-squared', 'Accuracy'],
-    correctAnswer: 'Gini Impurity'
+    category: category,
+    text: `[Advanced ${category}] Regarding ${topic}, which strategy is most effective for improving the generalizability of a model on unseen data?`,
+    options: [
+      'Increasing the complexity of the model by adding more layers.',
+      'Implementing robust cross-validation and regularization techniques.',
+      'Training the model for a significantly higher number of epochs.',
+      'Using the entire dataset for both training and testing.'
+    ],
+    correctAnswer: 'Implementing robust cross-validation and regularization techniques.'
   });
 }

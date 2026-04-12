@@ -408,7 +408,7 @@ export default function App() {
                   </Badge>
                   <Badge variant="destructive" className="px-4 py-1.5 flex items-center gap-2 text-sm font-bold shadow-sm">
                     <AlertCircle className="w-4 h-4" />
-                    Violations: {violations}/3
+                    Violations: {violations}/1
                   </Badge>
                 </div>
                 <div className="flex items-center gap-4">
@@ -577,24 +577,47 @@ export default function App() {
                 <div className="mx-auto bg-green-50 w-24 h-24 rounded-full flex items-center justify-center mb-8 shadow-inner">
                   <CheckCircle2 className="w-12 h-12 text-green-600" />
                 </div>
-                <CardTitle className="text-4xl font-black text-neutral-900">Application Received</CardTitle>
+                <CardTitle className="text-4xl font-black text-neutral-900">Thanks for submission</CardTitle>
                 <CardDescription className="text-lg text-neutral-500 pt-2">
-                  Your assessment for <strong>{selectedDomain?.title || 'All Domains'}</strong> has been successfully submitted.
+                  Your assessment for <strong>{selectedDomain?.title || 'All Domains'}</strong> has been successfully recorded.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-8 px-12">
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="p-6 rounded-3xl bg-neutral-50 border border-neutral-100 flex flex-col gap-2 text-center">
-                    <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Violations</span>
-                    <span className={`text-3xl font-black ${violations >= 3 ? 'text-destructive' : 'text-primary'}`}>{violations}</span>
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="p-4 rounded-3xl bg-neutral-50 border border-neutral-100 flex flex-col gap-1 text-center">
+                    <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Score</span>
+                    <span className="text-2xl font-black text-primary">
+                      {Object.keys(answers).reduce((acc, qId) => {
+                        const question = currentExam.questions.find(q => q.id === qId);
+                        return acc + (question?.correctAnswer === answers[qId] ? 1 : 0);
+                      }, 0)} / {currentExam.questions.length}
+                    </span>
                   </div>
-                  <div className="p-6 rounded-3xl bg-neutral-50 border border-neutral-100 flex flex-col gap-2 text-center">
-                    <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Time Taken</span>
-                    <span className="text-3xl font-black text-neutral-900">
+                  <div className="p-4 rounded-3xl bg-neutral-50 border border-neutral-100 flex flex-col gap-1 text-center">
+                    <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Violations</span>
+                    <span className={`text-2xl font-black ${violations > 0 ? 'text-destructive' : 'text-green-600'}`}>{violations}</span>
+                  </div>
+                  <div className="p-4 rounded-3xl bg-neutral-50 border border-neutral-100 flex flex-col gap-1 text-center">
+                    <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Time</span>
+                    <span className="text-2xl font-black text-neutral-900">
                       {Math.floor((Date.now() - startTime) / 60000)}m
                     </span>
                   </div>
                 </div>
+
+                {violations > 0 && (
+                  <div className="p-4 bg-destructive/5 border border-destructive/10 rounded-2xl">
+                    <div className="flex items-center gap-2 text-destructive mb-2">
+                      <AlertTriangle className="w-4 h-4" />
+                      <span className="text-xs font-black uppercase tracking-widest">Proctoring Alerts</span>
+                    </div>
+                    <ul className="text-xs text-neutral-600 space-y-1 list-disc list-inside">
+                      {logs.filter(l => l.type === 'TAB_SWITCH' || l.type === 'FULLSCREEN_EXIT').map((log, i) => (
+                        <li key={i}>{log.details}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 <div className="space-y-4">
                   <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400 text-center">Submission Metadata</h3>

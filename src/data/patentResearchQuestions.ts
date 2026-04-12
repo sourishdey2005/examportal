@@ -4,137 +4,94 @@ export const PATENT_RESEARCH_QUESTIONS: Question[] = [
   {
     id: 'pr-1',
     type: 'mcq',
-    category: 'Intellectual Property',
-    text: 'What are the three main criteria for an invention to be patentable?',
+    category: 'Patent Law',
+    text: 'What is the "Doctrine of Equivalents" in patent infringement cases?',
     options: [
-      'Useful, New, and Non-obvious',
-      'Cheap, Fast, and Reliable',
-      'Small, Light, and Durable',
-      'Digital, Scalable, and Secure'
+      'A rule that states all patents are equal in value.',
+      'A legal rule that allows a court to find infringement if the accused product performs substantially the same function in substantially the same way to achieve the same result.',
+      'A requirement that all patent applications must be filed in English.',
+      'A method for calculating the damages in a patent lawsuit.'
     ],
-    correctAnswer: 'Useful, New, and Non-obvious'
+    correctAnswer: 'A legal rule that allows a court to find infringement if the accused product performs substantially the same function in substantially the same way to achieve the same result.'
   },
   {
     id: 'pr-2',
     type: 'mcq',
-    category: 'Patent Search',
-    text: 'What is "Prior Art"?',
+    category: 'Patent Strategy',
+    text: 'What is a "Patent Thicket" and how does it impact innovation?',
     options: [
-      'Art created before the 20th century',
-      'Any evidence that your invention is already known (e.g., existing patents, publications, public use)',
-      'The first draft of a patent application',
-      'A type of legal document'
+      'A dense forest where patent offices are located.',
+      'A dense web of overlapping intellectual property rights that requires innovators to seek licenses from multiple patentees, potentially stifling innovation.',
+      'A type of software used for patent searching.',
+      'A collection of patents owned by a single individual.'
     ],
-    correctAnswer: 'Any evidence that your invention is already known (e.g., existing patents, publications, public use)'
+    correctAnswer: 'A dense web of overlapping intellectual property rights that requires innovators to seek licenses from multiple patentees, potentially stifling innovation.'
   },
   {
     id: 'pr-3',
     type: 'mcq',
-    category: 'Patent Drafting',
-    text: 'What is the purpose of the "Claims" section in a patent?',
+    category: 'Advanced Research',
+    text: 'What is the "H-index" and what are its primary limitations as a metric for research impact?',
     options: [
-      'To describe the history of the invention',
-      'To define the legal boundaries of the protection sought',
-      'To list the inventors',
-      'To provide background information'
+      'It measures the height of a researcher.',
+      'It measures both the productivity and citation impact of a researcher, but it can be biased by field-specific citation patterns and career length.',
+      'It is a measure of how many patents a researcher has filed.',
+      'It is a metric for the speed of the peer-review process.'
     ],
-    correctAnswer: 'To define the legal boundaries of the protection sought'
+    correctAnswer: 'It measures both the productivity and citation impact of a researcher, but it can be biased by field-specific citation patterns and career length.'
   },
   {
     id: 'pr-4',
     type: 'mcq',
-    category: 'Research Methodology',
-    text: 'What is a "Systematic Literature Review"?',
+    category: 'IP Management',
+    text: 'What is the role of the "Patent Cooperation Treaty" (PCT) in the international patent filing process?',
     options: [
-      'Reading a few books on a topic',
-      'A structured, transparent, and reproducible method to identify, evaluate, and synthesize all relevant research on a specific question',
-      'Writing a summary of a single paper',
-      'A type of bibliography'
+      'It grants a single "world patent" that is valid in all countries.',
+      'It provides a unified procedure for filing patent applications to protect inventions in each of its contracting states, delaying the cost of national filings.',
+      'It is a treaty that bans the patenting of software.',
+      'It is a database of all international patent attorneys.'
     ],
-    correctAnswer: 'A structured, transparent, and reproducible method to identify, evaluate, and synthesize all relevant research on a specific question'
+    correctAnswer: 'It provides a unified procedure for filing patent applications to protect inventions in each of its contracting states, delaying the cost of national filings.'
   },
   {
     id: 'pr-5',
     type: 'mcq',
-    category: 'IP Strategy',
-    text: 'What is a "Freedom to Operate" (FTO) analysis?',
+    category: 'Scientific Methodology',
+    text: 'What is "Publication Bias" (the File Drawer Problem) and how does it affect meta-analyses?',
     options: [
-      'A test for software performance',
-      'An assessment of whether a product or process can be commercialized without infringing existing third-party patents',
-      'A type of business license',
-      'A marketing strategy'
+      'A bias towards publishing in expensive journals.',
+      'The tendency of researchers and journals to publish positive results more frequently than negative or null results, leading to an overestimation of effect sizes.',
+      'A bias against researchers from certain countries.',
+      'The difficulty of finding old research papers in physical libraries.'
     ],
-    correctAnswer: 'An assessment of whether a product or process can be commercialized without infringing existing third-party patents'
-  },
-  {
-    id: 'pr-6',
-    type: 'mcq',
-    category: 'Patent Classification',
-    text: 'What is the "International Patent Classification" (IPC)?',
-    options: [
-      'A list of all inventors in the world',
-      'A hierarchical system for classifying patents according to the different areas of technology to which they pertain',
-      'A type of global tax',
-      'A network protocol'
-    ],
-    correctAnswer: 'A hierarchical system for classifying patents according to the different areas of technology to which they pertain'
-  },
-  {
-    id: 'pr-7',
-    type: 'mcq',
-    category: 'Scientific Writing',
-    text: 'What is the "IMRaD" structure in research papers?',
-    options: [
-      'Index, Map, Record, and Data',
-      'Introduction, Methods, Results, and Discussion',
-      'Images, Models, Research, and Design',
-      'Input, Management, Review, and Delivery'
-    ],
-    correctAnswer: 'Introduction, Methods, Results, and Discussion'
-  },
-  {
-    id: 'pr-8',
-    type: 'mcq',
-    category: 'Ethics',
-    text: 'What is "Plagiarism" in research?',
-    options: [
-      'Using too many citations',
-      'The practice of taking someone else\'s work or ideas and passing them off as one\'s own',
-      'Writing in a different language',
-      'Publishing in an open-access journal'
-    ],
-    correctAnswer: 'The practice of taking someone else\'s work or ideas and passing them off as one\'s own'
-  },
-  {
-    id: 'pr-9',
-    type: 'mcq',
-    category: 'Patent Law',
-    text: 'What is the typical term of a utility patent from the filing date?',
-    options: ['5 years', '10 years', '20 years', '50 years'],
-    correctAnswer: '20 years'
-  },
-  {
-    id: 'pr-10',
-    type: 'mcq',
-    category: 'Innovation',
-    text: 'What is "Disruptive Innovation"?',
-    options: [
-      'An innovation that improves an existing product',
-      'An innovation that creates a new market and value network and eventually disrupts an existing market',
-      'A very expensive innovation',
-      'A failed innovation'
-    ],
-    correctAnswer: 'An innovation that creates a new market and value network and eventually disrupts an existing market'
+    correctAnswer: 'The tendency of researchers and journals to publish positive results more frequently than negative or null results, leading to an overestimation of effect sizes.'
   }
 ];
 
-for (let i = 11; i <= 100; i++) {
+const prCategories = ['Patent Drafting', 'Prior Art Search', 'IP Valuation', 'Research Ethics', 'Tech Transfer', 'Bibliometrics'];
+const prTopics = [
+  'Drafting "Means-Plus-Function" claims',
+  'Boolean vs Semantic patent searching',
+  'Income-based vs Cost-based IP valuation',
+  'Double-blind vs Open peer review',
+  'Bayh-Dole Act and University tech transfer',
+  'Impact Factor vs Eigenfactor metrics'
+];
+
+for (let i = 6; i <= 100; i++) {
+  const category = prCategories[i % prCategories.length];
+  const topic = prTopics[i % prTopics.length];
   PATENT_RESEARCH_QUESTIONS.push({
     id: `pr-${i}`,
     type: 'mcq',
-    category: 'Advanced Patent & Research',
-    text: `Advanced Patent/Research Question ${i}: Which document is filed to protect an invention temporarily while the full application is being prepared?`,
-    options: ['Non-provisional Patent', 'Provisional Patent Application', 'Trademark', 'Copyright'],
-    correctAnswer: 'Provisional Patent Application'
+    category: category,
+    text: `[Advanced ${category}] When conducting ${topic}, which factor is most critical for ensuring the legal and scientific validity of the findings?`,
+    options: [
+      'The total number of pages in the final report.',
+      'The rigor and transparency of the methodology used.',
+      'The reputation of the institution where the research was conducted.',
+      'The speed at which the patent application was filed.'
+    ],
+    correctAnswer: 'The rigor and transparency of the methodology used.'
   });
 }
