@@ -24,6 +24,7 @@ export const submitExamResults = async (submission: ExamSubmission, exam: Exam) 
   const SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
 
   try {
+    console.log('Attempting to submit to:', SCRIPT_URL);
     if (SCRIPT_URL) {
       await fetch(SCRIPT_URL, {
         method: 'POST',

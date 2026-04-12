@@ -237,14 +237,14 @@ export default function App() {
                       Gain real-world experience across cutting-edge domains. Our proctored entrance assessment ensures a fair and merit-based selection process.
                     </p>
                     <div className="flex flex-wrap gap-4">
-                      <Button size="lg" className="h-16 px-10 text-lg gap-2 shadow-lg shadow-primary/20" onClick={() => setAppState('domains')}>
-                        Explore Domains <ArrowRight className="w-5 h-5" />
-                      </Button>
-                      <Button size="lg" variant="outline" className="h-16 px-10 text-lg" onClick={() => {
+                      <Button size="lg" className="h-16 px-10 text-lg gap-2 shadow-lg shadow-primary/20" onClick={() => {
                         setSelectedDomain(null);
                         setIsDialogOpen(true);
                       }}>
-                        Express Interest in All
+                        Register Now <ArrowRight className="w-5 h-5" />
+                      </Button>
+                      <Button size="lg" variant="outline" className="h-16 px-10 text-lg" onClick={() => setAppState('domains')}>
+                        Explore Domains
                       </Button>
                     </div>
                   </div>
@@ -673,6 +673,41 @@ export default function App() {
               </div>
             </DialogHeader>
 
+            <div className="space-y-6 bg-neutral-50 p-8 rounded-[2rem] border border-neutral-100">
+              <h3 className="text-sm font-black uppercase tracking-widest text-primary">Candidate Registration</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <Label htmlFor="name-apply" className="text-sm font-black uppercase tracking-widest text-neutral-400">Full Name</Label>
+                  <div className="relative">
+                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+                    <Input 
+                      id="name-apply" 
+                      type="text" 
+                      placeholder="John Doe" 
+                      value={studentName}
+                      onChange={(e) => setStudentName(e.target.value)}
+                      className="h-14 pl-12 rounded-2xl border-neutral-200 text-base font-bold focus:ring-primary/20 bg-white"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <Label htmlFor="email-apply" className="text-sm font-black uppercase tracking-widest text-neutral-400">Professional Email</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+                    <Input 
+                      id="email-apply" 
+                      type="email" 
+                      placeholder="name@university.edu" 
+                      value={studentEmail}
+                      onChange={(e) => setStudentEmail(e.target.value)}
+                      className="h-14 pl-12 rounded-2xl border-neutral-200 text-base font-bold focus:ring-primary/20 bg-white"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {selectedDomain ? (
               <div className="space-y-8">
                 <p className="text-lg text-neutral-600 leading-relaxed">{selectedDomain.description}</p>
@@ -736,35 +771,6 @@ export default function App() {
             )}
 
             <div className="space-y-6 pt-4">
-              <div className="space-y-3">
-                <Label htmlFor="name-apply" className="text-sm font-black uppercase tracking-widest text-neutral-400">Full Name</Label>
-                <div className="relative">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
-                  <Input 
-                    id="name-apply" 
-                    type="text" 
-                    placeholder="John Doe" 
-                    value={studentName}
-                    onChange={(e) => setStudentName(e.target.value)}
-                    className="h-16 pl-12 rounded-2xl border-neutral-200 text-lg font-bold focus:ring-primary/20"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <Label htmlFor="email-apply" className="text-sm font-black uppercase tracking-widest text-neutral-400">Your Professional Email</Label>
-                <div className="relative">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
-                  <Input 
-                    id="email-apply" 
-                    type="email" 
-                    placeholder="name@university.edu" 
-                    value={studentEmail}
-                    onChange={(e) => setStudentEmail(e.target.value)}
-                    className="h-16 pl-12 rounded-2xl border-neutral-200 text-lg font-bold focus:ring-primary/20"
-                  />
-                </div>
-              </div>
               <Button 
                 className="w-full h-16 rounded-2xl text-xl font-black shadow-xl shadow-primary/20 gap-3" 
                 disabled={!studentEmail || !studentName}
