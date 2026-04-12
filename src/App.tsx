@@ -97,10 +97,6 @@ export default function App() {
       
       if (isDisqualified) {
         setAppState('disqualified');
-        // Auto logout after 5 seconds of showing the disqualified screen
-        setTimeout(() => {
-          logout();
-        }, 5000);
       } else {
         setAppState('submitted');
       }
@@ -533,31 +529,36 @@ export default function App() {
             className="flex items-center justify-center min-h-screen p-4 bg-neutral-100"
           >
             <Card className="w-full max-w-xl shadow-2xl border-none overflow-hidden rounded-[2rem]">
-              <div className="h-3 bg-destructive w-full" />
+              <div className="h-3 bg-primary w-full" />
               <CardHeader className="text-center pt-16 pb-10">
-                <div className="mx-auto bg-destructive/10 w-24 h-24 rounded-full flex items-center justify-center mb-8 shadow-inner">
-                  <AlertTriangle className="w-12 h-12 text-destructive" />
+                <div className="mx-auto bg-green-50 w-24 h-24 rounded-full flex items-center justify-center mb-8 shadow-inner">
+                  <CheckCircle2 className="w-12 h-12 text-green-600" />
                 </div>
-                <CardTitle className="text-4xl font-black text-destructive uppercase tracking-tighter">Exam Terminated</CardTitle>
+                <CardTitle className="text-4xl font-black text-neutral-900 uppercase tracking-tighter">Test Submitted</CardTitle>
                 <CardDescription className="text-lg text-neutral-500 pt-2">
-                  You have been <strong>disqualified</strong> due to a proctoring violation.
+                  Successfully submitted the test. <strong>Thanks for appearing!</strong>
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-8 px-12 text-center">
                 <p className="text-neutral-600 leading-relaxed">
-                  The system detected a tab switch or fullscreen exit. Per our zero-tolerance policy, your assessment has been cancelled and your session has been voided.
+                  Your assessment has been recorded and sent for evaluation. Our team will review your performance and contact you via email if you are shortlisted.
                 </p>
-                <div className="p-6 bg-neutral-50 rounded-3xl border border-neutral-100">
-                  <p className="text-xs font-bold text-neutral-400 uppercase tracking-widest mb-2">Logged Violation</p>
-                  <p className="text-sm font-black text-destructive">UNAUTHORIZED_ACTION_DETECTED</p>
+                <div className="p-8 bg-neutral-50 rounded-[2rem] border border-neutral-100 space-y-4">
+                  <div className="flex items-center justify-center gap-3 text-primary">
+                    <Shield className="w-6 h-6" />
+                    <p className="text-lg font-black">Submission Confirmed</p>
+                  </div>
+                  <p className="text-sm font-medium text-neutral-500 leading-relaxed">
+                    Your session data and responses have been securely uploaded to our servers.
+                  </p>
                 </div>
               </CardContent>
               <CardFooter className="bg-neutral-50 p-10 flex flex-col gap-6">
-                <p className="text-xs text-center text-neutral-400 font-medium">
-                  You are being automatically logged out for security reasons.
+                <p className="text-xs text-center text-neutral-400 font-medium leading-relaxed px-4">
+                  You can now close this window. Further instructions will be sent to <strong>{studentEmail}</strong>.
                 </p>
-                <Button variant="destructive" className="w-full h-14 rounded-2xl font-bold text-lg shadow-lg shadow-destructive/20" onClick={logout}>
-                  Return to Home
+                <Button variant="outline" className="w-full h-14 rounded-2xl font-bold text-lg border-neutral-200 hover:bg-white transition-all" onClick={() => window.location.reload()}>
+                  Return to Portal Home
                 </Button>
               </CardFooter>
             </Card>
