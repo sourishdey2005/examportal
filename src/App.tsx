@@ -756,15 +756,22 @@ export default function App() {
               </div>
             ) : (
               <div className="space-y-6">
-                <p className="text-lg text-neutral-600 leading-relaxed">
-                  Not sure which domain to pick? Apply for our general internship track. We will evaluate your performance across all categories and match you with the best-fitting team.
-                </p>
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-sm font-black uppercase tracking-widest text-primary">Select Your Domain</h3>
+                  <p className="text-sm text-neutral-500">
+                    Choose a specialized path or leave unselected for the general track.
+                  </p>
+                </div>
                 <div className="grid grid-cols-2 gap-4">
                   {DOMAINS.map(d => (
-                    <div key={d.id} className="flex items-center gap-3 p-4 bg-neutral-50 rounded-2xl border border-neutral-100">
-                      <div className="text-primary">{getDomainIcon(d.id)}</div>
+                    <button 
+                      key={d.id} 
+                      onClick={() => setSelectedDomain(d)}
+                      className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-neutral-200 hover:border-primary hover:bg-primary/5 transition-all text-left group"
+                    >
+                      <div className="text-primary group-hover:scale-110 transition-transform">{getDomainIcon(d.id)}</div>
                       <span className="text-sm font-bold text-neutral-700">{d.title}</span>
-                    </div>
+                    </button>
                   ))}
                 </div>
               </div>
