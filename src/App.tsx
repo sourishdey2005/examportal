@@ -57,6 +57,7 @@ export default function App() {
   const [currentExam, setCurrentExam] = useState<Exam>(ENTRANCE_EXAM);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [studentEmail, setStudentEmail] = useState('');
+  const [studentName, setStudentName] = useState('');
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [startTime, setStartTime] = useState<number>(0);
   const [timeLeft, setTimeLeft] = useState(ENTRANCE_EXAM.durationMinutes * 60);
@@ -66,6 +67,7 @@ export default function App() {
 
   const logout = useCallback(() => {
     setStudentEmail('');
+    setStudentName('');
     setAnswers({});
     setSelectedDomain(null);
     setAppState('landing');
@@ -82,6 +84,7 @@ export default function App() {
       const submission: ExamSubmission = {
         examId: currentExam.id,
         domainId: selectedDomain?.id || 'all',
+        studentName,
         studentEmail,
         answers,
         logs,
@@ -92,7 +95,7 @@ export default function App() {
         status: isDisqualified ? 'disqualified' : 'completed'
       };
       
-      await submitExamResults(submission);
+      await submitExamResults(submission, currentExam);
       stopCamera();
       
       if (isDisqualified) {
@@ -157,7 +160,7 @@ export default function App() {
   }, [isFullScreen, appState]);
 
   const startExam = async () => {
-    if (!studentEmail) return;
+    if (!studentEmail || !studentName) return;
     setIsDialogOpen(false);
     
     const exam = selectedDomain ? DOMAIN_EXAMS[selectedDomain.id] : ENTRANCE_EXAM;
@@ -734,6 +737,21 @@ export default function App() {
 
             <div className="space-y-6 pt-4">
               <div className="space-y-3">
+                <Label htmlFor="name-apply" className="text-sm font-black uppercase tracking-widest text-neutral-400">Full Name</Label>
+                <div className="relative">
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
+                  <Input 
+                    id="name-apply" 
+                    type="text" 
+                    placeholder="John Doe" 
+                    value={studentName}
+                    onChange={(e) => setStudentName(e.target.value)}
+                    className="h-16 pl-12 rounded-2xl border-neutral-200 text-lg font-bold focus:ring-primary/20"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-3">
                 <Label htmlFor="email-apply" className="text-sm font-black uppercase tracking-widest text-neutral-400">Your Professional Email</Label>
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
@@ -749,7 +767,7 @@ export default function App() {
               </div>
               <Button 
                 className="w-full h-16 rounded-2xl text-xl font-black shadow-xl shadow-primary/20 gap-3" 
-                disabled={!studentEmail}
+                disabled={!studentEmail || !studentName}
                 onClick={startExam}
               >
                 Start Proctored Assessment <ArrowRight className="w-6 h-6" />

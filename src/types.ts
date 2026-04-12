@@ -33,6 +33,7 @@ export interface Exam {
 export interface ExamSubmission {
   examId: string;
   domainId?: string;
+  studentName: string;
   studentEmail: string;
   answers: Record<string, string>;
   logs: { type: string; timestamp: number; details?: string }[];
