@@ -13,7 +13,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'GROUP BY is faster for all types of datasets.',
       'Window functions require a separate temporary table to store results.'
     ],
-    correctAnswer: 'Window functions perform calculations across a set of table rows that are related to the current row, without collapsing them into a single output row.'
+    correctAnswer: 'Window functions perform calculations across a set of table rows that are related to the current row, without collapsing them into a single output row.',
+    difficulty: 'advanced',
+    explanation: 'Window functions use OVER() clause to define partitions; each input row produces one output row, unlike GROUP BY which aggregates rows.'
   },
   {
     id: 'da-2',
@@ -26,7 +28,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'To encrypt sensitive data in the query results.',
       'To compress the database storage size.'
     ],
-    correctAnswer: 'To create temporary result sets that can reference themselves, enabling hierarchical or recursive queries on tree/graph data.'
+    correctAnswer: 'To create temporary result sets that can reference themselves, enabling hierarchical or recursive queries on tree/graph data.',
+    difficulty: 'advanced',
+    explanation: 'Recursive CTEs use UNION ALL with self-reference; anchor member provides base case, recursive member iterates until termination.'
   },
   {
     id: 'da-3',
@@ -39,7 +43,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Index Scan is always faster than Index Seek.',
       'Index Seek only works on primary key columns.'
     ],
-    correctAnswer: 'Index Seek directly navigates to specific rows using the index; Index Scan reads all rows in the index leaf level, with Seek being generally more efficient for selective queries.'
+    correctAnswer: 'Index Seek directly navigates to specific rows using the index; Index Scan reads all rows in the index leaf level, with Seek being generally more efficient for selective queries.',
+    difficulty: 'advanced',
+    explanation: 'Seek uses B-tree navigation O(log n); Scan reads entire index O(n). Seek preferred for high-selectivity predicates.'
   },
   {
     id: 'da-4',
@@ -52,7 +58,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A method to compress query results.',
       'A way to merge multiple queries into one.'
     ],
-    correctAnswer: 'The process of converting high-level transformations into native database queries to push computation to the source system for efficiency.'
+    correctAnswer: 'The process of converting high-level transformations into native database queries to push computation to the source system for efficiency.',
+    difficulty: 'expert',
+    explanation: 'Query folding enables source-side execution, reducing data transfer and leveraging database optimization; broken by non-foldable steps.'
   },
   {
     id: 'da-5',
@@ -65,7 +73,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A formula for calculating query cost.',
       'A security protocol for database access control.'
     ],
-    correctAnswer: 'It states that a distributed system can only guarantee two of three: Consistency, Availability, and Partition tolerance.'
+    correctAnswer: 'It states that a distributed system can only guarantee two of three: Consistency, Availability, and Partition tolerance.',
+    difficulty: 'advanced',
+    explanation: 'CAP theorem: during network partition (P), system must choose between consistency (C) or availability (A); NoSQL systems make different tradeoffs.'
   },
   {
     id: 'da-6',
@@ -78,7 +88,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A strict consistency model requiring immediate synchronization.',
       'A method to consistently log database events.'
     ],
-    correctAnswer: 'A consistency model where updates will eventually propagate to all nodes, allowing temporary inconsistencies for better availability.'
+    correctAnswer: 'A consistency model where updates will eventually propagate to all nodes, allowing temporary inconsistencies for better availability.',
+    difficulty: 'advanced',
+    explanation: 'Eventual consistency trades immediate consistency for higher availability and partition tolerance; suitable for non-critical data.'
   },
   {
     id: 'da-7',
@@ -91,7 +103,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'LEFT JOIN is faster than INNER JOIN.',
       'INNER JOIN can only be used on primary keys.'
     ],
-    correctAnswer: 'INNER JOIN returns only matching rows from both tables; LEFT JOIN returns all rows from the left table and matching rows from the right, with NULLs for non-matches.'
+    correctAnswer: 'INNER JOIN returns only matching rows from both tables; LEFT JOIN returns all rows from the left table and matching rows from the right, with NULLs for non-matches.',
+    difficulty: 'advanced',
+    explanation: 'INNER JOIN filters to intersection; LEFT JOIN preserves all left table rows. RIGHT JOIN and FULL OUTER JOIN extend this logic.'
   },
   {
     id: 'da-8',
@@ -104,7 +118,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A method to normalize statistical distributions.',
       'A technique to compress database files.'
     ],
-    correctAnswer: 'Organizing data to minimize redundancy and dependency by dividing large tables into smaller ones and defining relationships.'
+    correctAnswer: 'Organizing data to minimize redundancy and dependency by dividing large tables into smaller ones and defining relationships.',
+    difficulty: 'advanced',
+    explanation: 'Normalization (1NF-5NF) eliminates update anomalies; denormalization may be applied later for read performance in data warehouses.'
   },
   {
     id: 'da-9',
@@ -117,7 +133,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A method to speed up acid-fast database queries.',
       'An encryption standard for database security.'
     ],
-    correctAnswer: 'Atomicity, Consistency, Isolation, Durability - properties guaranteeing reliable processing of database transactions.'
+    correctAnswer: 'Atomicity, Consistency, Isolation, Durability - properties guaranteeing reliable processing of database transactions.',
+    difficulty: 'advanced',
+    explanation: 'ACID ensures transactions are all-or-nothing (Atomic), valid (Consistent), isolated from concurrent transactions, and persistent after commit.'
   },
   {
     id: 'da-10',
@@ -130,7 +148,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'An index that covers only the WHERE clause.',
       'A clustered index on all tables.'
     ],
-    correctAnswer: 'A non-clustered index that includes all columns needed for a query, eliminating the need to access the table data.'
+    correctAnswer: 'A non-clustered index that includes all columns needed for a query, eliminating the need to access the table data.',
+    difficulty: 'expert',
+    explanation: 'Covering indexes include SELECT, WHERE, JOIN, and ORDER BY columns; avoid costly key lookups by satisfying queries entirely from index.'
   },
   {
     id: 'da-11',
@@ -143,7 +163,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A method to encrypt partitions of the database.',
       'Creating backup partitions of the data.'
     ],
-    correctAnswer: 'Splitting large tables into smaller, more manageable pieces based on partition keys to improve query performance and maintenance.'
+    correctAnswer: 'Splitting large tables into smaller, more manageable pieces based on partition keys to improve query performance and maintenance.',
+    difficulty: 'advanced',
+    explanation: 'Partitioning (range, list, hash) enables partition pruning, parallel operations, and easier maintenance like archiving old data.'
   },
   {
     id: 'da-12',
@@ -156,7 +178,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'To explain SQL syntax to beginners.',
       'To export query results to external files.'
     ],
-    correctAnswer: 'To display the execution plan showing how the database will execute a query, helping identify performance bottlenecks.'
+    correctAnswer: 'To display the execution plan showing how the database will execute a query, helping identify performance bottlenecks.',
+    difficulty: 'advanced',
+    explanation: 'EXPLAIN shows estimated plan; EXPLAIN ANALYZE executes query and shows actual runtime stats, revealing optimizer misestimates.'
   },
   {
     id: 'da-13',
@@ -169,7 +193,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A view that materializes only when queried.',
       'A temporary view that disappears after use.'
     ],
-    correctAnswer: 'A pre-computed view stored on disk that trades storage for query performance, useful for expensive aggregations on large datasets.'
+    correctAnswer: 'A pre-computed view stored on disk that trades storage for query performance, useful for expensive aggregations on large datasets.',
+    difficulty: 'advanced',
+    explanation: 'Materialized views require refresh strategies (complete/fast); ideal for pre-aggregating expensive joins and calculations.'
   },
   {
     id: 'da-14',
@@ -182,7 +208,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A method to change dimensions six times faster.',
       'A deprecated SCD type no longer used.'
     ],
-    correctAnswer: 'Combining Type 1, 2, and 3 approaches to maintain both current and historical views with additional columns.'
+    correctAnswer: 'Combining Type 1, 2, and 3 approaches to maintain both current and historical views with additional columns.',
+    difficulty: 'expert',
+    explanation: 'SCD Type 6 uses current flag (Type 1), historical rows (Type 2), and previous value columns (Type 3) for flexible historical reporting.'
   },
   {
     id: 'da-15',
@@ -195,7 +223,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A method to capture data entry errors.',
       'A technique to compress changing data.'
     ],
-    correctAnswer: 'A pattern to track and capture changes in source data for incremental updates to the data warehouse.'
+    correctAnswer: 'A pattern to track and capture changes in source data for incremental updates to the data warehouse.',
+    difficulty: 'advanced',
+    explanation: 'CDC uses transaction logs, timestamps, or triggers to identify changed rows; enables efficient incremental ETL without full table scans.'
   },
 
   // ==================== STATISTICS & EXPERIMENTAL DESIGN (Questions 16-30) ====================
@@ -210,7 +240,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'The total sample size required for the test.',
       'The magnitude of the difference between the control and variant groups.'
     ],
-    correctAnswer: 'The probability of correctly rejecting the null hypothesis when it is false (avoiding a Type II error).'
+    correctAnswer: 'The probability of correctly rejecting the null hypothesis when it is false (avoiding a Type II error).',
+    difficulty: 'advanced',
+    explanation: 'Power = 1 - β; typically target 80% power. Depends on effect size, sample size, significance level, and variance.'
   },
   {
     id: 'da-17',
@@ -223,7 +255,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Type I is worse than Type II in all scenarios.',
       'Type II Error only occurs in small sample sizes.'
     ],
-    correctAnswer: 'Type I Error (False Positive) rejects a true null hypothesis; Type II Error (False Negative) fails to reject a false null hypothesis.'
+    correctAnswer: 'Type I Error (False Positive) rejects a true null hypothesis; Type II Error (False Negative) fails to reject a false null hypothesis.',
+    difficulty: 'advanced',
+    explanation: 'α = P(Type I); β = P(Type II). Tradeoff exists: lowering α increases β unless sample size increases.'
   },
   {
     id: 'da-18',
@@ -236,7 +270,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'The probability that the alternative hypothesis is true.',
       'The percentage of data that supports the hypothesis.'
     ],
-    correctAnswer: 'The probability of obtaining test results at least as extreme as the observed results, assuming the null hypothesis is correct.'
+    correctAnswer: 'The probability of obtaining test results at least as extreme as the observed results, assuming the null hypothesis is correct.',
+    difficulty: 'advanced',
+    explanation: 'P-value < α leads to rejecting H₀. Common misconception: p-value is NOT probability H₀ is true; it assumes H₀ is true.'
   },
   {
     id: 'da-19',
@@ -249,7 +285,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'The interval between data collection and analysis.',
       'A confidence score for machine learning models.'
     ],
-    correctAnswer: 'A range that contains the true population parameter with a specified level of confidence (e.g., 95%) if the experiment were repeated many times.'
+    correctAnswer: 'A range that contains the true population parameter with a specified level of confidence (e.g., 95%) if the experiment were repeated many times.',
+    difficulty: 'advanced',
+    explanation: '95% CI means: if we repeated sampling 100 times, ~95 intervals would contain true parameter. Not probability about single interval.'
   },
   {
     id: 'da-20',
@@ -262,7 +300,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A method to correct skewed distributions.',
       'Correcting for seasonal variations in time series.'
     ],
-    correctAnswer: 'Adjusting significance levels when performing multiple comparisons to control the family-wise error rate.'
+    correctAnswer: 'Adjusting significance levels when performing multiple comparisons to control the family-wise error rate.',
+    difficulty: 'expert',
+    explanation: 'Bonferroni: α_adj = α / m for m tests. Conservative; alternatives include Holm-Bonferroni and Benjamini-Hochberg (FDR control).'
   },
   {
     id: 'da-21',
@@ -275,7 +315,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A trial with random data collection times.',
       'A method to control random noise in data.'
     ],
-    correctAnswer: 'Random assignment to treatment/control groups minimizes confounding variables, allowing causal inference.'
+    correctAnswer: 'Random assignment to treatment/control groups minimizes confounding variables, allowing causal inference.',
+    difficulty: 'advanced',
+    explanation: 'Randomization balances observed and unobserved confounders in expectation; enables unbiased estimation of treatment effect.'
   },
   {
     id: 'da-22',
@@ -288,7 +330,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Bias in selecting colors for visualizations.',
       'A bias toward selecting significant results only.'
     ],
-    correctAnswer: 'Systematic error introduced when the sample is not representative of the population due to non-random selection.'
+    correctAnswer: 'Systematic error introduced when the sample is not representative of the population due to non-random selection.',
+    difficulty: 'advanced',
+    explanation: 'Selection bias distorts estimates; examples: volunteer bias, attrition bias, Berkson\'s paradox in hospital-based studies.'
   },
   {
     id: 'da-23',
@@ -301,7 +345,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A bias in survival analysis statistics.',
       'Bias introduced by surviving hardware failures.'
     ],
-    correctAnswer: 'Logical error of concentrating on entities that passed a selection process while overlooking those that did not.'
+    correctAnswer: 'Logical error of concentrating on entities that passed a selection process while overlooking those that did not.',
+    difficulty: 'advanced',
+    explanation: 'Classic example: analyzing only returning WWII planes misses planes shot down; leads to wrong conclusions about armor placement.'
   },
   {
     id: 'da-24',
@@ -314,7 +360,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A paradox discovered by the Simpsons TV show writers.',
       'A statistical method for simple random sampling.'
     ],
-    correctAnswer: 'A trend appearing in different groups of data disappears or reverses when these groups are combined.'
+    correctAnswer: 'A trend appearing in different groups of data disappears or reverses when these groups are combined.',
+    difficulty: 'expert',
+    explanation: 'Simpson\'s paradox occurs due to confounding variables; always stratify analysis by relevant subgroups before aggregating.'
   },
   {
     id: 'da-25',
@@ -327,7 +375,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A theorem limiting the central tendency measures.',
       'A method to centralize data for analysis.'
     ],
-    correctAnswer: 'The sampling distribution of the mean approaches a normal distribution as sample size increases, regardless of population distribution.'
+    correctAnswer: 'The sampling distribution of the mean approaches a normal distribution as sample size increases, regardless of population distribution.',
+    difficulty: 'advanced',
+    explanation: 'CLT enables parametric tests and confidence intervals; n≥30 often sufficient, but skewed distributions may require larger n.'
   },
   {
     id: 'da-26',
@@ -340,7 +390,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A method to standardize variance across samples.',
       'A type of hierarchical clustering.'
     ],
-    correctAnswer: 'Non-constant variance of errors across the range of predicted values, violating OLS assumptions.'
+    correctAnswer: 'Non-constant variance of errors across the range of predicted values, violating OLS assumptions.',
+    difficulty: 'advanced',
+    explanation: 'Heteroscedasticity causes inefficient OLS estimates and biased standard errors; detect via residual plots, fix with robust SE or transformations.'
   },
   {
     id: 'da-27',
@@ -353,7 +405,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Multiple collinear data points in a scatter plot.',
       'A method to create multiple regression lines.'
     ],
-    correctAnswer: 'High correlation among independent variables, causing instability in coefficient estimates.'
+    correctAnswer: 'High correlation among independent variables, causing instability in coefficient estimates.',
+    difficulty: 'advanced',
+    explanation: 'Multicollinearity inflates standard errors, making coefficients unstable; detect via VIF > 5-10, address by removing variables or using regularization.'
   },
   {
     id: 'da-28',
@@ -366,7 +420,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Matching data points by their propensity to cluster.',
       'A method to score the propensity of model accuracy.'
     ],
-    correctAnswer: 'Reducing selection bias in observational studies by matching treated and control units with similar propensity scores.'
+    correctAnswer: 'Reducing selection bias in observational studies by matching treated and control units with similar propensity scores.',
+    difficulty: 'expert',
+    explanation: 'Propensity score = P(treatment|covariates); matching balances observed covariates, approximating randomization in observational data.'
   },
   {
     id: 'da-29',
@@ -379,7 +435,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A method to find differences in data quality.',
       'A technique for differencing time series data.'
     ],
-    correctAnswer: 'A quasi-experimental technique comparing changes over time between treatment and control groups to estimate causal effects.'
+    correctAnswer: 'A quasi-experimental technique comparing changes over time between treatment and control groups to estimate causal effects.',
+    difficulty: 'advanced',
+    explanation: 'DiD = (Post_Treatment - Pre_Treatment) - (Post_Control - Pre_Control); assumes parallel trends in absence of treatment.'
   },
   {
     id: 'da-30',
@@ -392,7 +450,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'An inference method used only for small datasets.',
       'A method that rejects all prior knowledge.'
     ],
-    correctAnswer: 'Updating prior beliefs with observed data to obtain posterior distributions, treating parameters as random variables.'
+    correctAnswer: 'Updating prior beliefs with observed data to obtain posterior distributions, treating parameters as random variables.',
+    difficulty: 'expert',
+    explanation: 'Bayesian: p(θ|data) ∝ p(data|θ)p(θ); provides full posterior distribution for uncertainty quantification, unlike point estimates in frequentist.'
   },
 
   // ==================== DATA MODELING & WAREHOUSING (Questions 31-42) ====================
@@ -407,7 +467,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Adding a new column to the existing record to store the previous value.',
       'Deleting old records to save storage space.'
     ],
-    correctAnswer: 'Creating a new record for every change to track the full history of the dimension over time.'
+    correctAnswer: 'Creating a new record for every change to track the full history of the dimension over time.',
+    difficulty: 'advanced',
+    explanation: 'SCD Type 2 adds new row with effective dates and current flag; enables point-in-time reporting but increases table size.'
   },
   {
     id: 'da-32',
@@ -420,7 +482,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A schema with five tables arranged in a star pattern.',
       'A method to prioritize star-rated data.'
     ],
-    correctAnswer: 'A design with a central fact table surrounded by denormalized dimension tables, optimizing for query performance.'
+    correctAnswer: 'A design with a central fact table surrounded by denormalized dimension tables, optimizing for query performance.',
+    difficulty: 'advanced',
+    explanation: 'Star schema minimizes joins for BI queries; dimensions denormalized for readability; fact table contains measures and foreign keys.'
   },
   {
     id: 'da-33',
@@ -433,7 +497,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A schema with six points like a snowflake.',
       'A temporary schema that melts away after use.'
     ],
-    correctAnswer: 'Normalized dimension tables that reduce redundancy but require more joins compared to Star Schema.'
+    correctAnswer: 'Normalized dimension tables that reduce redundancy but require more joins compared to Star Schema.',
+    difficulty: 'advanced',
+    explanation: 'Snowflake normalizes dimensions into sub-dimensions; saves storage but increases query complexity; modern DWs often prefer star for performance.'
   },
   {
     id: 'da-34',
@@ -446,7 +512,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A vault for storing backup data.',
       'Version 2.0 of database security.'
     ],
-    correctAnswer: 'A methodology emphasizing agility and scalability through hubs, links, and satellites for enterprise data warehouses.'
+    correctAnswer: 'A methodology emphasizing agility and scalability through hubs, links, and satellites for enterprise data warehouses.',
+    difficulty: 'expert',
+    explanation: 'Data Vault: hubs (business keys), links (relationships), satellites (descriptive attributes); designed for auditability and historical tracking.'
   },
   {
     id: 'da-35',
@@ -459,7 +527,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A method to anchor data to specific servers.',
       'A modeling approach for anchoring visualizations.'
     ],
-    correctAnswer: 'An agile modeling technique using anchors, attributes, and ties to handle changing requirements over time.'
+    correctAnswer: 'An agile modeling technique using anchors, attributes, and ties to handle changing requirements over time.',
+    difficulty: 'expert',
+    explanation: 'Anchor Modeling uses four constructs (anchors, attributes, ties, knots) for fully temporal, schema-evolution-friendly data modeling.'
   },
   {
     id: 'da-36',
@@ -472,7 +542,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A table containing only false facts.',
       'A temporary table that deletes facts.'
     ],
-    correctAnswer: 'A fact table without measures, used to capture relationships or events between dimensions.'
+    correctAnswer: 'A fact table without measures, used to capture relationships or events between dimensions.',
+    difficulty: 'advanced',
+    explanation: 'Factless facts track occurrences (e.g., student attendance) or coverage (e.g., product-store combinations); count of rows is the measure.'
   },
   {
     id: 'da-37',
@@ -485,7 +557,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A dimension that should be deleted.',
       'A temporary dimension for testing.'
     ],
-    correctAnswer: 'A dimension combining low-cardinality flags and indicators to reduce the number of foreign keys in fact tables.'
+    correctAnswer: 'A dimension combining low-cardinality flags and indicators to reduce the number of foreign keys in fact tables.',
+    difficulty: 'advanced',
+    explanation: 'Junk dimensions consolidate yes/no flags, status codes, etc., into one dimension to avoid fact table bloat with many FKs.'
   },
   {
     id: 'da-38',
@@ -498,7 +572,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A dimension with zero values.',
       'A deprecated dimension no longer used.'
     ],
-    correctAnswer: 'A dimension key that exists in the fact table without a separate dimension table, like transaction numbers.'
+    correctAnswer: 'A dimension key that exists in the fact table without a separate dimension table, like transaction numbers.',
+    difficulty: 'advanced',
+    explanation: 'Degenerate dimensions (invoice #, order ID) have no attributes; stored directly in fact table to avoid unnecessary dimension joins.'
   },
   {
     id: 'da-39',
@@ -511,7 +587,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Dimensions that have been confirmed accurate.',
       'Dimensions that conform to SQL standards.'
     ],
-    correctAnswer: 'Dimensions that are shared across multiple fact tables and data marts for consistent reporting.'
+    correctAnswer: 'Dimensions that are shared across multiple fact tables and data marts for consistent reporting.',
+    difficulty: 'advanced',
+    explanation: 'Conformed dimensions (e.g., Date, Customer) enable cross-functional analysis; defined once, reused everywhere for enterprise consistency.'
   },
   {
     id: 'da-40',
@@ -524,7 +602,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A table for bridging network connections.',
       'A temporary table bridging old and new data.'
     ],
-    correctAnswer: 'An associative table that resolves many-to-many relationships between dimensions and fact tables.'
+    correctAnswer: 'An associative table that resolves many-to-many relationships between dimensions and fact tables.',
+    difficulty: 'advanced',
+    explanation: 'Bridge tables handle M:N relationships (e.g., patient-diagnosis); may include weights for allocation in aggregations.'
   },
   {
     id: 'da-41',
@@ -537,7 +617,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Dimensions with late timestamps.',
       'A delay in ETL processing.'
     ],
-    correctAnswer: 'When dimension data arrives after fact data, requiring special handling to maintain referential integrity.'
+    correctAnswer: 'When dimension data arrives after fact data, requiring special handling to maintain referential integrity.',
+    difficulty: 'advanced',
+    explanation: 'Late-arriving dimensions require placeholder rows or deferred FK resolution; common in real-time or multi-source ETL scenarios.'
   },
   {
     id: 'da-42',
@@ -550,7 +632,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A design for time-series databases only.',
       'Temporary tables for ETL processes.'
     ],
-    correctAnswer: 'Incorporating time dimensions to track data changes over time, supporting historical and future data.'
+    correctAnswer: 'Incorporating time dimensions to track data changes over time, supporting historical and future data.',
+    difficulty: 'expert',
+    explanation: 'Temporal tables use valid_time and transaction_time to support time-travel queries; SQL:2011 standardizes temporal features.'
   },
 
   // ==================== BUSINESS INTELLIGENCE & VISUALIZATION (Questions 43-55) ====================
@@ -565,7 +649,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'The physical storage layer of the data warehouse.',
       'The encryption layer for data at rest.'
     ],
-    correctAnswer: 'A business representation of corporate data that helps end-users access data using common business terms rather than technical table names.'
+    correctAnswer: 'A business representation of corporate data that helps end-users access data using common business terms rather than technical table names.',
+    difficulty: 'advanced',
+    explanation: 'Semantic layer defines metrics, dimensions, and relationships in business language; enables self-service BI with governed definitions.'
   },
   {
     id: 'da-44',
@@ -578,7 +664,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'BI systems that require no user interaction.',
       'A service model for BI vendors.'
     ],
-    correctAnswer: 'Enabling business users to create reports without IT, risking data governance issues and inconsistent metrics.'
+    correctAnswer: 'Enabling business users to create reports without IT, risking data governance issues and inconsistent metrics.',
+    difficulty: 'advanced',
+    explanation: 'Self-service BI empowers users but requires governance: certified datasets, metric definitions, and training to prevent "spreadsheet chaos".'
   },
   {
     id: 'da-45',
@@ -591,7 +679,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A linear arrangement of data points.',
       'The chronological order of data entry.'
     ],
-    correctAnswer: 'Tracking data from its origin through transformations to its final destination for impact analysis and debugging.'
+    correctAnswer: 'Tracking data from its origin through transformations to its final destination for impact analysis and debugging.',
+    difficulty: 'advanced',
+    explanation: 'Data lineage maps data flow across systems; critical for compliance (GDPR), root cause analysis, and change impact assessment.'
   },
   {
     id: 'da-46',
@@ -604,7 +694,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Old charts that should be deleted.',
       'A type of junk mail containing charts.'
     ],
-    correctAnswer: 'Visual elements in charts and graphs that are not necessary to comprehend the information or that distract the viewer.'
+    correctAnswer: 'Visual elements in charts and graphs that are not necessary to comprehend the information or that distract the viewer.',
+    difficulty: 'advanced',
+    explanation: 'Chartjunk (3D effects, excessive gridlines, decorative images) increases cognitive load; Tufte advocates maximizing data-ink ratio.'
   },
   {
     id: 'da-47',
@@ -617,7 +709,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'The cost ratio of data storage to ink cartridges.',
       'A ratio for mixing data colors with ink.'
     ],
-    correctAnswer: 'Maximizing the proportion of ink used to present actual data vs. non-data ink (gridlines, decorations).'
+    correctAnswer: 'Maximizing the proportion of ink used to present actual data vs. non-data ink (gridlines, decorations).',
+    difficulty: 'advanced',
+    explanation: 'Data-ink ratio = ink for data / total ink; remove non-essential elements to reduce clutter and improve comprehension.'
   },
   {
     id: 'da-48',
@@ -630,7 +724,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Attributes assigned before data analysis.',
       'Preliminary attributes in draft visualizations.'
     ],
-    correctAnswer: 'Visual properties (color, size, position) processed immediately by the visual system without conscious effort.'
+    correctAnswer: 'Visual properties (color, size, position) processed immediately by the visual system without conscious effort.',
+    difficulty: 'advanced',
+    explanation: 'Preattentive attributes (color hue, size, orientation) enable rapid pattern recognition; use strategically to highlight key insights.'
   },
   {
     id: 'da-49',
@@ -643,7 +739,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Small multiples of the same data point.',
       'A multiplication technique for small numbers.'
     ],
-    correctAnswer: 'Series of similar graphs using the same scale and axes, allowing comparison across categories or time periods.'
+    correctAnswer: 'Series of similar graphs using the same scale and axes, allowing comparison across categories or time periods.',
+    difficulty: 'advanced',
+    explanation: 'Small multiples enable comparison without visual clutter; consistent scales allow viewers to detect patterns across facets.'
   },
   {
     id: 'da-50',
@@ -656,7 +754,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A cube that processes data online.',
       'An online application for cube calculations.'
     ],
-    correctAnswer: 'A multidimensional array of data allowing fast analysis through operations like slicing, dicing, drilling up/down.'
+    correctAnswer: 'A multidimensional array of data allowing fast analysis through operations like slicing, dicing, drilling up/down.',
+    difficulty: 'advanced',
+    explanation: 'OLAP cubes pre-aggregate data across dimensions; enable instant drill-down/up, pivot, and slice operations for interactive analysis.'
   },
   {
     id: 'da-51',
@@ -669,7 +769,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A framework for governing data center locations.',
       'Political governance of data.'
     ],
-    correctAnswer: 'A comprehensive approach to managing data availability, usability, integrity, and security in an enterprise.'
+    correctAnswer: 'A comprehensive approach to managing data availability, usability, integrity, and security in an enterprise.',
+    difficulty: 'advanced',
+    explanation: 'Data governance establishes policies, roles (data stewards), and processes for data quality, security, and compliance across the organization.'
   },
   {
     id: 'da-52',
@@ -682,7 +784,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Only using primary colors.',
       'Matching colors to corporate branding only.'
     ],
-    correctAnswer: 'Considering color blindness, ensuring sufficient contrast, and not using color as the only encoding channel.'
+    correctAnswer: 'Considering color blindness, ensuring sufficient contrast, and not using color as the only encoding channel.',
+    difficulty: 'advanced',
+    explanation: '8% of men have color vision deficiency; use colorblind-safe palettes (viridis, ColorBrewer) and redundant encoding (patterns, labels).'
   },
   {
     id: 'da-53',
@@ -695,7 +799,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Managing data for master\'s degree programs.',
       'A master key for data encryption.'
     ],
-    correctAnswer: 'A method to define and manage critical data to provide a single point of reference across the organization.'
+    correctAnswer: 'A method to define and manage critical data to provide a single point of reference across the organization.',
+    difficulty: 'advanced',
+    explanation: 'MDM creates golden records for entities (customer, product); resolves duplicates and ensures consistency across systems.'
   },
   {
     id: 'da-54',
@@ -708,7 +814,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A catalog of database vendors.',
       'A printed catalog of data reports.'
     ],
-    correctAnswer: 'An organized inventory of data assets with metadata, enabling data discovery and governance.'
+    correctAnswer: 'An organized inventory of data assets with metadata, enabling data discovery and governance.',
+    difficulty: 'advanced',
+    explanation: 'Data catalogs (Amundsen, DataHub) index tables, columns, lineage, and usage; enable self-service discovery with search and documentation.'
   },
   {
     id: 'da-55',
@@ -721,7 +829,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'The load time of the dashboard.',
       'The number of calculations the dashboard performs.'
     ],
-    correctAnswer: 'The mental effort required to process information; good design minimizes unnecessary cognitive load.'
+    correctAnswer: 'The mental effort required to process information; good design minimizes unnecessary cognitive load.',
+    difficulty: 'advanced',
+    explanation: 'Cognitive load theory: working memory is limited; dashboards should use clear hierarchy, progressive disclosure, and familiar patterns.'
   },
 
   // ==================== PREDICTIVE ANALYTICS & TIME SERIES (Questions 56-68) ====================
@@ -736,7 +846,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'The number of periods to forecast into the future.',
       'The confidence interval of the prediction.'
     ],
-    correctAnswer: 'The weight given to the most recent observation versus the historical average.'
+    correctAnswer: 'The weight given to the most recent observation versus the historical average.',
+    difficulty: 'advanced',
+    explanation: 'Alpha (0-1): higher values give more weight to recent data, making forecasts more responsive but potentially noisier.'
   },
   {
     id: 'da-57',
@@ -749,7 +861,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'An arrangement of data for analysis.',
       'A type of database indexing.'
     ],
-    correctAnswer: 'AutoRegressive Integrated Moving Average - a class of models that captures temporal structures in data.'
+    correctAnswer: 'AutoRegressive Integrated Moving Average - a class of models that captures temporal structures in data.',
+    difficulty: 'advanced',
+    explanation: 'ARIMA(p,d,q): AR(p) uses lagged values, I(d) differencing for stationarity, MA(q) uses lagged errors; identified via ACF/PACF.'
   },
   {
     id: 'da-58',
@@ -762,7 +876,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Removing seasonal data from analysis.',
       'A method to compress seasonal data.'
     ],
-    correctAnswer: 'Separating a time series into trend, seasonal, and residual components to better understand underlying patterns.'
+    correctAnswer: 'Separating a time series into trend, seasonal, and residual components to better understand underlying patterns.',
+    difficulty: 'advanced',
+    explanation: 'Decomposition (additive/multiplicative) via STL or classical methods; enables modeling components separately for better forecasts.'
   },
   {
     id: 'da-59',
@@ -775,7 +891,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Analyzing data in cohort batches.',
       'A method to group data by size.'
     ],
-    correctAnswer: 'Analyzing behavior of groups of users sharing common characteristics over time, common in retention analysis.'
+    correctAnswer: 'Analyzing behavior of groups of users sharing common characteristics over time, common in retention analysis.',
+    difficulty: 'advanced',
+    explanation: 'Cohorts (e.g., sign-up month) enable tracking retention, LTV, or engagement over user lifecycle; controls for acquisition timing.'
   },
   {
     id: 'da-60',
@@ -788,7 +906,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Random Forest Model analysis.',
       'Real-time Financial Monitoring.'
     ],
-    correctAnswer: 'Recency, Frequency, Monetary - a method to identify high-value customers based on purchase behavior.'
+    correctAnswer: 'Recency, Frequency, Monetary - a method to identify high-value customers based on purchase behavior.',
+    difficulty: 'advanced',
+    explanation: 'RFM scores customers on recency (days since last purchase), frequency (count), monetary (total spend); used for segmentation and targeting.'
   },
   {
     id: 'da-61',
@@ -801,7 +921,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Predicting data churn in ETL processes.',
       'A method to predict churn rate of employees.'
     ],
-    correctAnswer: 'Predicting which customers are likely to stop using a product/service to enable proactive retention strategies.'
+    correctAnswer: 'Predicting which customers are likely to stop using a product/service to enable proactive retention strategies.',
+    difficulty: 'advanced',
+    explanation: 'Churn models use classification (logistic regression, XGBoost) with features like usage patterns, support tickets, and engagement metrics.'
   },
   {
     id: 'da-62',
@@ -814,7 +936,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A tool to predict social media trends.',
       'A method to forecast prophet-based religions.'
     ],
-    correctAnswer: 'An automated forecasting procedure that handles missing data, outliers, and seasonal effects with intuitive parameters.'
+    correctAnswer: 'An automated forecasting procedure that handles missing data, outliers, and seasonal effects with intuitive parameters.',
+    difficulty: 'advanced',
+    explanation: 'Prophet uses additive model with trend, yearly/weekly seasonality, and holidays; robust to missing data and outliers via Bayesian framework.'
   },
   {
     id: 'da-63',
@@ -827,7 +951,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Simulating traffic in Monte Carlo.',
       'A method to generate random data.'
     ],
-    correctAnswer: 'Using random sampling to model probability distributions and understand risk/uncertainty in forecasts.'
+    correctAnswer: 'Using random sampling to model probability distributions and understand risk/uncertainty in forecasts.',
+    difficulty: 'advanced',
+    explanation: 'Monte Carlo runs thousands of simulations with random inputs to estimate outcome distributions; used for risk analysis and scenario planning.'
   },
   {
     id: 'da-64',
@@ -840,7 +966,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Analysis of surviving business strategies.',
       'A method to analyze surviving data points.'
     ],
-    correctAnswer: 'Analyzing time-to-event data, handling censored observations where the event has not yet occurred.'
+    correctAnswer: 'Analyzing time-to-event data, handling censored observations where the event has not yet occurred.',
+    difficulty: 'expert',
+    explanation: 'Survival analysis (Kaplan-Meier, Cox PH) handles right-censoring; used for churn, equipment failure, clinical trials where not all events observed.'
   },
   {
     id: 'da-65',
@@ -853,7 +981,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A lift in data storage capacity.',
       'The lift algorithm for clustering.'
     ],
-    correctAnswer: 'The improvement in response rate from a targeted campaign compared to a random baseline.'
+    correctAnswer: 'The improvement in response rate from a targeted campaign compared to a random baseline.',
+    difficulty: 'advanced',
+    explanation: 'Lift = (response rate in target group) / (overall response rate); lift > 1 indicates model adds value over random selection.'
   },
   {
     id: 'da-66',
@@ -866,7 +996,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A modeling technique that looks alike to competitors.',
       'A method to make models look similar.'
     ],
-    correctAnswer: 'Finding prospects similar to existing high-value customers using clustering or similarity algorithms.'
+    correctAnswer: 'Finding prospects similar to existing high-value customers using clustering or similarity algorithms.',
+    difficulty: 'advanced',
+    explanation: 'Look-alike models use features of seed audience to score prospects; common in digital advertising for audience expansion.'
   },
   {
     id: 'da-67',
@@ -879,7 +1011,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A model to uplift data quality.',
       'Uplifting the performance of models.'
     ],
-    correctAnswer: 'Predicting the incremental impact of a treatment on an individual, distinguishing persuadables from sure things/lost causes.'
+    correctAnswer: 'Predicting the incremental impact of a treatment on an individual, distinguishing persuadables from sure things/lost causes.',
+    difficulty: 'expert',
+    explanation: 'Uplift modeling estimates conditional average treatment effect (CATE); targets only persuadables to maximize ROI and avoid wasting resources.'
   },
   {
     id: 'da-68',
@@ -892,7 +1026,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Cross-checking validation rules.',
       'A validation method for cross-functional teams.'
     ],
-    correctAnswer: 'Partitioning data into training/validation sets multiple times to assess model generalization and reduce overfitting.'
+    correctAnswer: 'Partitioning data into training/validation sets multiple times to assess model generalization and reduce overfitting.',
+    difficulty: 'advanced',
+    explanation: 'K-fold CV trains on k-1 folds, tests on held-out fold; repeated k times. Provides robust estimate of out-of-sample performance.'
   },
 
   // ==================== PYTHON & DATA PROCESSING (Questions 69-80) ====================
@@ -907,7 +1043,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Creating vector graphics from data.',
       'A method to vectorize text data for NLP.'
     ],
-    correctAnswer: 'Performing operations on entire arrays at once using optimized C implementations, avoiding Python loop overhead.'
+    correctAnswer: 'Performing operations on entire arrays at once using optimized C implementations, avoiding Python loop overhead.',
+    difficulty: 'advanced',
+    explanation: 'Vectorization uses SIMD instructions and avoids Python interpreter overhead; 10-100x faster than explicit loops for numerical operations.'
   },
   {
     id: 'da-70',
@@ -920,7 +1058,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'apply() is for math only; map() is for geography; applymap() is for visualization.',
       'They differ only in execution speed.'
     ],
-    correctAnswer: 'apply() works on DataFrames/Series axis; map() on Series element-wise; applymap() on DataFrames element-wise.'
+    correctAnswer: 'apply() works on DataFrames/Series axis; map() on Series element-wise; applymap() on DataFrames element-wise.',
+    difficulty: 'advanced',
+    explanation: 'apply(func, axis=0/1) for row/column operations; map() for Series element transformation; applymap() (deprecated: map()) for DataFrame element-wise.'
   },
   {
     id: 'da-71',
@@ -933,7 +1073,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A method to secure Python code.',
       'Chaining different Python methods randomly.'
     ],
-    correctAnswer: 'Linking multiple operations in a single statement for readable, efficient data transformations.'
+    correctAnswer: 'Linking multiple operations in a single statement for readable, efficient data transformations.',
+    difficulty: 'advanced',
+    explanation: 'Method chaining: df.query().groupby().agg().sort_values(); improves readability, avoids intermediate variables, enables lazy evaluation patterns.'
   },
   {
     id: 'da-72',
@@ -946,7 +1088,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A graphical interface library.',
       'A global indexing lock for databases.'
     ],
-    correctAnswer: 'A mutex protecting access to Python objects that prevents true parallel execution of threads in CPython.'
+    correctAnswer: 'A mutex protecting access to Python objects that prevents true parallel execution of threads in CPython.',
+    difficulty: 'expert',
+    explanation: 'GIL allows only one thread to execute Python bytecode at a time; use multiprocessing or libraries releasing GIL (NumPy) for parallelism.'
   },
   {
     id: 'da-73',
@@ -959,7 +1103,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A dashboard creation library.',
       'A database connection tool.'
     ],
-    correctAnswer: 'A parallel computing library that scales Pandas/NumPy operations to larger-than-memory datasets and distributed systems.'
+    correctAnswer: 'A parallel computing library that scales Pandas/NumPy operations to larger-than-memory datasets and distributed systems.',
+    difficulty: 'advanced',
+    explanation: 'Dask provides parallel collections (DataFrame, Array) with familiar APIs; uses task graphs for out-of-core and distributed computing.'
   },
   {
     id: 'da-74',
@@ -972,7 +1118,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A profiling tool for Python interpreters.',
       'A method to profile database queries.'
     ],
-    correctAnswer: 'An automated library generating comprehensive exploratory data analysis reports with statistics and visualizations.'
+    correctAnswer: 'An automated library generating comprehensive exploratory data analysis reports with statistics and visualizations.',
+    difficulty: 'advanced',
+    explanation: 'Pandas Profiling generates HTML reports with missing values, distributions, correlations, and warnings; accelerates EDA for large datasets.'
   },
   {
     id: 'da-75',
@@ -985,7 +1133,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A type for categorizing all data automatically.',
       'A method to categorize data by type.'
     ],
-    correctAnswer: 'A memory-efficient type for repeated string values with limited unique values, enabling ordered categories.'
+    correctAnswer: 'A memory-efficient type for repeated string values with limited unique values, enabling ordered categories.',
+    difficulty: 'advanced',
+    explanation: 'Categorical dtype stores codes + categories; reduces memory 10-100x for low-cardinality strings; enables ordered operations and groupby optimization.'
   },
   {
     id: 'da-76',
@@ -998,7 +1148,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Combining multiple DataFrames into groups.',
       'A method to group Python classes.'
     ],
-    correctAnswer: 'Splitting data into groups, applying functions to each group independently, and combining results.'
+    correctAnswer: 'Splitting data into groups, applying functions to each group independently, and combining results.',
+    difficulty: 'advanced',
+    explanation: 'GroupBy follows split-apply-combine: split by key, apply aggregation/transformation, combine results; supports multiple keys and hierarchical grouping.'
   },
   {
     id: 'da-77',
@@ -1011,7 +1163,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Merging is for DataFrames; Joining is for Series only.',
       'Joining is faster than Merging.'
     ],
-    correctAnswer: 'merge() is the generic method; join() is a convenience method for merging on indices with database-style joins.'
+    correctAnswer: 'merge() is the generic method; join() is a convenience method for merging on indices with database-style joins.',
+    difficulty: 'advanced',
+    explanation: 'merge() supports column-based joins with on/left_on/right_on; join() defaults to index-based; both support inner/outer/left/right joins.'
   },
   {
     id: 'da-78',
@@ -1024,7 +1178,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A table for pivoting database connections.',
       'A method to pivot chart types.'
     ],
-    correctAnswer: 'A data summarization tool that reorganizes data to show relationships between categorical variables.'
+    correctAnswer: 'A data summarization tool that reorganizes data to show relationships between categorical variables.',
+    difficulty: 'advanced',
+    explanation: 'pivot_table() aggregates data with index/columns/values parameters; supports multiple aggregations, margins, and fill_value for missing combinations.'
   },
   {
     id: 'da-79',
@@ -1037,7 +1193,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Regularly expressing data quality issues.',
       'A method to regulate expressions in code.'
     ],
-    correctAnswer: 'Pattern matching and text manipulation for extracting, validating, and transforming string data.'
+    correctAnswer: 'Pattern matching and text manipulation for extracting, validating, and transforming string data.',
+    difficulty: 'advanced',
+    explanation: 'Regex (re module) uses patterns like \\d+, [A-Z]+, (?P<name>...) for extraction; essential for parsing unstructured text in ETL.'
   },
   {
     id: 'da-80',
@@ -1050,7 +1208,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Managing the memory of data analysts.',
       'A method to memorize data patterns.'
     ],
-    correctAnswer: 'Using appropriate dtypes, chunking data, and clearing variables to prevent memory overflow.'
+    correctAnswer: 'Using appropriate dtypes, chunking data, and clearing variables to prevent memory overflow.',
+    difficulty: 'advanced',
+    explanation: 'Memory tips: use category for strings, int32 vs int64, read_csv(chunksize), del variables, gc.collect(); monitor with df.memory_usage().'
   },
 
   // ==================== ETL & DATA ENGINEERING (Questions 81-90) ====================
@@ -1065,7 +1225,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A method to increase pipeline efficiency.',
       'A property of immutable data only.'
     ],
-    correctAnswer: 'Running the same operation multiple times produces the same result, ensuring reliability in retry scenarios.'
+    correctAnswer: 'Running the same operation multiple times produces the same result, ensuring reliability in retry scenarios.',
+    difficulty: 'advanced',
+    explanation: 'Idempotent pipelines handle retries safely; achieved via upserts, deduplication keys, and transactional writes to avoid duplicate records.'
   },
   {
     id: 'da-82',
@@ -1078,7 +1240,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'ELT is older technology; ETL is modern.',
       'ETL is for small data; ELT is for big data only.'
     ],
-    correctAnswer: 'ETL transforms before loading; ELT loads raw data first then transforms, leveraging modern cloud data warehouses.'
+    correctAnswer: 'ETL transforms before loading; ELT loads raw data first then transforms, leveraging modern cloud data warehouses.',
+    difficulty: 'advanced',
+    explanation: 'ELT suits cloud DWs (Snowflake, BigQuery) with elastic compute; ETL better for on-prem or when source systems can\'t handle transformation load.'
   },
   {
     id: 'da-83',
@@ -1091,7 +1255,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'The dimensions of data visualization.',
       'A framework for data dimensionality reduction.'
     ],
-    correctAnswer: 'Accuracy, completeness, consistency, timeliness, validity, and uniqueness (dimensions to assess data quality).'
+    correctAnswer: 'Accuracy, completeness, consistency, timeliness, validity, and uniqueness (dimensions to assess data quality).',
+    difficulty: 'advanced',
+    explanation: 'Data quality dimensions provide measurable criteria; implement checks at ingestion (Great Expectations, Deequ) to catch issues early.'
   },
   {
     id: 'da-84',
@@ -1104,7 +1270,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Reading data before writing schema.',
       'Two methods of database indexing.'
     ],
-    correctAnswer: 'Schema-on-Write enforces structure at load time (traditional DW); Schema-on-Read applies structure at query time (data lakes).'
+    correctAnswer: 'Schema-on-Write enforces structure at load time (traditional DW); Schema-on-Read applies structure at query time (data lakes).',
+    difficulty: 'advanced',
+    explanation: 'Schema-on-Write ensures quality but slows ingestion; Schema-on-Read enables flexible exploration but risks inconsistent interpretations.'
   },
   {
     id: 'da-85',
@@ -1117,7 +1285,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A technique to capture data changes in photos.',
       'Capturing changes in data team personnel.'
     ],
-    correctAnswer: 'Methods to identify and capture changes (timestamp-based, trigger-based, log-based) for incremental data loading.'
+    correctAnswer: 'Methods to identify and capture changes (timestamp-based, trigger-based, log-based) for incremental data loading.',
+    difficulty: 'expert',
+    explanation: 'Log-based CDC (Debezium) reads database transaction logs for low-latency, low-impact change capture; preferred over polling for real-time pipelines.'
   },
   {
     id: 'da-86',
@@ -1130,7 +1300,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A linear path of data movement.',
       'The lineage of database technologies.'
     ],
-    correctAnswer: 'Tracking data flow from source to destination, documenting transformations for debugging and impact analysis.'
+    correctAnswer: 'Tracking data flow from source to destination, documenting transformations for debugging and impact analysis.',
+    difficulty: 'advanced',
+    explanation: 'Data lineage tools (OpenLineage, Marquez) auto-capture pipeline metadata; critical for root cause analysis and regulatory compliance.'
   },
   {
     id: 'da-87',
@@ -1143,7 +1315,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A method to assert data quality upward.',
       'Uploading and inserting data simultaneously.'
     ],
-    correctAnswer: 'Atomic operation that inserts new records and updates existing ones based on a key.'
+    correctAnswer: 'Atomic operation that inserts new records and updates existing ones based on a key.',
+    difficulty: 'advanced',
+    explanation: 'Upsert (MERGE in SQL, df.merge with indicator) handles incremental loads; requires unique key and careful handling of concurrent updates.'
   },
   {
     id: 'da-88',
@@ -1156,7 +1330,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A method to watermark data for copyright.',
       'Adding watermarks to data exports.'
     ],
-    correctAnswer: 'Tracking progress in event time to handle late-arriving data in stream processing frameworks.'
+    correctAnswer: 'Tracking progress in event time to handle late-arriving data in stream processing frameworks.',
+    difficulty: 'expert',
+    explanation: 'Watermarks signal "no more data expected before time T"; enable windowed aggregations in Flink/Spark Streaming despite out-of-order events.'
   },
   {
     id: 'da-89',
@@ -1169,7 +1345,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Profiling the performance of ETL tools.',
       'A method to profile data security.'
     ],
-    correctAnswer: 'Analyzing source data to understand structure, content, relationships, and quality before designing ETL.'
+    correctAnswer: 'Analyzing source data to understand structure, content, relationships, and quality before designing ETL.',
+    difficulty: 'advanced',
+    explanation: 'Data profiling identifies nulls, patterns, outliers, and FK relationships; informs transformation logic and data quality rules.'
   },
   {
     id: 'da-90',
@@ -1182,7 +1360,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Tools for orchestrating database migrations.',
       'Orchestration of data team meetings.'
     ],
-    correctAnswer: 'Platforms to schedule, monitor, and manage complex data pipeline workflows with dependencies.'
+    correctAnswer: 'Platforms to schedule, monitor, and manage complex data pipeline workflows with dependencies.',
+    difficulty: 'advanced',
+    explanation: 'Orchestrators manage task dependencies, retries, alerts, and backfills; Airflow uses DAGs, Prefect uses flow-based programming.'
   },
 
   // ==================== ADVANCED EXCEL & TOOLS (Questions 91-100) ====================
@@ -1197,7 +1377,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A query tool for Power BI only.',
       'A method to query powerful computers.'
     ],
-    correctAnswer: 'Data transformation and ETL tool for importing, cleaning, and shaping data from various sources.'
+    correctAnswer: 'Data transformation and ETL tool for importing, cleaning, and shaping data from various sources.',
+    difficulty: 'advanced',
+    explanation: 'Power Query uses M language for transformations; supports query folding to push operations to source databases for performance.'
   },
   {
     id: 'da-92',
@@ -1210,7 +1392,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A method to pivot power data.',
       'A pivot table for electrical power analysis.'
     ],
-    correctAnswer: 'An in-memory data modeling engine with formula language for creating calculated columns and measures.'
+    correctAnswer: 'An in-memory data modeling engine with formula language for creating calculated columns and measures.',
+    difficulty: 'advanced',
+    explanation: 'Power Pivot uses VertiPaq columnar engine; DAX includes CALCULATE, FILTER, time intelligence functions for complex business logic.'
   },
   {
     id: 'da-93',
@@ -1223,7 +1407,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A formula for calculating array sizes.',
       'Formulas only for array data structures.'
     ],
-    correctAnswer: 'Formulas that return multiple values; legacy versions required Ctrl+Shift+Enter, modern Excel uses dynamic spilled arrays.'
+    correctAnswer: 'Formulas that return multiple values; legacy versions required Ctrl+Shift+Enter, modern Excel uses dynamic spilled arrays.',
+    difficulty: 'advanced',
+    explanation: 'Dynamic arrays (FILTER, SORT, UNIQUE) spill results automatically; replaced legacy CSE arrays with more intuitive syntax.'
   },
   {
     id: 'da-94',
@@ -1236,7 +1422,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'It can only look up X-axis data.',
       'A lookup method for XML data only.'
     ],
-    correctAnswer: 'Searches in any direction, handles errors better, and uses exact matching by default without column index limitations.'
+    correctAnswer: 'Searches in any direction, handles errors better, and uses exact matching by default without column index limitations.',
+    difficulty: 'advanced',
+    explanation: 'XLOOKUP supports left/right lookups, approximate/exact match, and if_not_found parameter; replaces VLOOKUP/HLOOKUP/INDEX-MATCH in modern Excel.'
   },
   {
     id: 'da-95',
@@ -1249,7 +1437,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A function to let users edit cells.',
       'A permission function for Excel.'
     ],
-    correctAnswer: 'Defines named variables to store intermediate calculations, improving readability and performance.'
+    correctAnswer: 'Defines named variables to store intermediate calculations, improving readability and performance.',
+    difficulty: 'advanced',
+    explanation: 'LET(name, value, calculation) avoids recalculating expressions; improves performance for complex formulas and enables cleaner logic.'
   },
   {
     id: 'da-96',
@@ -1262,7 +1452,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'A function to calculate wavelength.',
       'A lambda-shaped chart type.'
     ],
-    correctAnswer: 'Enables creation of custom, reusable functions without VBA, making Excel Turing-complete.'
+    correctAnswer: 'Enables creation of custom, reusable functions without VBA, making Excel Turing-complete.',
+    difficulty: 'expert',
+    explanation: 'LAMBDA(parameters, calculation) defines user functions; combined with LET and recursion enables functional programming patterns in Excel.'
   },
   {
     id: 'da-97',
@@ -1275,7 +1467,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Calculated fields are for numbers; calculated items are for text.',
       'Calculated items are more accurate than fields.'
     ],
-    correctAnswer: 'Calculated fields use other fields in formulas; calculated items use specific items within a field.'
+    correctAnswer: 'Calculated fields use other fields in formulas; calculated items use specific items within a field.',
+    difficulty: 'advanced',
+    explanation: 'Calculated fields operate on aggregated data; calculated items create new row/column entries; both can impact performance if overused.'
   },
   {
     id: 'da-98',
@@ -1288,7 +1482,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Goal Seek is for financial goals only; Solver is for engineering.',
       'Solver is a newer version of Goal Seek.'
     ],
-    correctAnswer: 'Goal Seek adjusts one input for a specific output; Solver handles multiple variables with constraints for optimization.'
+    correctAnswer: 'Goal Seek adjusts one input for a specific output; Solver handles multiple variables with constraints for optimization.',
+    difficulty: 'advanced',
+    explanation: 'Goal Seek uses iterative methods for single-variable what-if; Solver uses linear/nonlinear programming for multi-variable optimization with constraints.'
   },
   {
     id: 'da-99',
@@ -1301,7 +1497,9 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Validating data after analysis is complete.',
       'A method to validate external data sources.'
     ],
-    correctAnswer: 'Restricting input types, creating drop-down lists, and preventing data entry errors at the source.'
+    correctAnswer: 'Restricting input types, creating drop-down lists, and preventing data entry errors at the source.',
+    difficulty: 'advanced',
+    explanation: 'Data validation rules (list, date, custom formula) prevent invalid entries; combine with conditional formatting for visual feedback.'
   },
   {
     id: 'da-100',
@@ -1314,6 +1512,56 @@ export const DATA_ANALYST_QUESTIONS: Question[] = [
       'Power BI is the free version of Excel.',
       'Power Pivot is a feature within Power BI only.'
     ],
-    correctAnswer: 'Power BI evolved from Power Pivot technology, sharing DAX and data modeling concepts but with different focuses.'
+    correctAnswer: 'Power BI evolved from Power Pivot technology, sharing DAX and data modeling concepts but with different focuses.',
+    difficulty: 'advanced',
+    explanation: 'Power Pivot is Excel\'s data modeling engine; Power BI extends it with cloud sharing, interactive visuals, and enterprise governance features.'
   }
 ];
+
+// Verify we have exactly 100 unique questions
+console.assert(DATA_ANALYST_QUESTIONS.length === 100, 
+  `Expected 100 questions, got ${DATA_ANALYST_QUESTIONS.length}`);
+
+// Verify no duplicate IDs
+const ids = DATA_ANALYST_QUESTIONS.map(q => q.id);
+const uniqueIds = new Set(ids);
+console.assert(ids.length === uniqueIds.size, 'Duplicate question IDs detected!');
+
+// Verify no duplicate question texts
+const texts = DATA_ANALYST_QUESTIONS.map(q => q.text);
+const uniqueTexts = new Set(texts);
+console.assert(texts.length === uniqueTexts.size, 'Duplicate question texts detected!');
+
+// Optional: Helper function to get questions by difficulty
+export const getQuestionsByDifficulty = (difficulty: 'advanced' | 'expert'): Question[] => {
+  return DATA_ANALYST_QUESTIONS.filter(q => q.difficulty === difficulty);
+};
+
+// Optional: Helper to get questions by category
+export const getQuestionsByCategory = (category: string): Question[] => {
+  return DATA_ANALYST_QUESTIONS.filter(q => q.category === category);
+};
+
+// Optional: Get random subset for exams with deterministic seeding
+export const getRandomQuestions = (count: number, seed?: number): Question[] => {
+  const shuffled = [...DATA_ANALYST_QUESTIONS];
+  
+  // Seeded shuffle using linear congruential generator
+  if (seed !== undefined) {
+    let randomSeed = seed;
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      randomSeed = (randomSeed * 9301 + 49297) % 233280;
+      const j = Math.floor((randomSeed / 233280) * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+  } else {
+    // Standard Fisher-Yates shuffle
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+  }
+  return shuffled.slice(0, count);
+};
+
+export default DATA_ANALYST_QUESTIONS;

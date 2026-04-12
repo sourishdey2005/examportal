@@ -13,7 +13,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To allow for parallel processing of the sequence tokens.',
       'To ensure that the attention weights always sum to exactly one.'
     ],
-    correctAnswer: 'To prevent the dot products from growing large in magnitude, which would push the softmax function into regions with extremely small gradients.'
+    correctAnswer: 'To prevent the dot products from growing large in magnitude, which would push the softmax function into regions with extremely small gradients.',
+    difficulty: 'advanced',
+    explanation: 'Scaling by √d_k prevents softmax saturation, maintaining useful gradient flow during training.'
   },
   {
     id: 'ai-2',
@@ -26,7 +28,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To eliminate the need for attention mechanisms entirely.',
       'To compress the model weights for faster inference.'
     ],
-    correctAnswer: 'To encode relative positional information through rotation matrices, allowing better extrapolation to longer sequences.'
+    correctAnswer: 'To encode relative positional information through rotation matrices, allowing better extrapolation to longer sequences.',
+    difficulty: 'expert',
+    explanation: 'RoPE applies rotation matrices to query/key vectors, encoding position while preserving relative distance properties.'
   },
   {
     id: 'ai-3',
@@ -39,7 +43,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Gradient clipping, weight decay, and momentum.',
       'Experience replay, target networks, and epsilon-greedy exploration.'
     ],
-    correctAnswer: 'Function approximation, bootstrapping, and off-policy learning.'
+    correctAnswer: 'Function approximation, bootstrapping, and off-policy learning.',
+    difficulty: 'expert',
+    explanation: 'These three elements together can cause divergence in value-based RL; addressed by algorithms like DQN with target networks.'
   },
   {
     id: 'ai-4',
@@ -52,7 +58,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'It allows the model to process infinite-length sequences.',
       'It eliminates the need for positional embeddings.'
     ],
-    correctAnswer: 'It provides a balance between Multi-Head Attention (MHA) and Multi-Query Attention (MQA), reducing KV cache size while maintaining performance.'
+    correctAnswer: 'It provides a balance between Multi-Head Attention (MHA) and Multi-Query Attention (MQA), reducing KV cache size while maintaining performance.',
+    difficulty: 'advanced',
+    explanation: 'GQA groups queries to share key/value heads, reducing memory bandwidth while preserving multi-head expressiveness.'
   },
   {
     id: 'ai-5',
@@ -65,7 +73,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'The memory efficiency of the backpropagation algorithm.',
       'The ability of the model to handle missing data in the input features.'
     ],
-    correctAnswer: 'Generalization by seeking parameters that lie in neighborhoods of uniformly low loss rather than just a single sharp minimum.'
+    correctAnswer: 'Generalization by seeking parameters that lie in neighborhoods of uniformly low loss rather than just a single sharp minimum.',
+    difficulty: 'expert',
+    explanation: 'SAM minimizes the maximum loss within a perturbation radius, finding flatter minima that generalize better.'
   },
   {
     id: 'ai-6',
@@ -78,7 +88,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'It replaces the transformer architecture with RNNs during fine-tuning.',
       'It requires retraining the entire model from scratch with lower precision.'
     ],
-    correctAnswer: 'It freezes all model parameters and only trains small low-rank decomposition matrices injected into each layer.'
+    correctAnswer: 'It freezes all model parameters and only trains small low-rank decomposition matrices injected into each layer.',
+    difficulty: 'advanced',
+    explanation: 'LoRA adds trainable low-rank matrices ΔW = BA to frozen weights, enabling efficient fine-tuning with minimal parameters.'
   },
   {
     id: 'ai-7',
@@ -91,7 +103,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To generate the next sentence in the sequence.',
       'To compress the model size by removing unnecessary sentences.'
     ],
-    correctAnswer: 'To understand sentence-level relationships and discourse coherence.'
+    correctAnswer: 'To understand sentence-level relationships and discourse coherence.',
+    difficulty: 'advanced',
+    explanation: 'NSP trains BERT to predict if sentence B follows sentence A, improving performance on QA and NLI tasks.'
   },
   {
     id: 'ai-8',
@@ -104,7 +118,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'They eliminate the need for attention mechanisms.',
       'They guarantee deterministic outputs for the same input.'
     ],
-    correctAnswer: 'They allow conditional computation where only a subset of parameters is activated per token, enabling larger models without proportional inference cost.'
+    correctAnswer: 'They allow conditional computation where only a subset of parameters is activated per token, enabling larger models without proportional inference cost.',
+    difficulty: 'expert',
+    explanation: 'MoE routes each token to top-k experts, scaling parameter count without linearly increasing compute per token.'
   },
   {
     id: 'ai-9',
@@ -117,7 +133,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'It increases the model\'s ability to memorize training data.',
       'It reduces the vocabulary size of the tokenizer.'
     ],
-    correctAnswer: 'It stabilizes the distribution of layer inputs, addressing internal covariate shift.'
+    correctAnswer: 'It stabilizes the distribution of layer inputs, addressing internal covariate shift.',
+    difficulty: 'advanced',
+    explanation: 'LayerNorm normalizes across features for each sample, enabling stable training of deep transformers.'
   },
   {
     id: 'ai-10',
@@ -130,7 +148,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To increase the training speed by cooling down the GPU.',
       'To normalize the embedding vectors to unit length.'
     ],
-    correctAnswer: 'To control the randomness of the output; higher temperature produces more diverse but potentially less coherent text.'
+    correctAnswer: 'To control the randomness of the output; higher temperature produces more diverse but potentially less coherent text.',
+    difficulty: 'advanced',
+    explanation: 'Temperature T scales logits before softmax: p_i ∝ exp(logit_i / T); T>1 flattens distribution, T<1 sharpens it.'
   },
   {
     id: 'ai-11',
@@ -143,7 +163,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'O(n^2) - quadratic complexity with respect to sequence length.',
       'O(1) - constant complexity.'
     ],
-    correctAnswer: 'O(n^2) - quadratic complexity with respect to sequence length.'
+    correctAnswer: 'O(n^2) - quadratic complexity with respect to sequence length.',
+    difficulty: 'advanced',
+    explanation: 'Self-attention computes pairwise interactions between all tokens, leading to O(n²) time and memory.'
   },
   {
     id: 'ai-12',
@@ -156,7 +178,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Engineering the tokenizer algorithm for better compression.',
       'Building prompts for user interface design.'
     ],
-    correctAnswer: 'Crafting input prompts to guide the model toward desired outputs without changing model weights.'
+    correctAnswer: 'Crafting input prompts to guide the model toward desired outputs without changing model weights.',
+    difficulty: 'advanced',
+    explanation: 'Prompt engineering leverages in-context learning to steer model behavior through careful input design.'
   },
   {
     id: 'ai-13',
@@ -169,7 +193,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To reduce the dimensionality of the input data.',
       'To add noise to the activations for regularization.'
     ],
-    correctAnswer: 'To allow gradients to flow directly through the network, mitigating the vanishing gradient problem.'
+    correctAnswer: 'To allow gradients to flow directly through the network, mitigating the vanishing gradient problem.',
+    difficulty: 'advanced',
+    explanation: 'Residual connections enable training of very deep networks by providing direct gradient paths.'
   },
   {
     id: 'ai-14',
@@ -182,7 +208,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To chain multiple models together in a pipeline.',
       'To encrypt the communication between user and model.'
     ],
-    correctAnswer: 'To improve reasoning capabilities by prompting the model to show intermediate reasoning steps.'
+    correctAnswer: 'To improve reasoning capabilities by prompting the model to show intermediate reasoning steps.',
+    difficulty: 'advanced',
+    explanation: 'CoT prompting elicits step-by-step reasoning, significantly improving performance on complex reasoning tasks.'
   },
   {
     id: 'ai-15',
@@ -195,7 +223,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Applying attention to multiple input sentences simultaneously.',
       'A technique to reduce the number of attention layers.'
     ],
-    correctAnswer: 'Running the attention mechanism multiple times in parallel with different learned projections.'
+    correctAnswer: 'Running the attention mechanism multiple times in parallel with different learned projections.',
+    difficulty: 'advanced',
+    explanation: 'Multi-head attention allows the model to jointly attend to information from different representation subspaces.'
   },
 
   // ==================== GENERATIVE MODELS (Questions 16-25) ====================
@@ -210,7 +240,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'The Forward process is learned, while the Reverse process is a fixed mathematical transformation.',
       'The Forward process uses a GAN architecture, while the Reverse process uses a VAE.'
     ],
-    correctAnswer: 'The Forward process adds Gaussian noise to data until it becomes pure noise, while the Reverse process learns to denoise it.'
+    correctAnswer: 'The Forward process adds Gaussian noise to data until it becomes pure noise, while the Reverse process learns to denoise it.',
+    difficulty: 'advanced',
+    explanation: 'Forward process is fixed Markov chain adding noise; reverse process is learned neural network that denoises.'
   },
   {
     id: 'ai-17',
@@ -223,7 +255,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To compress the input data into a lower-dimensional representation.',
       'To cluster similar data points together.'
     ],
-    correctAnswer: 'To generate synthetic data that is indistinguishable from real data, fooling the discriminator.'
+    correctAnswer: 'To generate synthetic data that is indistinguishable from real data, fooling the discriminator.',
+    difficulty: 'advanced',
+    explanation: 'Generator minimizes discriminator\'s ability to distinguish real from fake, creating realistic samples.'
   },
   {
     id: 'ai-18',
@@ -236,7 +270,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'The model overfits to the training data and cannot generalize.',
       'The training process requires too much computational memory.'
     ],
-    correctAnswer: 'The generator produces limited diversity, outputting similar samples regardless of input noise.'
+    correctAnswer: 'The generator produces limited diversity, outputting similar samples regardless of input noise.',
+    difficulty: 'expert',
+    explanation: 'Mode collapse occurs when generator finds a few outputs that fool discriminator and stops exploring diversity.'
   },
   {
     id: 'ai-19',
@@ -249,7 +285,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To increase the dimensionality of the latent space.',
       'To speed up the training process by reducing computations.'
     ],
-    correctAnswer: 'To regularize the learned latent distribution to be close to a prior (typically standard normal).'
+    correctAnswer: 'To regularize the learned latent distribution to be close to a prior (typically standard normal).',
+    difficulty: 'advanced',
+    explanation: 'KL term ensures latent space is well-structured and enables meaningful sampling from prior distribution.'
   },
   {
     id: 'ai-20',
@@ -262,7 +300,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To remove the need for a U-Net architecture.',
       'To classify generated images during training.'
     ],
-    correctAnswer: 'To trade off between sample quality and diversity by adjusting the influence of conditional information.'
+    correctAnswer: 'To trade off between sample quality and diversity by adjusting the influence of conditional information.',
+    difficulty: 'expert',
+    explanation: 'CFG scales the difference between conditional and unconditional predictions, controlling adherence to prompt.'
   },
   {
     id: 'ai-21',
@@ -275,7 +315,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Autoregressive models use only CNNs, while diffusion models use only RNNs.',
       'There is no difference; they are identical approaches.'
     ],
-    correctAnswer: 'Autoregressive models generate data sequentially token-by-token, while diffusion models generate all dimensions in parallel through iterative denoising.'
+    correctAnswer: 'Autoregressive models generate data sequentially token-by-token, while diffusion models generate all dimensions in parallel through iterative denoising.',
+    difficulty: 'advanced',
+    explanation: 'AR models factorize joint distribution as product of conditionals; diffusion models learn reverse denoising process.'
   },
   {
     id: 'ai-22',
@@ -288,7 +330,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To increase the learning rate during training.',
       'To compress the model weights for deployment.'
     ],
-    correctAnswer: 'To allow backpropagation through random sampling by separating the stochastic component from the parameters.'
+    correctAnswer: 'To allow backpropagation through random sampling by separating the stochastic component from the parameters.',
+    difficulty: 'advanced',
+    explanation: 'Reparameterization expresses z = μ + σ⊙ε with ε~N(0,I), enabling gradient flow through sampling operation.'
   },
   {
     id: 'ai-23',
@@ -301,7 +345,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'It eliminates the need for text conditioning.',
       'It uses only convolutional layers without attention.'
     ],
-    correctAnswer: 'It performs diffusion in a lower-dimensional latent space rather than pixel space, significantly reducing computational cost.'
+    correctAnswer: 'It performs diffusion in a lower-dimensional latent space rather than pixel space, significantly reducing computational cost.',
+    difficulty: 'advanced',
+    explanation: 'Latent diffusion applies denoising in compressed VAE latent space, reducing compute by ~4-16x vs pixel space.'
   },
   {
     id: 'ai-24',
@@ -314,7 +360,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'It reduces the memory usage of the generator.',
       'It eliminates the need for the discriminator entirely.'
     ],
-    correctAnswer: 'It prevents the discriminator from becoming too powerful by constraining its Lipschitz constant.'
+    correctAnswer: 'It prevents the discriminator from becoming too powerful by constraining its Lipschitz constant.',
+    difficulty: 'expert',
+    explanation: 'Spectral norm constrains weight matrix singular values, stabilizing GAN training by controlling discriminator gradients.'
   },
   {
     id: 'ai-25',
@@ -327,7 +375,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'They can only generate discrete data like text.',
       'They require Markov Chain Monte Carlo sampling for generation.'
     ],
-    correctAnswer: 'They use invertible neural networks with tractable likelihood computation.'
+    correctAnswer: 'They use invertible neural networks with tractable likelihood computation.',
+    difficulty: 'expert',
+    explanation: 'Normalizing flows use bijective transformations with computable Jacobians, enabling exact likelihood and sampling.'
   },
 
   // ==================== COMPUTER VISION (Questions 26-35) ====================
@@ -342,7 +392,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'ViTs require 100x less data to train effectively.',
       'ViTs can only process grayscale images.'
     ],
-    correctAnswer: 'ViTs process images as sequences of patches using self-attention, eliminating the need for convolutional operations.'
+    correctAnswer: 'ViTs process images as sequences of patches using self-attention, eliminating the need for convolutional operations.',
+    difficulty: 'advanced',
+    explanation: 'ViT splits images into fixed-size patches, linearly embeds them, and processes with standard transformer encoder.'
   },
   {
     id: 'ai-27',
@@ -355,7 +407,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To compress the image file size.',
       'To eliminate background regions from the image.'
     ],
-    correctAnswer: 'To predefine bounding boxes of various scales and aspect ratios that the network refines and classifies.'
+    correctAnswer: 'To predefine bounding boxes of various scales and aspect ratios that the network refines and classifies.',
+    difficulty: 'advanced',
+    explanation: 'Anchor boxes provide reference proposals at multiple scales/aspect ratios, improving detection of varied object shapes.'
   },
   {
     id: 'ai-28',
@@ -368,7 +422,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To connect the input directly to the output without processing.',
       'To reduce the number of parameters in the model.'
     ],
-    correctAnswer: 'To combine high-level semantic information from the decoder with fine-grained spatial details from the encoder.'
+    correctAnswer: 'To combine high-level semantic information from the decoder with fine-grained spatial details from the encoder.',
+    difficulty: 'advanced',
+    explanation: 'Skip connections preserve spatial resolution lost during downsampling, enabling precise pixel-level predictions.'
   },
   {
     id: 'ai-29',
@@ -381,7 +437,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'The memory usage of the model.',
       'The number of objects detected per second.'
     ],
-    correctAnswer: 'The ratio of the intersection area to the union area of two bounding boxes, measuring overlap.'
+    correctAnswer: 'The ratio of the intersection area to the union area of two bounding boxes, measuring overlap.',
+    difficulty: 'advanced',
+    explanation: 'IoU = area(intersection)/area(union); used for evaluation and non-maximum suppression in object detection.'
   },
   {
     id: 'ai-30',
@@ -394,7 +452,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Training multiple models simultaneously and averaging their weights.',
       'Converting color images to grayscale during training.'
     ],
-    correctAnswer: 'Using a pre-trained model on a large dataset and fine-tuning it for a specific downstream task.'
+    correctAnswer: 'Using a pre-trained model on a large dataset and fine-tuning it for a specific downstream task.',
+    difficulty: 'advanced',
+    explanation: 'Transfer learning leverages features learned on large datasets (e.g., ImageNet) for tasks with limited data.'
   },
   {
     id: 'ai-31',
@@ -407,7 +467,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'They eliminate the need for activation functions.',
       'They automatically adjust the learning rate during training.'
     ],
-    correctAnswer: 'They reduce computational cost and model size by factorizing standard convolution into depthwise and pointwise operations.'
+    correctAnswer: 'They reduce computational cost and model size by factorizing standard convolution into depthwise and pointwise operations.',
+    difficulty: 'advanced',
+    explanation: 'Depthwise separable convolutions reduce FLOPs by ~8-9x compared to standard convolutions with similar accuracy.'
   },
   {
     id: 'ai-32',
@@ -416,11 +478,13 @@ export const AI_ML_QUESTIONS: Question[] = [
     text: 'What is "Data Augmentation" primarily used for in training computer vision models?',
     options: [
       'To increase the effective size and diversity of the training set by applying random transformations.',
-      To compress the dataset for faster loading.',
+      'To compress the dataset for faster loading.',
       'To remove noisy images from the dataset.',
       'To convert all images to the same file format.'
     ],
-    correctAnswer: 'To increase the effective size and diversity of the training set by applying random transformations.'
+    correctAnswer: 'To increase the effective size and diversity of the training set by applying random transformations.',
+    difficulty: 'advanced',
+    explanation: 'Augmentation (rotation, flip, color jitter, etc.) improves generalization by exposing model to varied inputs.'
   },
   {
     id: 'ai-33',
@@ -433,7 +497,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To shuffle the order of images in each batch.',
       'To reduce the number of channels in the feature maps.'
     ],
-    correctAnswer: 'To normalize the input batch to have zero mean and unit variance, stabilizing and accelerating training.'
+    correctAnswer: 'To normalize the input batch to have zero mean and unit variance, stabilizing and accelerating training.',
+    difficulty: 'advanced',
+    explanation: 'BatchNorm reduces internal covariate shift, enabling higher learning rates and faster convergence.'
   },
   {
     id: 'ai-34',
@@ -446,7 +512,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To measure the confidence of the bounding box coordinates.',
       'To determine the color of the object.'
     ],
-    correctAnswer: 'To distinguish between regions that contain objects vs. background, regardless of specific class.'
+    correctAnswer: 'To distinguish between regions that contain objects vs. background, regardless of specific class.',
+    difficulty: 'advanced',
+    explanation: 'Objectness score is binary classification (object/background) that filters proposals before class-specific detection.'
   },
   {
     id: 'ai-35',
@@ -459,7 +527,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'The need for faster image loading from disk.',
       'The issue of color distortion in images.'
     ],
-    correctAnswer: 'The challenge of detecting objects at different scales by combining multi-level features.'
+    correctAnswer: 'The challenge of detecting objects at different scales by combining multi-level features.',
+    difficulty: 'advanced',
+    explanation: 'FPN builds pyramid of feature maps with lateral connections, enabling detection at multiple scales efficiently.'
   },
 
   // ==================== REINFORCEMENT LEARNING (Questions 36-45) ====================
@@ -474,7 +544,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'It measures the entropy of a probability distribution.',
       'It defines the backpropagation algorithm.'
     ],
-    correctAnswer: 'It recursively defines the value of a state as the immediate reward plus the discounted value of the next state.'
+    correctAnswer: 'It recursively defines the value of a state as the immediate reward plus the discounted value of the next state.',
+    difficulty: 'advanced',
+    explanation: 'Bellman equation V(s) = E[r + γV(s\')] forms foundation of dynamic programming and value-based RL methods.'
   },
   {
     id: 'ai-37',
@@ -487,7 +559,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Q-learning requires a teacher to provide correct actions, while policy gradient does not.',
       'Policy gradient uses supervised learning, while Q-learning uses unsupervised learning.'
     ],
-    correctAnswer: 'Policy gradient methods directly optimize the policy parameters, while Q-learning learns a value function to derive the policy.'
+    correctAnswer: 'Policy gradient methods directly optimize the policy parameters, while Q-learning learns a value function to derive the policy.',
+    difficulty: 'advanced',
+    explanation: 'Policy gradients optimize π_θ directly via ∇_θ J; Q-learning learns Q*(s,a) then derives greedy policy.'
   },
   {
     id: 'ai-38',
@@ -500,7 +574,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Recording the training process for video documentation.',
       'Replaying random noise to the network for regularization.'
     ],
-    correctAnswer: 'Storing and randomly sampling past transitions to break correlation and improve sample efficiency.'
+    correctAnswer: 'Storing and randomly sampling past transitions to break correlation and improve sample efficiency.',
+    difficulty: 'advanced',
+    explanation: 'Experience replay breaks temporal correlations in sequential data and enables reuse of experiences.'
   },
   {
     id: 'ai-39',
@@ -513,7 +589,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'It measures the advantage of deep learning over traditional ML.',
       'It determines the learning rate advantage for different layers.'
     ],
-    correctAnswer: 'It measures how much better an action is compared to the average action at a given state, reducing variance in policy gradients.'
+    correctAnswer: 'It measures how much better an action is compared to the average action at a given state, reducing variance in policy gradients.',
+    difficulty: 'advanced',
+    explanation: 'Advantage A(s,a) = Q(s,a) - V(s) provides lower-variance gradient estimates than raw returns.'
   },
   {
     id: 'ai-40',
@@ -526,7 +604,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'It prevents overfitting to the training environment.',
       'It prevents the use of neural networks in RL.'
     ],
-    correctAnswer: 'It prevents overly large policy updates that could destabilize training using a clipped surrogate objective.'
+    correctAnswer: 'It prevents overly large policy updates that could destabilize training using a clipped surrogate objective.',
+    difficulty: 'advanced',
+    explanation: 'PPO clips policy ratio to [1-ε, 1+ε], preventing destructive updates while enabling multiple epochs of optimization.'
   },
   {
     id: 'ai-41',
@@ -539,7 +619,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'The choice between batch and online learning.',
       'The decision of which optimizer to use.'
     ],
-    correctAnswer: 'The trade-off between taking random actions to discover rewards vs. taking known good actions to maximize reward.'
+    correctAnswer: 'The trade-off between taking random actions to discover rewards vs. taking known good actions to maximize reward.',
+    difficulty: 'advanced',
+    explanation: 'Exploration gathers information about environment; exploitation uses current knowledge to maximize reward.'
   },
   {
     id: 'ai-42',
@@ -552,7 +634,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'A method to difference images temporally for video analysis.',
       'A scheduling technique for distributed training.'
     ],
-    correctAnswer: 'A method that updates value estimates based on the difference between consecutive predictions without waiting for the final outcome.'
+    correctAnswer: 'A method that updates value estimates based on the difference between consecutive predictions without waiting for the final outcome.',
+    difficulty: 'advanced',
+    explanation: 'TD learning bootstraps: updates V(s_t) toward r + γV(s_{t+1}), combining Monte Carlo and dynamic programming.'
   },
   {
     id: 'ai-43',
@@ -565,7 +649,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'RL that models the reward function only.',
       'RL that uses supervised learning for all decisions.'
     ],
-    correctAnswer: 'RL where the agent learns or uses a model of the environment to plan and make decisions.'
+    correctAnswer: 'RL where the agent learns or uses a model of the environment to plan and make decisions.',
+    difficulty: 'advanced',
+    explanation: 'Model-based RL learns transition/reward dynamics, enabling planning and sample-efficient learning.'
   },
   {
     id: 'ai-44',
@@ -578,7 +664,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To compress the policy network size.',
       'To increase the temperature of the training process.'
     ],
-    correctAnswer: 'To encourage exploration by preventing the policy from becoming too deterministic too quickly.'
+    correctAnswer: 'To encourage exploration by preventing the policy from becoming too deterministic too quickly.',
+    difficulty: 'advanced',
+    explanation: 'Entropy bonus H(π) added to objective encourages stochastic policies, preventing premature convergence.'
   },
   {
     id: 'ai-45',
@@ -591,7 +679,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Using multiple reward functions for a single agent.',
       'Training an agent on multiple environments sequentially.'
     ],
-    correctAnswer: 'RL scenarios where multiple agents interact in a shared environment, potentially cooperating or competing.'
+    correctAnswer: 'RL scenarios where multiple agents interact in a shared environment, potentially cooperating or competing.',
+    difficulty: 'expert',
+    explanation: 'MARL introduces non-stationarity and credit assignment challenges due to multiple learning agents.'
   },
 
   // ==================== OPTIMIZATION & TRAINING (Questions 46-55) ====================
@@ -606,7 +696,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'It requires no hyperparameter tuning.',
       'It works only with convolutional networks.'
     ],
-    correctAnswer: 'It uses adaptive learning rates for each parameter by maintaining first and second moment estimates.'
+    correctAnswer: 'It uses adaptive learning rates for each parameter by maintaining first and second moment estimates.',
+    difficulty: 'advanced',
+    explanation: 'Adam combines momentum (first moment) and RMSProp (second moment) with bias correction for adaptive per-parameter steps.'
   },
   {
     id: 'ai-47',
@@ -619,7 +711,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'To schedule GPU usage across multiple users.',
       'To determine the batch size dynamically.'
     ],
-    correctAnswer: 'To adjust the learning rate during training, typically decreasing it to help convergence.'
+    correctAnswer: 'To adjust the learning rate during training, typically decreasing it to help convergence.',
+    difficulty: 'advanced',
+    explanation: 'LR schedules (step decay, cosine, warmup) balance fast initial progress with fine-grained final convergence.'
   },
   {
     id: 'ai-48',
@@ -632,7 +726,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Overfitting by removing gradients entirely.',
       'Memory leaks by clipping tensor sizes.'
     ],
-    correctAnswer: 'Exploding gradients by capping the maximum norm of gradients during backpropagation.'
+    correctAnswer: 'Exploding gradients by capping the maximum norm of gradients during backpropagation.',
+    difficulty: 'advanced',
+    explanation: 'Gradient clipping prevents NaN losses in RNNs/deep nets by scaling gradients when norm exceeds threshold.'
   },
   {
     id: 'ai-49',
@@ -645,7 +741,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Decaying the learning rate exponentially.',
       'Removing weights that are close to zero.'
     ],
-    correctAnswer: 'Adding a penalty term proportional to the squared magnitude of weights to the loss function.'
+    correctAnswer: 'Adding a penalty term proportional to the squared magnitude of weights to the loss function.',
+    difficulty: 'advanced',
+    explanation: 'L2 regularization adds λ||w||² to loss, encouraging smaller weights and reducing overfitting.'
   },
   {
     id: 'ai-50',
@@ -658,7 +756,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'The model forgetting previously learned information.',
       'The training data vanishing from memory.'
     ],
-    correctAnswer: 'Gradients becoming exponentially small in early layers during backpropagation, preventing effective learning.'
+    correctAnswer: 'Gradients becoming exponentially small in early layers during backpropagation, preventing effective learning.',
+    difficulty: 'advanced',
+    explanation: 'Vanishing gradients occur with saturating activations; addressed by ReLU, residual connections, and careful initialization.'
   },
   {
     id: 'ai-51',
@@ -671,7 +771,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Removing the last layer of the network.',
       'Decreasing the batch size during training.'
     ],
-    correctAnswer: 'Randomly setting a fraction of neurons to zero during training to prevent co-adaptation and overfitting.'
+    correctAnswer: 'Randomly setting a fraction of neurons to zero during training to prevent co-adaptation and overfitting.',
+    difficulty: 'advanced',
+    explanation: 'Dropout trains an ensemble of thinned networks, reducing overfitting by preventing complex co-adaptations.'
   },
   {
     id: 'ai-52',
@@ -684,7 +786,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Ending training before processing all batches in an epoch.',
       'Stopping gradient computation early in backpropagation.'
     ],
-    correctAnswer: 'Halting training when validation performance stops improving to prevent overfitting.'
+    correctAnswer: 'Halting training when validation performance stops improving to prevent overfitting.',
+    difficulty: 'advanced',
+    explanation: 'Early stopping uses validation loss as proxy for generalization, preventing memorization of training noise.'
   },
   {
     id: 'ai-53',
@@ -697,7 +801,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Larger batches always lead to better generalization.',
       'Smaller batches always converge faster.'
     ],
-    correctAnswer: 'Larger batches provide more stable gradient estimates but may generalize worse; smaller batches add noise but can escape sharp minima.'
+    correctAnswer: 'Larger batches provide more stable gradient estimates but may generalize worse; smaller batches add noise but can escape sharp minima.',
+    difficulty: 'advanced',
+    explanation: 'Small batch noise acts as implicit regularization; large batches require learning rate scaling for similar performance.'
   },
   {
     id: 'ai-54',
@@ -710,7 +816,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Using multiple precision metrics for evaluation.',
       'Mixing different optimization algorithms.'
     ],
-    correctAnswer: 'Using both 16-bit and 32-bit floating point numbers to reduce memory and speed up training while maintaining stability.'
+    correctAnswer: 'Using both 16-bit and 32-bit floating point numbers to reduce memory and speed up training while maintaining stability.',
+    difficulty: 'advanced',
+    explanation: 'Mixed precision uses FP16 for compute/FP32 for master weights, with loss scaling to prevent underflow.'
   },
   {
     id: 'ai-55',
@@ -723,7 +831,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Storing all gradients for visualization.',
       'Accumulating gradients over multiple epochs.'
     ],
-    correctAnswer: 'Simulating larger batch sizes by accumulating gradients over multiple forward/backward passes before updating weights.'
+    correctAnswer: 'Simulating larger batch sizes by accumulating gradients over multiple forward/backward passes before updating weights.',
+    difficulty: 'advanced',
+    explanation: 'Gradient accumulation enables large effective batch sizes when GPU memory limits per-step batch size.'
   },
 
   // ==================== MLOps & SYSTEMS (Questions 56-65) ====================
@@ -738,7 +848,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Quantifying the uncertainty of model predictions.',
       'Dividing the model into smaller sub-models.'
     ],
-    correctAnswer: 'Reducing model precision (e.g., FP32 to INT8) to decrease size and increase inference speed.'
+    correctAnswer: 'Reducing model precision (e.g., FP32 to INT8) to decrease size and increase inference speed.',
+    difficulty: 'advanced',
+    explanation: 'Quantization reduces memory bandwidth and enables faster integer arithmetic on edge devices.'
   },
   {
     id: 'ai-57',
@@ -751,7 +863,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Removing knowledge from the model to protect privacy.',
       'Converting model weights to a different format.'
     ],
-    correctAnswer: 'Transferring knowledge from a large teacher model to a smaller student model.'
+    correctAnswer: 'Transferring knowledge from a large teacher model to a smaller student model.',
+    difficulty: 'advanced',
+    explanation: 'Distillation uses teacher soft labels (logits) to train compact student models with comparable performance.'
   },
   {
     id: 'ai-58',
@@ -764,7 +878,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'The model weights changing during inference.',
       'The training process taking too long.'
     ],
-    correctAnswer: 'The phenomenon where model performance degrades over time due to changes in the underlying data distribution.'
+    correctAnswer: 'The phenomenon where model performance degrades over time due to changes in the underlying data distribution.',
+    difficulty: 'advanced',
+    explanation: 'Data drift (P(X) changes) and concept drift (P(Y|X) changes) require monitoring and periodic retraining.'
   },
   {
     id: 'ai-59',
@@ -777,7 +893,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'A testing framework for unit tests.',
       'Testing the model on two different GPUs.'
     ],
-    correctAnswer: 'Comparing two or more model versions by serving them to different user segments and measuring performance.'
+    correctAnswer: 'Comparing two or more model versions by serving them to different user segments and measuring performance.',
+    difficulty: 'advanced',
+    explanation: 'A/B testing provides causal evidence of model impact on business metrics before full rollout.'
   },
   {
     id: 'ai-60',
@@ -790,7 +908,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'A database for storing raw images.',
       'A cache for model predictions.'
     ],
-    correctAnswer: 'A centralized storage system for managing, sharing, and serving ML features across training and inference.'
+    correctAnswer: 'A centralized storage system for managing, sharing, and serving ML features across training and inference.',
+    difficulty: 'advanced',
+    explanation: 'Feature stores ensure consistency between training/serving features and enable feature reuse across teams.'
   },
   {
     id: 'ai-61',
@@ -803,7 +923,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Versioning the training data only.',
       'Creating different versions of the same prediction.'
     ],
-    correctAnswer: 'Tracking different iterations of models, enabling reproducibility, rollback, and comparison.'
+    correctAnswer: 'Tracking different iterations of models, enabling reproducibility, rollback, and comparison.',
+    difficulty: 'advanced',
+    explanation: 'Model versioning with metadata enables audit trails, experiment tracking, and safe deployment practices.'
   },
   {
     id: 'ai-62',
@@ -816,7 +938,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Checking if the data is encrypted.',
       'Validating user permissions to access data.'
     ],
-    correctAnswer: 'Checking that input data conforms to expected schemas, distributions, and quality standards before training or inference.'
+    correctAnswer: 'Checking that input data conforms to expected schemas, distributions, and quality standards before training or inference.',
+    difficulty: 'advanced',
+    explanation: 'Data validation catches schema changes, distribution shifts, and data quality issues before they cause model failures.'
   },
   {
     id: 'ai-63',
@@ -829,7 +953,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Hiding the model architecture from users.',
       'Deploying models without testing.'
     ],
-    correctAnswer: 'Running a new model version alongside the production model without affecting live traffic, to validate performance.'
+    correctAnswer: 'Running a new model version alongside the production model without affecting live traffic, to validate performance.',
+    difficulty: 'advanced',
+    explanation: 'Shadow deployment compares new model predictions against production without impacting users, reducing deployment risk.'
   },
   {
     id: 'ai-64',
@@ -842,7 +968,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Explaining the code to other developers.',
       'Making predictions faster.'
     ],
-    correctAnswer: 'Understanding why models make specific predictions for debugging, compliance, and building user trust.'
+    correctAnswer: 'Understanding why models make specific predictions for debugging, compliance, and building user trust.',
+    difficulty: 'advanced',
+    explanation: 'Explainability supports regulatory compliance (GDPR), debugging model errors, and user acceptance of AI decisions.'
   },
   {
     id: 'ai-65',
@@ -855,7 +983,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Training models only on internet data.',
       'Running models on online servers only.'
     ],
-    correctAnswer: 'Updating the model continuously as new data arrives, rather than batch retraining.'
+    correctAnswer: 'Updating the model continuously as new data arrives, rather than batch retraining.',
+    difficulty: 'advanced',
+    explanation: 'Online learning adapts to distribution changes in real-time but requires careful handling of concept drift and catastrophic forgetting.'
   },
 
   // ==================== AI ETHICS & SAFETY (Questions 66-75) ====================
@@ -870,7 +1000,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'A preference for certain algorithms over others.',
       'The tendency of algorithms to prefer faster computation.'
     ],
-    correctAnswer: 'Systematic and unfair discrimination against certain groups due to biased training data or model design.'
+    correctAnswer: 'Systematic and unfair discrimination against certain groups due to biased training data or model design.',
+    difficulty: 'advanced',
+    explanation: 'Algorithmic bias arises from historical biases in data, proxy variables, or model objectives that disadvantage protected groups.'
   },
   {
     id: 'ai-67',
@@ -883,7 +1015,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'The difference between training and test accuracy.',
       'The privacy of the internet connection.'
     ],
-    correctAnswer: 'Individual privacy by ensuring that the inclusion or exclusion of a single data point does not significantly affect model output.'
+    correctAnswer: 'Individual privacy by ensuring that the inclusion or exclusion of a single data point does not significantly affect model output.',
+    difficulty: 'expert',
+    explanation: 'Differential privacy adds calibrated noise to queries/outputs, providing mathematical privacy guarantees with ε parameter.'
   },
   {
     id: 'ai-68',
@@ -896,7 +1030,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Training examples that are difficult to learn.',
       'Examples used in competitive AI competitions.'
     ],
-    correctAnswer: 'Inputs specifically crafted to cause models to make incorrect predictions with high confidence.'
+    correctAnswer: 'Inputs specifically crafted to cause models to make incorrect predictions with high confidence.',
+    difficulty: 'advanced',
+    explanation: 'Adversarial examples exploit model vulnerabilities via small, often imperceptible perturbations to inputs.'
   },
   {
     id: 'ai-69',
@@ -909,7 +1045,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Training models without looking at the data.',
       'Removing all sensitive information from the internet.'
     ],
-    correctAnswer: 'The approach of removing protected attributes from features, which may fail due to correlated proxy variables.'
+    correctAnswer: 'The approach of removing protected attributes from features, which may fail due to correlated proxy variables.',
+    difficulty: 'advanced',
+    explanation: 'Fairness through unawareness often fails because proxy variables (e.g., zip code) can encode protected attributes.'
   },
   {
     id: 'ai-70',
@@ -922,7 +1060,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Flipping the model architecture upside down.',
       'Reversing the training process.'
     ],
-    correctAnswer: 'Reconstructing sensitive training data from model outputs and parameters.'
+    correctAnswer: 'Reconstructing sensitive training data from model outputs and parameters.',
+    difficulty: 'expert',
+    explanation: 'Model inversion exploits model confidence scores or gradients to reconstruct private training examples.'
   },
   {
     id: 'ai-71',
@@ -935,7 +1075,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Attacking the model membership system.',
       'Inferring which club the model belongs to.'
     ],
-    correctAnswer: 'Determining whether a specific data point was part of the model\'s training set.'
+    correctAnswer: 'Determining whether a specific data point was part of the model\'s training set.',
+    difficulty: 'expert',
+    explanation: 'Membership inference exploits overfitting: models behave differently on training vs. unseen data, revealing membership.'
   },
   {
     id: 'ai-72',
@@ -948,7 +1090,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Learning about federal governments.',
       'Training models only on government data.'
     ],
-    correctAnswer: 'Training models across decentralized devices without centralizing raw data, preserving privacy.'
+    correctAnswer: 'Training models across decentralized devices without centralizing raw data, preserving privacy.',
+    difficulty: 'advanced',
+    explanation: 'Federated learning aggregates model updates (not raw data) from edge devices, enabling privacy-preserving collaborative training.'
   },
   {
     id: 'ai-73',
@@ -961,7 +1105,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Expensive AI systems.',
       'Old AI systems.'
     ],
-    correctAnswer: 'Black-box models where decision-making processes are opaque and difficult to interpret.'
+    correctAnswer: 'Black-box models where decision-making processes are opaque and difficult to interpret.',
+    difficulty: 'advanced',
+    explanation: 'XAI methods (SHAP, LIME, attention) provide post-hoc or intrinsic interpretability for complex models.'
   },
   {
     id: 'ai-74',
@@ -974,7 +1120,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Competing against other AI teams.',
       'Training models on red-colored images.'
     ],
-    correctAnswer: 'Systematically attempting to find failures, biases, and vulnerabilities in AI systems before deployment.'
+    correctAnswer: 'Systematically attempting to find failures, biases, and vulnerabilities in AI systems before deployment.',
+    difficulty: 'advanced',
+    explanation: 'Red teaming uses adversarial testing, prompt injection, and edge cases to uncover model weaknesses proactively.'
   },
   {
     id: 'ai-75',
@@ -987,7 +1135,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Building AI for government use only.',
       'Constitutional law for AI rights.'
     ],
-    correctAnswer: 'Training AI systems to follow a set of principles or constitution through self-critique and revision.'
+    correctAnswer: 'Training AI systems to follow a set of principles or constitution through self-critique and revision.',
+    difficulty: 'expert',
+    explanation: 'Constitutional AI uses RLHF with principles as constraints, enabling models to self-critique and revise outputs.'
   },
 
   // ==================== PROBABILISTIC METHODS & BAYESIAN (Questions 76-85) ====================
@@ -1002,7 +1152,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Optimizing neural network weights deterministically.',
       'Creating Monte Carlo simulations for games.'
     ],
-    correctAnswer: 'Sampling from complex probability distributions when direct sampling is difficult.'
+    correctAnswer: 'Sampling from complex probability distributions when direct sampling is difficult.',
+    difficulty: 'advanced',
+    explanation: 'MCMC constructs Markov chain with target distribution as stationary distribution, enabling approximate inference.'
   },
   {
     id: 'ai-77',
@@ -1015,7 +1167,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Frequentist methods require more data.',
       'Bayesian methods cannot use neural networks.'
     ],
-    correctAnswer: 'Bayesian methods treat parameters as random variables with distributions, while Frequentist methods treat them as fixed unknowns.'
+    correctAnswer: 'Bayesian methods treat parameters as random variables with distributions, while Frequentist methods treat them as fixed unknowns.',
+    difficulty: 'advanced',
+    explanation: 'Bayesian inference updates prior beliefs with data via Bayes\' theorem; frequentist focuses on long-run frequency properties.'
   },
   {
     id: 'ai-78',
@@ -1028,7 +1182,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'The distribution of predictions after training.',
       'The posterior probability of model architecture.'
     ],
-    correctAnswer: 'The updated probability distribution of parameters after observing data, combining prior and likelihood.'
+    correctAnswer: 'The updated probability distribution of parameters after observing data, combining prior and likelihood.',
+    difficulty: 'advanced',
+    explanation: 'Posterior p(θ|D) ∝ p(D|θ)p(θ) combines prior beliefs with observed data likelihood via Bayes\' rule.'
   },
   {
     id: 'ai-79',
@@ -1041,7 +1197,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Cross-validation.',
       'Data augmentation.'
     ],
-    correctAnswer: 'MCMC methods, providing faster approximate inference by optimizing over a family of distributions.'
+    correctAnswer: 'MCMC methods, providing faster approximate inference by optimizing over a family of distributions.',
+    difficulty: 'advanced',
+    explanation: 'VI approximates posterior with tractable distribution q(θ) by minimizing KL(q||p), enabling scalable Bayesian inference.'
   },
   {
     id: 'ai-80',
@@ -1054,7 +1212,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'A type of neural network layer.',
       'A data normalization technique.'
     ],
-    correctAnswer: 'A non-parametric probabilistic model that defines a distribution over functions, commonly used for regression.'
+    correctAnswer: 'A non-parametric probabilistic model that defines a distribution over functions, commonly used for regression.',
+    difficulty: 'expert',
+    explanation: 'GPs specify mean and covariance functions, providing uncertainty estimates and flexible function approximation.'
   },
   {
     id: 'ai-81',
@@ -1067,7 +1227,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'They are trained only on Bayesian statistics datasets.',
       'They cannot use activation functions.'
     ],
-    correctAnswer: 'They place probability distributions over network weights rather than point estimates, capturing uncertainty.'
+    correctAnswer: 'They place probability distributions over network weights rather than point estimates, capturing uncertainty.',
+    difficulty: 'expert',
+    explanation: 'BNNs provide predictive uncertainty by integrating over weight posterior, useful for safety-critical applications.'
   },
   {
     id: 'ai-82',
@@ -1080,7 +1242,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'The previous model version.',
       'The prerequisite data required.'
     ],
-    correctAnswer: 'The initial belief about parameters before observing any data.'
+    correctAnswer: 'The initial belief about parameters before observing any data.',
+    difficulty: 'advanced',
+    explanation: 'Priors encode domain knowledge or regularization; choice affects posterior especially with limited data.'
   },
   {
     id: 'ai-83',
@@ -1093,7 +1257,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'A dropout variant for CNNs only.',
       'Randomly dropping training data points.'
     ],
-    correctAnswer: 'Approximating Bayesian inference in neural networks by using dropout at test time to estimate uncertainty.'
+    correctAnswer: 'Approximating Bayesian inference in neural networks by using dropout at test time to estimate uncertainty.',
+    difficulty: 'advanced',
+    explanation: 'MC Dropout interprets dropout as approximate Bayesian inference, enabling uncertainty estimation via multiple stochastic forward passes.'
   },
   {
     id: 'ai-84',
@@ -1106,7 +1272,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'A bound on the training error.',
       'The minimum evidence required for training.'
     ],
-    correctAnswer: 'A lower bound on the log-likelihood of the data that is optimized to approximate the posterior.'
+    correctAnswer: 'A lower bound on the log-likelihood of the data that is optimized to approximate the posterior.',
+    difficulty: 'expert',
+    explanation: 'ELBO = E_q[log p(x,z)] - E_q[log q(z)] is maximized to minimize KL(q||p), enabling tractable variational optimization.'
   },
   {
     id: 'ai-85',
@@ -1119,7 +1287,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'The previous conjugate model.',
       'A paired prior distribution.'
     ],
-    correctAnswer: 'A prior distribution that, when combined with the likelihood, yields a posterior of the same family.'
+    correctAnswer: 'A prior distribution that, when combined with the likelihood, yields a posterior of the same family.',
+    difficulty: 'advanced',
+    explanation: 'Conjugacy enables closed-form posterior updates (e.g., Beta-Binomial, Normal-Normal), simplifying Bayesian inference.'
   },
 
   // ==================== GRAPH NEURAL NETWORKS (Questions 86-93) ====================
@@ -1134,7 +1304,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Passing error messages during debugging.',
       'Transmitting training data between servers.'
     ],
-    correctAnswer: 'The process where nodes exchange information with neighbors to update their representations iteratively.'
+    correctAnswer: 'The process where nodes exchange information with neighbors to update their representations iteratively.',
+    difficulty: 'advanced',
+    explanation: 'Message passing framework: h_v^{(l+1)} = UPDATE(h_v^{(l)}, AGGREGATE({h_u^{(l)} : u ∈ N(v)})).'
   },
   {
     id: 'ai-87',
@@ -1147,7 +1319,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'GCNs use too much attention already.',
       'GCNs cannot handle weighted graphs.'
     ],
-    correctAnswer: 'GCNs use uniform aggregation weights, while GATs learn attention weights for neighbor importance.'
+    correctAnswer: 'GCNs use uniform aggregation weights, while GATs learn attention weights for neighbor importance.',
+    difficulty: 'advanced',
+    explanation: 'GATs compute attention coefficients α_ij for each edge, allowing adaptive neighbor weighting based on feature relevance.'
   },
   {
     id: 'ai-88',
@@ -1160,7 +1334,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Overfitting to smooth data distributions.',
       'Using too much smoothing in image preprocessing.'
     ],
-    correctAnswer: 'The phenomenon where node representations become indistinguishable as the number of layers increases.'
+    correctAnswer: 'The phenomenon where node representations become indistinguishable as the number of layers increases.',
+    difficulty: 'expert',
+    explanation: 'Over-smoothing occurs when repeated message passing causes all node embeddings to converge to similar values.'
   },
   {
     id: 'ai-89',
@@ -1173,7 +1349,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Training on induced subgraphs only.',
       'Using inductive biases from physics.'
     ],
-    correctAnswer: 'The ability to generalize to unseen graphs or nodes not present during training.'
+    correctAnswer: 'The ability to generalize to unseen graphs or nodes not present during training.',
+    difficulty: 'advanced',
+    explanation: 'Inductive GNNs (e.g., GraphSAGE) learn aggregation functions that generalize to new nodes/graphs, unlike transductive methods.'
   },
   {
     id: 'ai-90',
@@ -1186,7 +1364,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Storing graphs in memory pools.',
       'Pooling multiple graphs into one.'
     ],
-    correctAnswer: 'Reducing graph size by coarsening nodes to create hierarchical representations.'
+    correctAnswer: 'Reducing graph size by coarsening nodes to create hierarchical representations.',
+    difficulty: 'advanced',
+    explanation: 'Graph pooling (e.g., DiffPool, SAGPool) enables hierarchical graph representation learning for graph classification tasks.'
   },
   {
     id: 'ai-91',
@@ -1199,7 +1379,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Linking different neural network layers.',
       'Predicting the strength of hyperlinks.'
     ],
-    correctAnswer: 'Predicting the existence of edges between nodes that are not yet connected.'
+    correctAnswer: 'Predicting the existence of edges between nodes that are not yet connected.',
+    difficulty: 'advanced',
+    explanation: 'Link prediction uses node embeddings to score potential edges, applied in recommendation and knowledge graph completion.'
   },
   {
     id: 'ai-92',
@@ -1212,7 +1394,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Making graphs look identical.',
       'Isolating graphs during training.'
     ],
-    correctAnswer: 'Two graphs are isomorphic if they have the same structure; GNNs must be invariant to node ordering.'
+    correctAnswer: 'Two graphs are isomorphic if they have the same structure; GNNs must be invariant to node ordering.',
+    difficulty: 'expert',
+    explanation: 'GNNs must produce same output for isomorphic graphs; expressiveness bounded by Weisfeiler-Lehman test.'
   },
   {
     id: 'ai-93',
@@ -1225,7 +1409,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'A test for graph compression.',
       'A performance benchmark for GNN speed.'
     ],
-    correctAnswer: 'It provides a theoretical framework for testing the expressiveness of GNNs in distinguishing graph structures.'
+    correctAnswer: 'It provides a theoretical framework for testing the expressiveness of GNNs in distinguishing graph structures.',
+    difficulty: 'expert',
+    explanation: 'WL test iteratively refines node colors; GNNs cannot distinguish graphs that WL test cannot distinguish.'
   },
 
   // ==================== ADVANCED TOPICS (Questions 94-100) ====================
@@ -1240,7 +1426,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Searching for neurons in the brain.',
       'Manual architecture design by experts.'
     ],
-    correctAnswer: 'Automating the design of neural network architectures using optimization algorithms.'
+    correctAnswer: 'Automating the design of neural network architectures using optimization algorithms.',
+    difficulty: 'expert',
+    explanation: 'NAS uses RL, evolutionary algorithms, or gradient-based methods to discover high-performing architectures automatically.'
   },
   {
     id: 'ai-95',
@@ -1253,7 +1441,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Training models to learn faster by using better hardware.',
       'Learning the meta-physics of AI.'
     ],
-    correctAnswer: 'Training models that can quickly adapt to new tasks with few examples by leveraging prior learning experience.'
+    correctAnswer: 'Training models that can quickly adapt to new tasks with few examples by leveraging prior learning experience.',
+    difficulty: 'expert',
+    explanation: 'Meta-learning (e.g., MAML) optimizes model initialization or learning algorithm for fast adaptation to new tasks.'
   },
   {
     id: 'ai-96',
@@ -1266,7 +1456,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Generating text about retrieval systems.',
       'Retrieving the best generation seeds.'
     ],
-    correctAnswer: 'Combining parametric knowledge from LLMs with non-parametric knowledge from external retrieval systems.'
+    correctAnswer: 'Combining parametric knowledge from LLMs with non-parametric knowledge from external retrieval systems.',
+    difficulty: 'advanced',
+    explanation: 'RAG retrieves relevant documents from external knowledge base and conditions generation on them, reducing hallucination.'
   },
   {
     id: 'ai-97',
@@ -1279,7 +1471,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Supervised learning with automated supervisors.',
       'Learning without any loss function.'
     ],
-    correctAnswer: 'Creating supervisory signals from the data itself without human labels, such as predicting image rotations.'
+    correctAnswer: 'Creating supervisory signals from the data itself without human labels, such as predicting image rotations.',
+    difficulty: 'advanced',
+    explanation: 'Self-supervised methods (e.g., contrastive learning, masked autoencoding) learn representations from unlabeled data.'
   },
   {
     id: 'ai-98',
@@ -1292,7 +1486,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'A technique to flash (display) attention weights.',
       'Attention that lasts for a very short time.'
     ],
-    correctAnswer: 'An IO-aware algorithm that reduces memory reads/writes for attention computation, speeding up training.'
+    correctAnswer: 'An IO-aware algorithm that reduces memory reads/writes for attention computation, speeding up training.',
+    difficulty: 'expert',
+    explanation: 'Flash Attention uses tiling and recomputation to compute attention in O(1) memory with exact gradients, 2-4x faster.'
   },
   {
     id: 'ai-99',
@@ -1305,7 +1501,9 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Training models within a specific context window.',
       'Context-aware pretraining objectives.'
     ],
-    correctAnswer: 'Learning to perform tasks from examples provided in the prompt without gradient updates.'
+    correctAnswer: 'Learning to perform tasks from examples provided in the prompt without gradient updates.',
+    difficulty: 'advanced',
+    explanation: 'In-context learning emerges at scale: LLMs infer task from few-shot examples in prompt, adapting behavior without fine-tuning.'
   },
   {
     id: 'ai-100',
@@ -1318,6 +1516,51 @@ export const AI_ML_QUESTIONS: Question[] = [
       'Memory alignment for efficient GPU usage.',
       'Aligning model layers in parallel.'
     ],
-    correctAnswer: 'Ensuring AI systems pursue intended goals and behave in accordance with human values and intentions.'
+    correctAnswer: 'Ensuring AI systems pursue intended goals and behave in accordance with human values and intentions.',
+    difficulty: 'expert',
+    explanation: 'AI alignment addresses the challenge of making powerful AI systems robustly beneficial, avoiding specification gaming and unintended behaviors.'
   }
 ];
+
+// Verify we have exactly 100 unique questions
+console.assert(AI_ML_QUESTIONS.length === 100, 
+  `Expected 100 questions, got ${AI_ML_QUESTIONS.length}`);
+
+// Verify no duplicate IDs
+const ids = AI_ML_QUESTIONS.map(q => q.id);
+const uniqueIds = new Set(ids);
+console.assert(ids.length === uniqueIds.size, 'Duplicate question IDs detected!');
+
+// Optional: Helper function to get questions by difficulty
+export const getQuestionsByDifficulty = (difficulty: 'advanced' | 'expert'): Question[] => {
+  return AI_ML_QUESTIONS.filter(q => q.difficulty === difficulty);
+};
+
+// Optional: Helper to get questions by category
+export const getQuestionsByCategory = (category: string): Question[] => {
+  return AI_ML_QUESTIONS.filter(q => q.category === category);
+};
+
+// Optional: Get random subset for exams with deterministic seeding
+export const getRandomQuestions = (count: number, seed?: number): Question[] => {
+  const shuffled = [...AI_ML_QUESTIONS];
+  
+  // Seeded shuffle using linear congruential generator
+  if (seed !== undefined) {
+    let randomSeed = seed;
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      randomSeed = (randomSeed * 9301 + 49297) % 233280;
+      const j = Math.floor((randomSeed / 233280) * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+  } else {
+    // Standard Fisher-Yates shuffle
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+  }
+  return shuffled.slice(0, count);
+};
+
+export default AI_ML_QUESTIONS;

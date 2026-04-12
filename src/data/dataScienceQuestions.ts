@@ -1,16 +1,3 @@
-// types.ts
-export interface Question {
-  id: string;
-  type: 'mcq';
-  category: string;
-  text: string;
-  options: string[];
-  correctAnswer: string;
-  difficulty?: 'advanced' | 'expert';
-  explanation?: string;
-}
-
-// data-science-advanced-questions.ts
 import { Question } from '../types';
 
 export const DATA_SCIENCE_QUESTIONS: Question[] = [
@@ -1547,9 +1534,14 @@ export const DATA_SCIENCE_QUESTIONS: Question[] = [
   }
 ];
 
-// Verify we have exactly 100 questions
+// Verify we have exactly 100 unique questions
 console.assert(DATA_SCIENCE_QUESTIONS.length === 100, 
   `Expected 100 questions, got ${DATA_SCIENCE_QUESTIONS.length}`);
+
+// Verify no duplicate IDs
+const ids = DATA_SCIENCE_QUESTIONS.map(q => q.id);
+const uniqueIds = new Set(ids);
+console.assert(ids.length === uniqueIds.size, 'Duplicate question IDs detected!');
 
 // Optional: Helper function to get questions by difficulty
 export const getQuestionsByDifficulty = (difficulty: 'advanced' | 'expert'): Question[] => {
@@ -1561,9 +1553,11 @@ export const getQuestionsByCategory = (category: string): Question[] => {
   return DATA_SCIENCE_QUESTIONS.filter(q => q.category === category);
 };
 
-// Optional: Get random subset for exams
+// Optional: Get random subset for exams with deterministic seeding
 export const getRandomQuestions = (count: number, seed?: number): Question[] => {
   const shuffled = [...DATA_SCIENCE_QUESTIONS];
+  
+  // Seeded shuffle using linear congruential generator
   if (seed !== undefined) {
     let randomSeed = seed;
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -1572,6 +1566,7 @@ export const getRandomQuestions = (count: number, seed?: number): Question[] => 
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
   } else {
+    // Standard Fisher-Yates shuffle
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];

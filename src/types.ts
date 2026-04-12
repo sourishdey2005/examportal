@@ -5,6 +5,8 @@ export interface Question {
   options?: string[];
   correctAnswer?: string;
   category?: string;
+  difficulty?: 'advanced' | 'expert' | 'beginner' | 'intermediate';
+  explanation?: string;
 }
 
 export interface Domain {
