@@ -1,5 +1,5 @@
 {
-  "name": "ProctorExam",
+  "name": "ExamPortal",
   "description": "A secure web-based exam application with proctoring features including tab switch detection, fullscreen enforcement, and camera monitoring.",
   "requestFramePermissions": ["camera"]
 }

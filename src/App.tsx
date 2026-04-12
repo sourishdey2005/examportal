@@ -214,7 +214,7 @@ export default function App() {
               <div className="max-w-7xl mx-auto flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Shield className="w-8 h-8 text-primary" />
-                  <span className="text-2xl font-bold tracking-tight">ProctorExam Portal</span>
+                  <span className="text-2xl font-bold tracking-tight">ExamPortal</span>
                 </div>
                 <div className="flex items-center gap-4">
                   <Button variant="ghost" onClick={() => setAppState('domains')}>Internships</Button>
@@ -307,9 +307,9 @@ export default function App() {
               <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
                 <div className="flex items-center gap-2">
                   <Shield className="w-6 h-6 text-primary" />
-                  <span className="text-xl font-bold">ProctorExam Portal</span>
+                  <span className="text-xl font-bold">ExamPortal</span>
                 </div>
-                <p className="text-neutral-500 text-sm">© 2026 ProctorExam. All rights reserved.</p>
+                <p className="text-neutral-500 text-sm">© 2026 ExamPortal. All rights reserved.</p>
                 <div className="flex gap-6 text-neutral-400">
                   <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
                   <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
@@ -400,7 +400,7 @@ export default function App() {
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
                     <Shield className="w-6 h-6 text-primary" />
-                    <span className="font-bold hidden md:inline">ProctorExam</span>
+                    <span className="font-bold hidden md:inline">ExamPortal</span>
                   </div>
                   <Badge variant="outline" className="px-4 py-1.5 flex items-center gap-2 text-sm font-bold bg-white shadow-sm">
                     <Clock className="w-4 h-4 text-primary" />
