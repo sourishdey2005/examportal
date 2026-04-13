@@ -49,6 +49,9 @@ import { DOMAINS, ENTRANCE_EXAM, DOMAIN_EXAMS } from './constants';
 import { ExamSubmission, Domain, Exam } from './types';
 import { submitExamResults } from './services/examService';
 
+import ReactMarkdown from 'react-markdown';
+import { PRIVACY_POLICY, TERMS_OF_SERVICE } from './constants/policies';
+
 type AppState = 'landing' | 'domains' | 'exam' | 'submitted' | 'disqualified';
 
 export default function App() {
@@ -72,6 +75,7 @@ export default function App() {
     email: string;
     time: number;
   } | null>(null);
+  const [policyType, setPolicyType] = useState<'privacy' | 'terms' | null>(null);
 
   useEffect(() => {
     const submitted = localStorage.getItem('submitted_domains');
@@ -359,9 +363,9 @@ export default function App() {
                 </div>
                 <p className="text-neutral-500 text-sm">© 2026 ExamPortal. All rights reserved.</p>
                 <div className="flex gap-6 text-neutral-400">
-                  <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                  <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-                  <a href="#" className="hover:text-white transition-colors">Contact Us</a>
+                  <button onClick={() => setPolicyType('privacy')} className="hover:text-white transition-colors">Privacy Policy</button>
+                  <button onClick={() => setPolicyType('terms')} className="hover:text-white transition-colors">Terms of Service</button>
+                  <a href="mailto:support@examportal.com" className="hover:text-white transition-colors">Contact Us</a>
                 </div>
               </div>
             </footer>
@@ -475,7 +479,7 @@ export default function App() {
                     <span className="text-[10px] text-neutral-400 font-bold uppercase tracking-widest">Applying for</span>
                     <span className="text-sm font-bold text-primary">{selectedDomain?.title || 'All Domains'}</span>
                   </div>
-                  <Button variant="destructive" size="sm" className="font-bold px-6" onClick={submitExam} disabled={isSubmitting}>
+                  <Button variant="destructive" size="sm" className="font-bold px-6" onClick={() => submitExam()} disabled={isSubmitting}>
                     {isSubmitting ? 'Submitting...' : 'Finish Exam'}
                   </Button>
                 </div>
@@ -836,6 +840,38 @@ export default function App() {
                 By clicking start, you agree to our proctoring terms and camera monitoring.
               </p>
             </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Policy Dialog */}
+      <Dialog open={!!policyType} onOpenChange={(open) => !open && setPolicyType(null)}>
+        <DialogContent className="sm:max-w-[800px] max-h-[80vh] overflow-y-auto rounded-[2rem] p-0 border-none shadow-2xl">
+          <div className="h-2 bg-primary w-full" />
+          <div className="p-10">
+            <DialogHeader className="mb-8">
+              <DialogTitle className="text-4xl font-black">
+                {policyType === 'privacy' ? 'Privacy Policy' : 'Terms of Service'}
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-6 text-neutral-600 leading-relaxed font-medium">
+              <ReactMarkdown 
+                components={{
+                  h1: ({node, ...props}) => <h1 className="hidden" {...props} />,
+                  h2: ({node, ...props}) => <h2 className="text-2xl font-black text-neutral-900 mt-8 mb-4 flex items-center gap-2" {...props} />,
+                  p: ({node, ...props}) => <p className="mb-4" {...props} />,
+                  ul: ({node, ...props}) => <ul className="list-disc pl-6 space-y-2 mb-6" {...props} />,
+                  li: ({node, ...props}) => <li {...props} />,
+                }}
+              >
+                {policyType === 'privacy' ? PRIVACY_POLICY : TERMS_OF_SERVICE}
+              </ReactMarkdown>
+            </div>
+            <DialogFooter className="mt-12">
+              <Button onClick={() => setPolicyType(null)} className="rounded-2xl px-10 h-14 text-lg font-black">
+                I Understand
+              </Button>
+            </DialogFooter>
           </div>
         </DialogContent>
       </Dialog>
