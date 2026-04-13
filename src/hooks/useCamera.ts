@@ -9,10 +9,18 @@ export const useCamera = (captureIntervalMs: number = 10000) => {
 
   const startCamera = async () => {
     try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({ 
-        video: { width: 1280, height: 720 }, 
-        audio: true 
-      });
+      let mediaStream: MediaStream;
+      try {
+        mediaStream = await navigator.mediaDevices.getUserMedia({ 
+          video: { width: 1280, height: 720 }, 
+          audio: true 
+        });
+      } catch (audioErr) {
+        console.warn('Microphone access failed, falling back to video only:', audioErr);
+        mediaStream = await navigator.mediaDevices.getUserMedia({ 
+          video: { width: 1280, height: 720 }
+        });
+      }
       setStream(mediaStream);
       if (videoRef.current) {
         videoRef.current.srcObject = mediaStream;

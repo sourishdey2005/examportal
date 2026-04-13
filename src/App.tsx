@@ -65,12 +65,23 @@ export default function App() {
   const [warningMessage, setWarningMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [submissionSummary, setSubmissionSummary] = useState<{
+    score: number;
+    total: number;
+    domainTitle: string;
+    email: string;
+    time: number;
+  } | null>(null);
 
   useEffect(() => {
     const submitted = localStorage.getItem('exam_submitted');
+    const summary = localStorage.getItem('exam_summary');
     if (submitted) {
       setHasSubmitted(true);
       setAppState('submitted');
+      if (summary) {
+        setSubmissionSummary(JSON.parse(summary));
+      }
     }
   }, []);
 
@@ -107,7 +118,22 @@ export default function App() {
       await submitExamResults(submission, currentExam);
       stopCamera();
       
+      const score = Object.keys(answers).reduce((acc, qId) => {
+        const question = currentExam.questions.find(q => q.id === qId);
+        return acc + (question?.correctAnswer === answers[qId] ? 1 : 0);
+      }, 0);
+
+      const summary = {
+        score,
+        total: currentExam.questions.length,
+        domainTitle: selectedDomain?.title || 'General Interest',
+        email: studentEmail,
+        time: Math.floor((Date.now() - startTime) / 60000)
+      };
+
       localStorage.setItem('exam_submitted', 'true');
+      localStorage.setItem('exam_summary', JSON.stringify(summary));
+      setSubmissionSummary(summary);
       setHasSubmitted(true);
       
       if (isDisqualified) {
@@ -603,28 +629,15 @@ export default function App() {
                 </div>
                 <CardTitle className="text-4xl font-black text-neutral-900">Thanks for submission</CardTitle>
                 <CardDescription className="text-lg text-neutral-500 pt-2">
-                  Your assessment for <strong>{selectedDomain?.title || 'All Domains'}</strong> has been successfully recorded.
+                  Your assessment for <strong>{submissionSummary?.domainTitle || selectedDomain?.title || 'All Domains'}</strong> has been successfully recorded.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-8 px-12">
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="p-4 rounded-3xl bg-neutral-50 border border-neutral-100 flex flex-col gap-1 text-center">
-                    <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Score</span>
-                    <span className="text-2xl font-black text-primary">
-                      {Object.keys(answers).reduce((acc, qId) => {
-                        const question = currentExam.questions.find(q => q.id === qId);
-                        return acc + (question?.correctAnswer === answers[qId] ? 1 : 0);
-                      }, 0)} / {currentExam.questions.length}
-                    </span>
-                  </div>
-                  <div className="p-4 rounded-3xl bg-neutral-50 border border-neutral-100 flex flex-col gap-1 text-center">
-                    <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Violations</span>
-                    <span className={`text-2xl font-black ${violations > 0 ? 'text-destructive' : 'text-green-600'}`}>{violations}</span>
-                  </div>
-                  <div className="p-4 rounded-3xl bg-neutral-50 border border-neutral-100 flex flex-col gap-1 text-center">
-                    <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Time</span>
-                    <span className="text-2xl font-black text-neutral-900">
-                      {Math.floor((Date.now() - startTime) / 60000)}m
+                <div className="flex justify-center">
+                  <div className="p-6 px-10 rounded-3xl bg-neutral-50 border border-neutral-100 flex flex-col gap-1 text-center min-w-[200px]">
+                    <span className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Integrity Status</span>
+                    <span className={`text-2xl font-black ${violations > 0 ? 'text-destructive' : 'text-green-600'}`}>
+                      {violations === 0 ? 'Verified' : `${violations} Flag${violations > 1 ? 's' : ''}`}
                     </span>
                   </div>
                 </div>
@@ -648,11 +661,11 @@ export default function App() {
                   <div className="p-6 bg-neutral-50 rounded-3xl border border-neutral-100 space-y-4">
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-bold text-neutral-500">Email</span>
-                      <span className="text-sm font-black text-neutral-800">{studentEmail}</span>
+                      <span className="text-sm font-black text-neutral-800">{submissionSummary?.email || studentEmail}</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-bold text-neutral-500">Domain</span>
-                      <span className="text-sm font-black text-primary">{selectedDomain?.title || 'General Interest'}</span>
+                      <span className="text-sm font-black text-primary">{submissionSummary?.domainTitle || selectedDomain?.title || 'General Interest'}</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-bold text-neutral-500">Reference ID</span>
@@ -663,7 +676,7 @@ export default function App() {
               </CardContent>
               <CardFooter className="bg-neutral-50 p-10 flex flex-col gap-6">
                 <p className="text-xs text-center text-neutral-400 font-medium leading-relaxed px-4">
-                  Our recruitment team will analyze your proctoring logs and assessment performance. Shortlisted candidates will be contacted at <strong>{studentEmail}</strong> within 7 business days.
+                  Our recruitment team will analyze your proctoring logs and assessment performance. Shortlisted candidates will be contacted at <strong>{submissionSummary?.email || studentEmail}</strong> within 7 business days.
                 </p>
                 <Button variant="outline" className="w-full h-14 rounded-2xl font-bold text-lg border-neutral-200 hover:bg-white transition-all" onClick={() => window.location.reload()}>
                   Return to Portal Home
