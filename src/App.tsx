@@ -93,7 +93,7 @@ export default function App() {
     logs, 
     enterFullScreen,
     resetProctoring
-  } = useProctoring();
+  } = useProctoring(undefined, 1, appState === 'exam');
 
   const { 
     stream, 
@@ -178,6 +178,7 @@ export default function App() {
 
   useEffect(() => {
     if (violations >= 1 && appState === 'exam') {
+      console.log('Auto-submitting due to violations:', violations);
       submitExam(true);
     }
   }, [violations, appState, submitExam]);
@@ -221,6 +222,7 @@ export default function App() {
     
     await startCamera();
     await enterFullScreen();
+    resetProctoring();
     setStartTime(Date.now());
     setAppState('exam');
   };

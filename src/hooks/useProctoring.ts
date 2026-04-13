@@ -8,7 +8,7 @@ interface ProctoringState {
   isTabActive: boolean;
 }
 
-export const useProctoring = (onAutoSubmit?: () => void, maxViolations: number = 1) => {
+export const useProctoring = (onAutoSubmit?: () => void, maxViolations: number = 1, enabled: boolean = true) => {
   const [state, setState] = useState<ProctoringState>({
     violations: 0,
     tabSwitches: 0,
@@ -20,10 +20,12 @@ export const useProctoring = (onAutoSubmit?: () => void, maxViolations: number =
   const [logs, setLogs] = useState<{ type: string; timestamp: number; details?: string }[]>([]);
 
   const addLog = useCallback((type: string, details?: string) => {
+    if (!enabled) return;
     setLogs((prev) => [...prev, { type, timestamp: Date.now(), details }]);
-  }, []);
+  }, [enabled]);
 
   const incrementViolations = useCallback(() => {
+    if (!enabled) return;
     setState((prev) => {
       const newViolations = prev.violations + 1;
       if (onAutoSubmit && newViolations >= maxViolations) {
@@ -31,7 +33,7 @@ export const useProctoring = (onAutoSubmit?: () => void, maxViolations: number =
       }
       return { ...prev, violations: newViolations };
     });
-  }, [maxViolations, onAutoSubmit]);
+  }, [maxViolations, onAutoSubmit, enabled]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
