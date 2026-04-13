@@ -173,13 +173,6 @@ export default function App() {
   }, [studentEmail, studentName, answers, isSubmitting, selectedDomain, currentExam, violations, logs, snapshots, startTime, submittedDomains, stopCamera]);
 
   useEffect(() => {
-    if (appState === 'exam' && stream && videoRef.current) {
-      videoRef.current.srcObject = stream;
-      videoRef.current.play().catch(e => console.error("Error playing video:", e));
-    }
-  }, [appState, stream, videoRef]);
-
-  useEffect(() => {
     if (violations >= 1 && appState === 'exam') {
       submitExam(true);
     }

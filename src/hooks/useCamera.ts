@@ -7,6 +7,20 @@ export const useCamera = (captureIntervalMs: number = 10000) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (stream && videoRef.current && videoRef.current.srcObject !== stream) {
+        videoRef.current.srcObject = stream;
+        videoRef.current.play().catch(e => {
+          if (e.name !== 'AbortError') {
+            console.error("Error playing video:", e);
+          }
+        });
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [stream]);
+
   const startCamera = async () => {
     try {
       let mediaStream: MediaStream;
