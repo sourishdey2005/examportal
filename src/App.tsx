@@ -64,6 +64,15 @@ export default function App() {
   const [showWarning, setShowWarning] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  useEffect(() => {
+    const submitted = localStorage.getItem('exam_submitted');
+    if (submitted) {
+      setHasSubmitted(true);
+      setAppState('submitted');
+    }
+  }, []);
 
   const logout = useCallback(() => {
     setStudentEmail('');
@@ -97,6 +106,9 @@ export default function App() {
       
       await submitExamResults(submission, currentExam);
       stopCamera();
+      
+      localStorage.setItem('exam_submitted', 'true');
+      setHasSubmitted(true);
       
       if (isDisqualified) {
         setAppState('disqualified');
@@ -160,6 +172,10 @@ export default function App() {
   }, [isFullScreen, appState]);
 
   const startExam = async () => {
+    if (hasSubmitted) {
+      setAppState('submitted');
+      return;
+    }
     if (!studentEmail || !studentName) return;
     setIsDialogOpen(false);
     
@@ -238,10 +254,14 @@ export default function App() {
                     </p>
                     <div className="flex flex-wrap gap-4">
                       <Button size="lg" className="h-16 px-10 text-lg gap-2 shadow-lg shadow-primary/20" onClick={() => {
-                        setSelectedDomain(null);
-                        setIsDialogOpen(true);
+                        if (hasSubmitted) {
+                          setAppState('submitted');
+                        } else {
+                          setSelectedDomain(null);
+                          setIsDialogOpen(true);
+                        }
                       }}>
-                        Register Now <ArrowRight className="w-5 h-5" />
+                        {hasSubmitted ? 'View Submission' : 'Register Now'} <ArrowRight className="w-5 h-5" />
                       </Button>
                       <Button size="lg" variant="outline" className="h-16 px-10 text-lg" onClick={() => setAppState('domains')}>
                         Explore Domains
