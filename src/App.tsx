@@ -64,7 +64,7 @@ export default function App() {
   const [showWarning, setShowWarning] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [submittedDomains, setSubmittedDomains] = useState<string[]>([]);
   const [submissionSummary, setSubmissionSummary] = useState<{
     score: number;
     total: number;
@@ -74,27 +74,50 @@ export default function App() {
   } | null>(null);
 
   useEffect(() => {
-    const submitted = localStorage.getItem('exam_submitted');
-    const summary = localStorage.getItem('exam_summary');
+    const submitted = localStorage.getItem('submitted_domains');
     if (submitted) {
-      setHasSubmitted(true);
-      setAppState('submitted');
-      if (summary) {
-        setSubmissionSummary(JSON.parse(summary));
-      }
+      setSubmittedDomains(JSON.parse(submitted));
     }
   }, []);
 
-  const logout = useCallback(() => {
-    setStudentEmail('');
-    setStudentName('');
+  const { 
+    violations, 
+    tabSwitches, 
+    fullscreenExits, 
+    isFullScreen, 
+    isTabActive, 
+    logs, 
+    enterFullScreen,
+    resetProctoring
+  } = useProctoring();
+
+  const { 
+    stream, 
+    videoRef, 
+    canvasRef, 
+    startCamera, 
+    stopCamera, 
+    snapshots,
+    resetCamera
+  } = useCamera();
+
+  const resetSession = useCallback(() => {
     setAnswers({});
     setSelectedDomain(null);
+    setStartTime(0);
+    resetProctoring();
+    resetCamera();
     setAppState('landing');
     if (document.fullscreenElement) {
       document.exitFullscreen().catch(() => {});
     }
-  }, []);
+  }, [resetProctoring, resetCamera]);
+
+  const logout = useCallback(() => {
+    setStudentEmail('');
+    setStudentName('');
+    resetSession();
+  }, [resetSession]);
 
   const submitExam = useCallback(async (isDisqualified = false) => {
     if (isSubmitting) return;
@@ -131,10 +154,10 @@ export default function App() {
         time: Math.floor((Date.now() - startTime) / 60000)
       };
 
-      localStorage.setItem('exam_submitted', 'true');
-      localStorage.setItem('exam_summary', JSON.stringify(summary));
+      const newSubmittedDomains = [...submittedDomains, selectedDomain?.id || 'all'];
+      localStorage.setItem('submitted_domains', JSON.stringify(newSubmittedDomains));
+      setSubmittedDomains(newSubmittedDomains);
       setSubmissionSummary(summary);
-      setHasSubmitted(true);
       
       if (isDisqualified) {
         setAppState('disqualified');
@@ -147,26 +170,20 @@ export default function App() {
     } finally {
       setIsSubmitting(false);
     }
-  }, [studentEmail, answers, isSubmitting, selectedDomain, currentExam, logout]);
+  }, [studentEmail, studentName, answers, isSubmitting, selectedDomain, currentExam, violations, logs, snapshots, startTime, submittedDomains, stopCamera]);
 
-  const { 
-    violations, 
-    tabSwitches, 
-    fullscreenExits, 
-    isFullScreen, 
-    isTabActive, 
-    logs, 
-    enterFullScreen 
-  } = useProctoring(() => submitExam(true));
+  useEffect(() => {
+    if (appState === 'exam' && stream && videoRef.current) {
+      videoRef.current.srcObject = stream;
+      videoRef.current.play().catch(e => console.error("Error playing video:", e));
+    }
+  }, [appState, stream, videoRef]);
 
-  const { 
-    stream, 
-    videoRef, 
-    canvasRef, 
-    startCamera, 
-    stopCamera, 
-    snapshots 
-  } = useCamera();
+  useEffect(() => {
+    if (violations >= 1 && appState === 'exam') {
+      submitExam(true);
+    }
+  }, [violations, appState, submitExam]);
 
   useEffect(() => {
     if (appState === 'exam' && timeLeft > 0) {
@@ -198,10 +215,6 @@ export default function App() {
   }, [isFullScreen, appState]);
 
   const startExam = async () => {
-    if (hasSubmitted) {
-      setAppState('submitted');
-      return;
-    }
     if (!studentEmail || !studentName) return;
     setIsDialogOpen(false);
     
@@ -234,6 +247,7 @@ export default function App() {
   };
 
   const openDomainDetails = (domain: Domain) => {
+    if (submittedDomains.includes(domain.id)) return;
     setSelectedDomain(domain);
     setIsDialogOpen(true);
   };
@@ -280,14 +294,10 @@ export default function App() {
                     </p>
                     <div className="flex flex-wrap gap-4">
                       <Button size="lg" className="h-16 px-10 text-lg gap-2 shadow-lg shadow-primary/20" onClick={() => {
-                        if (hasSubmitted) {
-                          setAppState('submitted');
-                        } else {
-                          setSelectedDomain(null);
-                          setIsDialogOpen(true);
-                        }
+                        setSelectedDomain(null);
+                        setIsDialogOpen(true);
                       }}>
-                        {hasSubmitted ? 'View Submission' : 'Register Now'} <ArrowRight className="w-5 h-5" />
+                        Register Now <ArrowRight className="w-5 h-5" />
                       </Button>
                       <Button size="lg" variant="outline" className="h-16 px-10 text-lg" onClick={() => setAppState('domains')}>
                         Explore Domains
@@ -395,38 +405,49 @@ export default function App() {
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {DOMAINS.map((domain) => (
-                  <Card key={domain.id} className="group hover:shadow-2xl transition-all border-neutral-200 overflow-hidden flex flex-col transform hover:-translate-y-1 duration-300">
-                    <CardHeader className="space-y-4 p-8">
-                      <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors shadow-inner">
-                        {getDomainIcon(domain.id)}
-                      </div>
-                      <div>
-                        <CardTitle className="text-2xl">{domain.title}</CardTitle>
+                {DOMAINS.map((domain) => {
+                  const isCompleted = submittedDomains.includes(domain.id);
+                  return (
+                    <Card key={domain.id} className={`group hover:shadow-2xl transition-all border-neutral-200 overflow-hidden flex flex-col transform hover:-translate-y-1 duration-300 ${isCompleted ? 'opacity-70 grayscale-[0.5]' : ''}`}>
+                      <CardHeader className="space-y-4 p-8">
+                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-colors shadow-inner ${isCompleted ? 'bg-green-100 text-green-600' : 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white'}`}>
+                          {isCompleted ? <CheckCircle2 className="w-8 h-8" /> : getDomainIcon(domain.id)}
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <CardTitle className="text-2xl">{domain.title}</CardTitle>
+                          {isCompleted && (
+                            <Badge className="bg-green-100 text-green-700 border-none">Completed</Badge>
+                          )}
+                        </div>
                         <CardDescription className="flex items-center gap-2 mt-2">
                           <Badge variant="secondary" className="bg-primary/5 text-primary border-none">{domain.duration}</Badge>
                           <Badge variant="outline" className="text-neutral-500">{domain.level}</Badge>
                         </CardDescription>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="flex-1 space-y-6 p-8 pt-0">
-                      <p className="text-neutral-600 leading-relaxed">{domain.description}</p>
-                      <div className="space-y-3">
-                        <p className="text-xs font-bold uppercase tracking-widest text-neutral-400">Key Skills</p>
-                        <div className="flex flex-wrap gap-2">
-                          {domain.keySkills.map(skill => (
-                            <Badge key={skill} variant="secondary" className="bg-neutral-100 text-neutral-600 border-none px-3 py-1">{skill}</Badge>
-                          ))}
+                      </CardHeader>
+                      <CardContent className="flex-1 space-y-6 p-8 pt-0">
+                        <p className="text-neutral-600 leading-relaxed">{domain.description}</p>
+                        <div className="space-y-3">
+                          <p className="text-xs font-bold uppercase tracking-widest text-neutral-400">Key Skills</p>
+                          <div className="flex flex-wrap gap-2">
+                            {domain.keySkills.map(skill => (
+                              <Badge key={skill} variant="secondary" className="bg-neutral-100 text-neutral-600 border-none px-3 py-1">{skill}</Badge>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    </CardContent>
-                    <CardFooter className="bg-neutral-50/50 border-t border-neutral-100 p-8">
-                      <Button className="w-full h-12 gap-2 text-lg font-semibold" onClick={() => openDomainDetails(domain)}>
-                        Apply for {domain.title} <ChevronRight className="w-5 h-5" />
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                ))}
+                      </CardContent>
+                      <CardFooter className="bg-neutral-50/50 border-t border-neutral-100 p-8">
+                        <Button 
+                          className="w-full h-12 gap-2 text-lg font-semibold" 
+                          onClick={() => openDomainDetails(domain)}
+                          disabled={isCompleted}
+                          variant={isCompleted ? "secondary" : "default"}
+                        >
+                          {isCompleted ? 'Already Applied' : `Apply for ${domain.title}`} {!isCompleted && <ChevronRight className="w-5 h-5" />}
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  );
+                })}
               </div>
             </main>
           </motion.div>
@@ -525,7 +546,7 @@ export default function App() {
                     autoPlay 
                     muted 
                     playsInline 
-                    className="w-full h-full object-cover rounded-2xl"
+                    className="w-full h-full object-cover rounded-2xl scale-x-[-1]"
                   />
                   <div className="absolute top-3 left-3 flex items-center gap-2 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse shadow-[0_0_10px_rgba(239,68,68,0.5)]" />
@@ -606,7 +627,7 @@ export default function App() {
                 <p className="text-xs text-center text-neutral-400 font-medium leading-relaxed px-4">
                   You can now close this window. Further instructions will be sent to <strong>{studentEmail}</strong>.
                 </p>
-                <Button variant="outline" className="w-full h-14 rounded-2xl font-bold text-lg border-neutral-200 hover:bg-white transition-all" onClick={() => window.location.reload()}>
+                <Button variant="outline" className="w-full h-14 rounded-2xl font-bold text-lg border-neutral-200 hover:bg-white transition-all" onClick={resetSession}>
                   Return to Portal Home
                 </Button>
               </CardFooter>
@@ -678,7 +699,7 @@ export default function App() {
                 <p className="text-xs text-center text-neutral-400 font-medium leading-relaxed px-4">
                   Our recruitment team will analyze your proctoring logs and assessment performance. Shortlisted candidates will be contacted at <strong>{submissionSummary?.email || studentEmail}</strong> within 7 business days.
                 </p>
-                <Button variant="outline" className="w-full h-14 rounded-2xl font-bold text-lg border-neutral-200 hover:bg-white transition-all" onClick={() => window.location.reload()}>
+                <Button variant="outline" className="w-full h-14 rounded-2xl font-bold text-lg border-neutral-200 hover:bg-white transition-all" onClick={resetSession}>
                   Return to Portal Home
                 </Button>
               </CardFooter>

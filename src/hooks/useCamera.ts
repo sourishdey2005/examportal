@@ -22,12 +22,6 @@ export const useCamera = (captureIntervalMs: number = 10000) => {
         });
       }
       setStream(mediaStream);
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
-        videoRef.current.onloadedmetadata = () => {
-          videoRef.current?.play().catch(e => console.error("Error playing video:", e));
-        };
-      }
     } catch (err) {
       setError('Camera access denied or not available');
       console.error('Error accessing camera:', err);
@@ -70,6 +64,11 @@ export const useCamera = (captureIntervalMs: number = 10000) => {
     };
   }, [stream, captureIntervalMs, takeSnapshot]);
 
+  const resetCamera = useCallback(() => {
+    setSnapshots([]);
+    setError(null);
+  }, []);
+
   return {
     stream,
     error,
@@ -79,5 +78,6 @@ export const useCamera = (captureIntervalMs: number = 10000) => {
     startCamera,
     stopCamera,
     takeSnapshot,
+    resetCamera,
   };
 };

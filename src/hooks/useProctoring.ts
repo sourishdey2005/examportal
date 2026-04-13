@@ -8,7 +8,7 @@ interface ProctoringState {
   isTabActive: boolean;
 }
 
-export const useProctoring = (onAutoSubmit: () => void, maxViolations: number = 1) => {
+export const useProctoring = (onAutoSubmit?: () => void, maxViolations: number = 1) => {
   const [state, setState] = useState<ProctoringState>({
     violations: 0,
     tabSwitches: 0,
@@ -26,7 +26,7 @@ export const useProctoring = (onAutoSubmit: () => void, maxViolations: number = 
   const incrementViolations = useCallback(() => {
     setState((prev) => {
       const newViolations = prev.violations + 1;
-      if (newViolations >= maxViolations) {
+      if (onAutoSubmit && newViolations >= maxViolations) {
         onAutoSubmit();
       }
       return { ...prev, violations: newViolations };
@@ -105,5 +105,16 @@ export const useProctoring = (onAutoSubmit: () => void, maxViolations: number = 
     }
   };
 
-  return { ...state, logs, enterFullScreen };
+  const resetProctoring = useCallback(() => {
+    setState({
+      violations: 0,
+      tabSwitches: 0,
+      fullscreenExits: 0,
+      isFullScreen: false,
+      isTabActive: true,
+    });
+    setLogs([]);
+  }, []);
+
+  return { ...state, logs, enterFullScreen, resetProctoring };
 };
