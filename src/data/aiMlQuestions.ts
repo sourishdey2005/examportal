@@ -923,3 +923,47 @@ console.assert(AI_ML_QUESTIONS.length === 100, `Expected 100 questions, got ${AI
 const ids = AI_ML_QUESTIONS.map(q => q.id);
 const uniqueIds = new Set(ids);
 console.assert(ids.length === uniqueIds.size, 'Duplicate question IDs detected!');
+// Verify we have exactly 100 unique questions
+console.assert(AI_ML_QUESTIONS.length === 100, 
+  `Expected 100 questions, got ${AI_ML_QUESTIONS.length}`);
+
+// Verify no duplicate IDs
+const ids = AI_ML_QUESTIONS.map(q => q.id);
+const uniqueIds = new Set(ids);
+console.assert(ids.length === uniqueIds.size, 'Duplicate question IDs detected!');
+
+// Optional: Helper function to get questions by difficulty
+export const getQuestionsByDifficulty = (difficulty: 'advanced' | 'expert'): Question[] => {
+  return AI_ML_QUESTIONS.filter(q => q.difficulty === difficulty);
+};
+
+// Optional: Helper to get questions by category
+export const getQuestionsByCategory = (category: string): Question[] => {
+  return AI_ML_QUESTIONS.filter(q => q.category === category);
+};
+
+// Optional: Get random subset for exams with deterministic seeding
+export const getRandomQuestions = (count: number, seed?: number): Question[] => {
+  const shuffled = [...AI_ML_QUESTIONS];
+  
+  // Seeded shuffle using linear congruential generator
+  if (seed !== undefined) {
+    let randomSeed = seed;
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      randomSeed = (randomSeed * 9301 + 49297) % 233280;
+      const j = Math.floor((randomSeed / 233280) * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+  } else {
+    // Standard Fisher-Yates shuffle
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+  }
+  return shuffled.slice(0, count);
+};
+
+export default AI_ML_QUESTIONS;
+
+
