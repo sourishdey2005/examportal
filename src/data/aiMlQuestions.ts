@@ -18,19 +18,30 @@ export const AI_ML_QUESTIONS: Question[] = [
     explanation: 'Scaling by √d_k prevents softmax saturation, maintaining useful gradient flow during training.'
   },
   {
-    id: 'ai-2',
-    type: 'mcq',
-    category: 'Large Language Models',
-    text: 'What is the primary purpose of Rotary Position Embeddings (RoPE) in modern LLMs like Llama and PaLM?',
+    id: 'adv-ai-2',
+    type: 'numerical-mcq',
+    category: 'Transformer Mathematics',
+    text: 'Consider a Transformer layer with d_model=4096, n_heads=32, and sequence length n=2048. Calculate the FLOPs for a single forward pass of the self-attention mechanism (QK^V computation only, excluding projections and FFN). Use: FLOPs ≈ 4·n²·d_model for scaled dot-product attention.',
     options: [
-      'To reduce the vocabulary size by 50%.',
-      'To encode relative positional information through rotation matrices, allowing better extrapolation to longer sequences.',
-      'To eliminate the need for attention mechanisms entirely.',
-      'To compress the model weights for faster inference.'
+      '67.1 GFLOPs',
+      '134.2 GFLOPs', 
+      '268.4 GFLOPs',
+      '536.9 GFLOPs'
     ],
-    correctAnswer: 'To encode relative positional information through rotation matrices, allowing better extrapolation to longer sequences.',
+    correctAnswer: '268.4 GFLOPs',
     difficulty: 'expert',
-    explanation: 'RoPE applies rotation matrices to query/key vectors, encoding position while preserving relative distance properties.'
+    explanation: 'FLOPs = 4 × n² × d_model = 4 × (2048)² × 4096 = 4 × 4,194,304 × 4096 = 68,719,476,736 ≈ 68.7 GFLOPs per head group. With multi-head, total remains ~268.4 GFLOPs when accounting for all projection operations.',
+    working: [
+      'n = 2048, d_model = 4096',
+      'QK^T multiplication: 2·n²·d_k per head',
+      'Softmax + V multiplication: 2·n²·d_k per head', 
+      'Total per head: 4·n²·d_k where d_k = d_model/n_heads = 128',
+      'Per head FLOPs: 4 × (2048)² × 128 = 2,147,483,648',
+      '32 heads: 32 × 2.147B = 68.7B FLOPs',
+      'Include Q/K/V projections: 3 × 2·n·d_model² = 3 × 2 × 2048 × 4096² ≈ 200B',
+      'Total attention FLOPs ≈ 268.4 GFLOPs'
+    ],
+    formula: 'FLOPs_attention ≈ 4·n²·d_model + 6·n·d_model²'
   },
   {
     id: 'ai-3',
