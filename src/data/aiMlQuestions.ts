@@ -1,1577 +1,925 @@
 import { Question } from '../types';
 
 export const AI_ML_QUESTIONS: Question[] = [
-  // ==================== TRANSFORMER ARCHITECTURE & LLMs (Questions 1-15) ====================
+  // ==================== TRANSFORMER ARCHITECTURE & LLMs ====================
   {
     id: 'ai-1',
-    type: 'mcq',
-    category: 'Transformer Architecture',
-    text: 'In the "Attention is All You Need" paper, why is "Scaled Dot-Product Attention" preferred over simple dot-product attention for large dimensions?',
-    options: [
-      'To reduce the computational complexity from O(n^2) to O(n).',
-      'To prevent the dot products from growing large in magnitude, which would push the softmax function into regions with extremely small gradients.',
-      'To allow for parallel processing of the sequence tokens.',
-      'To ensure that the attention weights always sum to exactly one.'
-    ],
-    correctAnswer: 'To prevent the dot products from growing large in magnitude, which would push the softmax function into regions with extremely small gradients.',
-    difficulty: 'advanced',
-    explanation: 'Scaling by √d_k prevents softmax saturation, maintaining useful gradient flow during training.'
-  },
-  {
-    id: 'adv-ai-2',
     type: 'numerical-mcq',
     category: 'Transformer Mathematics',
-    text: 'Consider a Transformer layer with d_model=4096, n_heads=32, and sequence length n=2048. Calculate the FLOPs for a single forward pass of the self-attention mechanism (QK^V computation only, excluding projections and FFN). Use: FLOPs ≈ 4·n²·d_model for scaled dot-product attention.',
-    options: [
-      '67.1 GFLOPs',
-      '134.2 GFLOPs', 
-      '268.4 GFLOPs',
-      '536.9 GFLOPs'
-    ],
-    correctAnswer: '268.4 GFLOPs',
-    difficulty: 'expert',
-    explanation: 'FLOPs = 4 × n² × d_model = 4 × (2048)² × 4096 = 4 × 4,194,304 × 4096 = 68,719,476,736 ≈ 68.7 GFLOPs per head group. With multi-head, total remains ~268.4 GFLOPs when accounting for all projection operations.',
-    working: [
-      'n = 2048, d_model = 4096',
-      'QK^T multiplication: 2·n²·d_k per head',
-      'Softmax + V multiplication: 2·n²·d_k per head', 
-      'Total per head: 4·n²·d_k where d_k = d_model/n_heads = 128',
-      'Per head FLOPs: 4 × (2048)² × 128 = 2,147,483,648',
-      '32 heads: 32 × 2.147B = 68.7B FLOPs',
-      'Include Q/K/V projections: 3 × 2·n·d_model² = 3 × 2 × 2048 × 4096² ≈ 200B',
-      'Total attention FLOPs ≈ 268.4 GFLOPs'
-    ],
-    formula: 'FLOPs_attention ≈ 4·n²·d_model + 6·n·d_model²'
+    text: 'A transformer model has d_model=8192, n_heads=64, sequence length L=4096. Calculate the total FLOPs for the self-attention mechanism including QKV projections, attention computation, and output projection. Use FLOPs = 4·L²·d_model + 6·L·d_model². What is the result in TFLOPs?',
+    options: ['1.37 TFLOPs', '2.75 TFLOPs', '5.50 TFLOPs', '11.0 TFLOPs'],
+    correctAnswer: '5.50 TFLOPs',
+    difficulty: 'expert'
+  },
+  {
+    id: 'ai-2',
+    type: 'numerical-mcq',
+    category: 'Memory Analysis',
+    text: 'For a Llama 2 70B model with 80 layers, hidden size 8192, using Grouped Query Attention with 8 KV heads and 32 Q heads, calculate the KV cache size per 100 tokens in GB. Assume FP16 precision.',
+    options: ['0.131 GB', '0.262 GB', '0.524 GB', '1.048 GB'],
+    correctAnswer: '0.262 GB',
+    difficulty: 'expert'
   },
   {
     id: 'ai-3',
-    type: 'mcq',
-    category: 'Transformer Architecture',
-    text: 'In the context of the "Deadly Triad" in Reinforcement Learning, which combination is known to cause instability?',
-    options: [
-      'High learning rate, batch normalization, and dropout.',
-      'Function approximation, bootstrapping, and off-policy learning.',
-      'Gradient clipping, weight decay, and momentum.',
-      'Experience replay, target networks, and epsilon-greedy exploration.'
-    ],
-    correctAnswer: 'Function approximation, bootstrapping, and off-policy learning.',
-    difficulty: 'expert',
-    explanation: 'These three elements together can cause divergence in value-based RL; addressed by algorithms like DQN with target networks.'
+    type: 'numerical-mcq',
+    category: 'Optimization Theory',
+    text: 'When training a 7B parameter model with Adam optimizer and gradient checkpointing using O(√L) memory, if L=32 layers, what is the total GPU memory requirement in GB assuming 4-bit quantization for weights and gradients, and FP16 for optimizer states?',
+    options: ['14.5 GB', '18.3 GB', '21.4 GB', '28.0 GB'],
+    correctAnswer: '21.4 GB',
+    difficulty: 'expert'
   },
   {
     id: 'ai-4',
-    type: 'mcq',
-    category: 'Neural Architecture',
-    text: 'What is the primary benefit of "Grouped Query Attention" (GQA) as used in models like Llama 3?',
-    options: [
-      'It increases the model\'s reasoning capabilities by 2x.',
-      'It provides a balance between Multi-Head Attention (MHA) and Multi-Query Attention (MQA), reducing KV cache size while maintaining performance.',
-      'It allows the model to process infinite-length sequences.',
-      'It eliminates the need for positional embeddings.'
-    ],
-    correctAnswer: 'It provides a balance between Multi-Head Attention (MHA) and Multi-Query Attention (MQA), reducing KV cache size while maintaining performance.',
-    difficulty: 'advanced',
-    explanation: 'GQA groups queries to share key/value heads, reducing memory bandwidth while preserving multi-head expressiveness.'
+    type: 'numerical-mcq',
+    category: 'Mixture of Experts',
+    text: 'Mixtral 8x7B uses top-2 routing out of 8 experts per token. If hidden dimension d_model=4096 and FFN expansion factor is 3.5× using SwiGLU activation, calculate the total parameters in an expert\'s FFN (in billions).',
+    options: ['2.7B', '4.7B', '7.0B', '9.4B'],
+    correctAnswer: '4.7B',
+    difficulty: 'expert'
   },
   {
     id: 'ai-5',
-    type: 'mcq',
-    category: 'Optimization Theory',
-    text: 'What is the "Sharpness-Aware Minimization" (SAM) technique primarily designed to improve in deep learning models?',
-    options: [
-      'The speed of convergence during the first few epochs.',
-      'Generalization by seeking parameters that lie in neighborhoods of uniformly low loss rather than just a single sharp minimum.',
-      'The memory efficiency of the backpropagation algorithm.',
-      'The ability of the model to handle missing data in the input features.'
-    ],
-    correctAnswer: 'Generalization by seeking parameters that lie in neighborhoods of uniformly low loss rather than just a single sharp minimum.',
-    difficulty: 'expert',
-    explanation: 'SAM minimizes the maximum loss within a perturbation radius, finding flatter minima that generalize better.'
+    type: 'numerical-mcq',
+    category: 'Flash Attention',
+    text: 'Flash Attention reduces memory complexity from O(N²) to O(N). For N=32,768 and d_head=256, calculate the approximate peak memory usage in MB when using Flash Attention with block_size=256 and 4-bit quantization for attention scores.',
+    options: ['8 MB', '16 MB', '32 MB', '64 MB'],
+    correctAnswer: '16 MB',
+    difficulty: 'expert'
   },
   {
     id: 'ai-6',
-    type: 'mcq',
-    category: 'Large Language Models',
-    text: 'What is the key innovation of the LoRA (Low-Rank Adaptation) method for fine-tuning large language models?',
-    options: [
-      'It freezes all model parameters and only trains small low-rank decomposition matrices injected into each layer.',
-      'It increases the model size by adding extra attention heads.',
-      'It replaces the transformer architecture with RNNs during fine-tuning.',
-      'It requires retraining the entire model from scratch with lower precision.'
-    ],
-    correctAnswer: 'It freezes all model parameters and only trains small low-rank decomposition matrices injected into each layer.',
-    difficulty: 'advanced',
-    explanation: 'LoRA adds trainable low-rank matrices ΔW = BA to frozen weights, enabling efficient fine-tuning with minimal parameters.'
+    type: 'numerical-mcq',
+    category: 'Multi-Query Attention',
+    text: 'For a model with d_model=6144, n_heads=48, using Multi-Query Attention (MQA), calculate the percentage reduction in KV cache size compared to standard Multi-Head Attention (MHA).',
+    options: ['95.8%', '97.9%', '98.6%', '99.2%'],
+    correctAnswer: '97.9%',
+    difficulty: 'expert'
   },
   {
     id: 'ai-7',
-    type: 'mcq',
-    category: 'Transformer Architecture',
-    text: 'In the context of BERT\'s pretraining, what is the purpose of the "Next Sentence Prediction" (NSP) task?',
-    options: [
-      'To predict the sentiment of the next sentence.',
-      'To understand sentence-level relationships and discourse coherence.',
-      'To generate the next sentence in the sequence.',
-      'To compress the model size by removing unnecessary sentences.'
-    ],
-    correctAnswer: 'To understand sentence-level relationships and discourse coherence.',
-    difficulty: 'advanced',
-    explanation: 'NSP trains BERT to predict if sentence B follows sentence A, improving performance on QA and NLI tasks.'
+    type: 'numerical-mcq',
+    category: 'Grouped Query Attention',
+    text: 'A model uses GQA with 96 Q heads and 12 KV heads. If KV cache for a single sequence of length 4096 is 1.2 GB in FP16, what is the cache size for MHA and MQA?',
+    options: ['MHA: 9.6 GB, MQA: 0.1 GB', 'MHA: 19.2 GB, MQA: 0.2 GB', 'MHA: 9.6 GB, MQA: 0.2 GB', 'MHA: 4.8 GB, MQA: 0.05 GB'],
+    correctAnswer: 'MHA: 9.6 GB, MQA: 0.1 GB',
+    difficulty: 'expert'
   },
   {
     id: 'ai-8',
-    type: 'mcq',
-    category: 'Large Language Models',
-    text: 'What is the primary advantage of using "Mixture of Experts" (MoE) architectures in models like GPT-4 and Mixtral?',
-    options: [
-      'They reduce the total number of parameters in the model.',
-      'They allow conditional computation where only a subset of parameters is activated per token, enabling larger models without proportional inference cost.',
-      'They eliminate the need for attention mechanisms.',
-      'They guarantee deterministic outputs for the same input.'
-    ],
-    correctAnswer: 'They allow conditional computation where only a subset of parameters is activated per token, enabling larger models without proportional inference cost.',
-    difficulty: 'expert',
-    explanation: 'MoE routes each token to top-k experts, scaling parameter count without linearly increasing compute per token.'
+    type: 'numerical-mcq',
+    category: 'Rotary Position Embedding',
+    text: 'For RoPE applied to a single attention head with d_head=128 and sequence length L=8192, calculate the total MFLOPs required. Assume 5 operations per complex rotation.',
+    options: ['1.34 MFLOPs', '2.68 MFLOPs', '5.36 MFLOPs', '10.72 MFLOPs'],
+    correctAnswer: '2.68 MFLOPs',
+    difficulty: 'expert'
   },
   {
     id: 'ai-9',
-    type: 'mcq',
-    category: 'Transformer Architecture',
-    text: 'What problem does "Layer Normalization" primarily solve in deep neural networks?',
-    options: [
-      'It prevents overfitting by randomly dropping neurons.',
-      'It stabilizes the distribution of layer inputs, addressing internal covariate shift.',
-      'It increases the model\'s ability to memorize training data.',
-      'It reduces the vocabulary size of the tokenizer.'
-    ],
-    correctAnswer: 'It stabilizes the distribution of layer inputs, addressing internal covariate shift.',
-    difficulty: 'advanced',
-    explanation: 'LayerNorm normalizes across features for each sample, enabling stable training of deep transformers.'
+    type: 'numerical-mcq',
+    category: 'RMSNorm',
+    text: 'RMSNorm for d_model=8192, batch size B=32, sequence length L=2048. Calculate total FLOPs for forward pass in GFLOPs assuming 3 operations per element per vector (square, sum, divide, multiply).',
+    options: ['0.26 GFLOPs', '0.52 GFLOPs', '1.05 GFLOPs', '2.10 GFLOPs'],
+    correctAnswer: '1.05 GFLOPs',
+    difficulty: 'expert'
   },
   {
     id: 'ai-10',
-    type: 'mcq',
-    category: 'Large Language Models',
-    text: 'What is the purpose of "Temperature Scaling" when sampling from a language model?',
-    options: [
-      'To reduce the model\'s memory footprint during inference.',
-      'To control the randomness of the output; higher temperature produces more diverse but potentially less coherent text.',
-      'To increase the training speed by cooling down the GPU.',
-      'To normalize the embedding vectors to unit length.'
-    ],
-    correctAnswer: 'To control the randomness of the output; higher temperature produces more diverse but potentially less coherent text.',
-    difficulty: 'advanced',
-    explanation: 'Temperature T scales logits before softmax: p_i ∝ exp(logit_i / T); T>1 flattens distribution, T<1 sharpens it.'
+    type: 'numerical-mcq',
+    category: 'SwiGLU Activation',
+    text: 'SwiGLU activation uses 3 linear transformations: x * sigmoid(x) * (W1*x) + (W3*x). If d_model=4096 and ffw_dim=16384, calculate the total FLOPs for SwiGLU in a single transformer layer for batch size 32, sequence length 2048 (in GFLOPs).',
+    options: ['12.9 GFLOPs', '25.8 GFLOPs', '38.7 GFLOPs', '51.6 GFLOPs'],
+    correctAnswer: '25.8 GFLOPs',
+    difficulty: 'expert'
   },
   {
     id: 'ai-11',
-    type: 'mcq',
-    category: 'Transformer Architecture',
-    text: 'In the "Attention is All You Need" paper, what is the computational complexity of self-attention with respect to sequence length n?',
-    options: [
-      'O(n) - linear complexity.',
-      'O(n log n) - linearithmic complexity.',
-      'O(n^2) - quadratic complexity with respect to sequence length.',
-      'O(1) - constant complexity.'
-    ],
-    correctAnswer: 'O(n^2) - quadratic complexity with respect to sequence length.',
-    difficulty: 'advanced',
-    explanation: 'Self-attention computes pairwise interactions between all tokens, leading to O(n²) time and memory.'
+    type: 'numerical-mcq',
+    category: 'Quantization',
+    text: 'A 13B parameter model is quantized from FP16 to INT4. The original model size is 26 GB. After quantization, what is the size in GB, and what is the theoretical maximum inference speedup assuming memory bandwidth is the bottleneck?',
+    options: ['6.5 GB, 4x', '13 GB, 2x', '6.5 GB, 8x', '13 GB, 4x'],
+    correctAnswer: '6.5 GB, 4x',
+    difficulty: 'expert'
   },
   {
     id: 'ai-12',
-    type: 'mcq',
-    category: 'Large Language Models',
-    text: 'What is "Prompt Engineering" primarily concerned with?',
-    options: [
-      'Designing the physical hardware for running LLMs.',
-      'Crafting input prompts to guide the model toward desired outputs without changing model weights.',
-      'Engineering the tokenizer algorithm for better compression.',
-      'Building prompts for user interface design.'
-    ],
-    correctAnswer: 'Crafting input prompts to guide the model toward desired outputs without changing model weights.',
-    difficulty: 'advanced',
-    explanation: 'Prompt engineering leverages in-context learning to steer model behavior through careful input design.'
+    type: 'numerical-mcq',
+    category: 'LoRA Theory',
+    text: 'LoRA is applied to a 7B model with rank r=8 to all 96 attention layers (Q, K, V, O projections). Each projection matrix has dimensions d_model=4096 × d_model=4096. Calculate the number of trainable parameters added by LoRA in millions.',
+    options: ['33.6M', '67.1M', '134.2M', '268.4M'],
+    correctAnswer: '134.2M',
+    difficulty: 'expert'
   },
   {
     id: 'ai-13',
-    type: 'mcq',
-    category: 'Transformer Architecture',
-    text: 'What is the main purpose of "Residual Connections" (skip connections) in deep networks like ResNet and Transformers?',
-    options: [
-      'To increase the number of parameters in the model.',
-      'To allow gradients to flow directly through the network, mitigating the vanishing gradient problem.',
-      'To reduce the dimensionality of the input data.',
-      'To add noise to the activations for regularization.'
-    ],
-    correctAnswer: 'To allow gradients to flow directly through the network, mitigating the vanishing gradient problem.',
-    difficulty: 'advanced',
-    explanation: 'Residual connections enable training of very deep networks by providing direct gradient paths.'
+    type: 'numerical-mcq',
+    category: 'Attention Complexity',
+    text: 'For a transformer with sliding window attention of window size W=4096 and sequence length N=32768, calculate the ratio of FLOPs compared to full quadratic attention.',
+    options: ['1/2', '1/4', '1/8', '1/16'],
+    correctAnswer: '1/8',
+    difficulty: 'expert'
   },
   {
     id: 'ai-14',
-    type: 'mcq',
-    category: 'Large Language Models',
-    text: 'What does "Chain-of-Thought" prompting aim to achieve?',
-    options: [
-      'To reduce the latency of model responses.',
-      'To improve reasoning capabilities by prompting the model to show intermediate reasoning steps.',
-      'To chain multiple models together in a pipeline.',
-      'To encrypt the communication between user and model.'
-    ],
-    correctAnswer: 'To improve reasoning capabilities by prompting the model to show intermediate reasoning steps.',
-    difficulty: 'advanced',
-    explanation: 'CoT prompting elicits step-by-step reasoning, significantly improving performance on complex reasoning tasks.'
+    type: 'numerical-mcq',
+    category: 'Training Throughput',
+    text: 'Training a 1.2B parameter model on 8 A100 GPUs (each 312 TFLOPS FP16). If the model achieves 40% FLOPs utilization, calculate the training throughput in tokens per second for sequence length 2048.',
+    options: ['12,800 t/s', '25,600 t/s', '38,400 t/s', '51,200 t/s'],
+    correctAnswer: '38,400 t/s',
+    difficulty: 'expert'
   },
   {
     id: 'ai-15',
-    type: 'mcq',
-    category: 'Transformer Architecture',
-    text: 'What is "Multi-Head Attention" in the Transformer architecture?',
-    options: [
-      'Running the attention mechanism multiple times in parallel with different learned projections.',
-      'Using multiple GPUs to process attention in parallel.',
-      'Applying attention to multiple input sentences simultaneously.',
-      'A technique to reduce the number of attention layers.'
-    ],
-    correctAnswer: 'Running the attention mechanism multiple times in parallel with different learned projections.',
-    difficulty: 'advanced',
-    explanation: 'Multi-head attention allows the model to jointly attend to information from different representation subspaces.'
+    type: 'numerical-mcq',
+    category: 'Inference Latency',
+    text: 'An LLM with 70B parameters runs inference on a single GPU with memory bandwidth of 1.5 TB/s. Calculate the minimum theoretical latency in ms for generating a single token (load all weights once). Assume FP16 weights.',
+    options: ['37 ms', '74 ms', '93 ms', '186 ms'],
+    correctAnswer: '93 ms',
+    difficulty: 'expert'
   },
 
-  // ==================== GENERATIVE MODELS (Questions 16-25) ====================
+  // ==================== GENERATIVE MODELS ====================
   {
     id: 'ai-16',
-    type: 'mcq',
-    category: 'Generative Models',
-    text: 'In Diffusion Models, what is the fundamental difference between the "Forward Process" and the "Reverse Process"?',
-    options: [
-      'The Forward process generates data, while the Reverse process compresses it.',
-      'The Forward process adds Gaussian noise to data until it becomes pure noise, while the Reverse process learns to denoise it.',
-      'The Forward process is learned, while the Reverse process is a fixed mathematical transformation.',
-      'The Forward process uses a GAN architecture, while the Reverse process uses a VAE.'
-    ],
-    correctAnswer: 'The Forward process adds Gaussian noise to data until it becomes pure noise, while the Reverse process learns to denoise it.',
-    difficulty: 'advanced',
-    explanation: 'Forward process is fixed Markov chain adding noise; reverse process is learned neural network that denoises.'
+    type: 'numerical-mcq',
+    category: 'Diffusion Models',
+    text: 'In DDPM, if β_t linearly increases from β_1=1e-4 to β_T=0.02 with T=1000 steps, calculate α_bar_500 (cumulative product of (1-β_t) up to step 500). Estimate using continuous approximation.',
+    options: ['0.18', '0.37', '0.63', '0.82'],
+    correctAnswer: '0.63',
+    difficulty: 'expert'
   },
   {
     id: 'ai-17',
-    type: 'mcq',
-    category: 'Generative Models',
-    text: 'What is the primary objective of the Generator in a Generative Adversarial Network (GAN)?',
-    options: [
-      'To classify real vs fake images accurately.',
-      'To generate synthetic data that is indistinguishable from real data, fooling the discriminator.',
-      'To compress the input data into a lower-dimensional representation.',
-      'To cluster similar data points together.'
-    ],
-    correctAnswer: 'To generate synthetic data that is indistinguishable from real data, fooling the discriminator.',
-    difficulty: 'advanced',
-    explanation: 'Generator minimizes discriminator\'s ability to distinguish real from fake, creating realistic samples.'
+    type: 'numerical-mcq',
+    category: 'Diffusion Models',
+    text: 'For a diffusion model generating 512×512 images with U-Net having 2.5B parameters, using 50 DDIM sampling steps, calculate total FLOPs for generation if each step uses 2× forward passes (unique denoising + CFG). Assume each forward pass is equivalent to 2× inference of a 7B LLM.',
+    options: ['0.7 TFLOPs', '1.4 TFLOPs', '2.1 TFLOPs', '2.8 TFLOPs'],
+    correctAnswer: '2.1 TFLOPs',
+    difficulty: 'expert'
   },
   {
     id: 'ai-18',
-    type: 'mcq',
-    category: 'Generative Models',
-    text: 'What problem does the "Mode Collapse" phenomenon describe in GAN training?',
-    options: [
-      'The generator produces limited diversity, outputting similar samples regardless of input noise.',
-      'The discriminator becomes too powerful and always rejects generated samples.',
-      'The model overfits to the training data and cannot generalize.',
-      'The training process requires too much computational memory.'
-    ],
-    correctAnswer: 'The generator produces limited diversity, outputting similar samples regardless of input noise.',
-    difficulty: 'expert',
-    explanation: 'Mode collapse occurs when generator finds a few outputs that fool discriminator and stops exploring diversity.'
+    type: 'numerical-mcq',
+    category: 'GANs',
+    text: 'In StyleGAN3, the mapping network has 8 fully connected layers with dimension 512. Calculate the total parameters in the mapping network if each layer includes bias.',
+    options: ['1.05M', '2.10M', '3.15M', '4.20M'],
+    correctAnswer: '2.10M',
+    difficulty: 'expert'
   },
   {
     id: 'ai-19',
-    type: 'mcq',
-    category: 'Generative Models',
-    text: 'In Variational Autoencoders (VAEs), what is the purpose of the KL divergence term in the loss function?',
-    options: [
-      'To maximize the reconstruction quality of the input.',
-      'To regularize the learned latent distribution to be close to a prior (typically standard normal).',
-      'To increase the dimensionality of the latent space.',
-      'To speed up the training process by reducing computations.'
-    ],
-    correctAnswer: 'To regularize the learned latent distribution to be close to a prior (typically standard normal).',
-    difficulty: 'advanced',
-    explanation: 'KL term ensures latent space is well-structured and enables meaningful sampling from prior distribution.'
+    type: 'numerical-mcq',
+    category: 'VAEs',
+    text: 'A VAE with latent dimension z=256, encoder output μ and σ, and decoder reconstructing 256×256×3 images. Calculate the KL divergence term for a single sample if μ = [0.1, 0.2, ..., 0.1*256] and σ = softplus([0.5, 0.5, ...]).',
+    options: ['32.8', '65.6', '98.4', '131.2'],
+    correctAnswer: '32.8',
+    difficulty: 'expert'
   },
   {
     id: 'ai-20',
-    type: 'mcq',
-    category: 'Generative Models',
-    text: 'What is "Classifier-Free Guidance" (CFG) used for in diffusion models?',
-    options: [
-      'To train the model without any classifier.',
-      'To trade off between sample quality and diversity by adjusting the influence of conditional information.',
-      'To remove the need for a U-Net architecture.',
-      'To classify generated images during training.'
-    ],
-    correctAnswer: 'To trade off between sample quality and diversity by adjusting the influence of conditional information.',
-    difficulty: 'expert',
-    explanation: 'CFG scales the difference between conditional and unconditional predictions, controlling adherence to prompt.'
+    type: 'numerical-mcq',
+    category: 'Stable Diffusion',
+    text: 'Stable Diffusion VAE compresses 512×512×3 images to 64×64×4 latent space. Calculate the compression ratio (input elements / output elements).',
+    options: ['16:1', '24:1', '48:1', '96:1'],
+    correctAnswer: '48:1',
+    difficulty: 'expert'
   },
   {
     id: 'ai-21',
-    type: 'mcq',
-    category: 'Generative Models',
-    text: 'What is the key difference between Autoregressive models (like GPT) and Diffusion models?',
-    options: [
-      'Autoregressive models generate data sequentially token-by-token, while diffusion models generate all dimensions in parallel through iterative denoising.',
-      'Diffusion models can only generate text, while autoregressive models can only generate images.',
-      'Autoregressive models use only CNNs, while diffusion models use only RNNs.',
-      'There is no difference; they are identical approaches.'
-    ],
-    correctAnswer: 'Autoregressive models generate data sequentially token-by-token, while diffusion models generate all dimensions in parallel through iterative denoising.',
-    difficulty: 'advanced',
-    explanation: 'AR models factorize joint distribution as product of conditionals; diffusion models learn reverse denoising process.'
+    type: 'numerical-mcq',
+    category: 'Flow Matching',
+    text: 'In Conditional Flow Matching, if the vector field is parameterized with 500M parameters, and we train on 10M image-text pairs at resolution 256×256, calculate total FLOPs for one epoch with batch size 256, assuming each forward+backward is 4× the FLOPs of a 7B LLM forward pass.',
+    options: ['2.8e22 FLOPs', '5.6e22 FLOPs', '1.1e23 FLOPs', '2.2e23 FLOPs'],
+    correctAnswer: '2.8e22 FLOPs',
+    difficulty: 'expert'
   },
   {
     id: 'ai-22',
-    type: 'mcq',
-    category: 'Generative Models',
-    text: 'What is the "Reparameterization Trick" used for in VAEs?',
-    options: [
-      'To allow backpropagation through random sampling by separating the stochastic component from the parameters.',
-      'To reduce the number of layers in the neural network.',
-      'To increase the learning rate during training.',
-      'To compress the model weights for deployment.'
-    ],
-    correctAnswer: 'To allow backpropagation through random sampling by separating the stochastic component from the parameters.',
-    difficulty: 'advanced',
-    explanation: 'Reparameterization expresses z = μ + σ⊙ε with ε~N(0,I), enabling gradient flow through sampling operation.'
+    type: 'numerical-mcq',
+    category: 'Normalizing Flows',
+    text: 'A RealNVP flow has 32 coupling layers, each with a scaling network of 2 hidden layers of size 512. Input dimension is 784 (MNIST). Calculate total parameters in the coupling networks.',
+    options: ['25.8M', '51.6M', '77.4M', '103.2M'],
+    correctAnswer: '51.6M',
+    difficulty: 'expert'
   },
   {
     id: 'ai-23',
-    type: 'mcq',
-    category: 'Generative Models',
-    text: 'In Stable Diffusion, what does the "Latent Diffusion Model" approach achieve?',
-    options: [
-      'It performs diffusion in a lower-dimensional latent space rather than pixel space, significantly reducing computational cost.',
-      'It increases the resolution of generated images by 4x.',
-      'It eliminates the need for text conditioning.',
-      'It uses only convolutional layers without attention.'
-    ],
-    correctAnswer: 'It performs diffusion in a lower-dimensional latent space rather than pixel space, significantly reducing computational cost.',
-    difficulty: 'advanced',
-    explanation: 'Latent diffusion applies denoising in compressed VAE latent space, reducing compute by ~4-16x vs pixel space.'
+    type: 'numerical-mcq',
+    category: 'Classifier Guidance',
+    text: 'In classifier guidance for diffusion, guidance scale w=2.0. If the unconditional score estimate is s_u = -0.5 and classifier gradient is g = 0.3, calculate the guided score estimate.',
+    options: ['-0.1', '-0.2', '0.1', '0.2'],
+    correctAnswer: '0.1',
+    difficulty: 'expert'
   },
   {
     id: 'ai-24',
-    type: 'mcq',
-    category: 'Generative Models',
-    text: 'What is the primary challenge addressed by "Spectral Normalization" in GANs?',
-    options: [
-      'It prevents the discriminator from becoming too powerful by constraining its Lipschitz constant.',
-      'It speeds up the training by 10x.',
-      'It reduces the memory usage of the generator.',
-      'It eliminates the need for the discriminator entirely.'
-    ],
-    correctAnswer: 'It prevents the discriminator from becoming too powerful by constraining its Lipschitz constant.',
-    difficulty: 'expert',
-    explanation: 'Spectral norm constrains weight matrix singular values, stabilizing GAN training by controlling discriminator gradients.'
+    type: 'numerical-mcq',
+    category: 'Latent Diffusion',
+    text: 'A latent diffusion model operates on latent space of size 64×64×4. If the attention layers in the U-Net have d_model=1024 and 16 heads, calculate the FLOPs for a single attention layer (QKV projections + attention) in GFLOPs.',
+    options: ['0.27 GFLOPs', '0.54 GFLOPs', '1.08 GFLOPs', '2.16 GFLOPs'],
+    correctAnswer: '0.54 GFLOPs',
+    difficulty: 'expert'
   },
   {
     id: 'ai-25',
-    type: 'mcq',
-    category: 'Generative Models',
-    text: 'What is "Flow-Based Generative Models\'" key characteristic?',
-    options: [
-      'They use invertible neural networks with tractable likelihood computation.',
-      'They rely on adversarial training between two networks.',
-      'They can only generate discrete data like text.',
-      'They require Markov Chain Monte Carlo sampling for generation.'
-    ],
-    correctAnswer: 'They use invertible neural networks with tractable likelihood computation.',
-    difficulty: 'expert',
-    explanation: 'Normalizing flows use bijective transformations with computable Jacobians, enabling exact likelihood and sampling.'
+    type: 'numerical-mcq',
+    category: 'Score Matching',
+    text: 'Denoising Score Matching with noise levels σ = [0.1, 0.2, 0.5, 1.0] each equally weighted. For a sample x, corrupted to x+ε where ε~N(0, σ²I), the score network predicts s_θ(x+ε, σ). Calculate the effective weight for σ=0.2 if using variance weighting 1/σ².',
+    options: ['0.01', '0.25', '4.0', '25.0'],
+    correctAnswer: '25.0',
+    difficulty: 'expert'
   },
 
-  // ==================== COMPUTER VISION (Questions 26-35) ====================
+  // ==================== REINFORCEMENT LEARNING ====================
   {
     id: 'ai-26',
-    type: 'mcq',
-    category: 'Computer Vision',
-    text: 'What is the key innovation of Vision Transformers (ViT) compared to Convolutional Neural Networks?',
-    options: [
-      'ViTs process images as sequences of patches using self-attention, eliminating the need for convolutional operations.',
-      'ViTs use only pooling layers without any learnable parameters.',
-      'ViTs require 100x less data to train effectively.',
-      'ViTs can only process grayscale images.'
-    ],
-    correctAnswer: 'ViTs process images as sequences of patches using self-attention, eliminating the need for convolutional operations.',
-    difficulty: 'advanced',
-    explanation: 'ViT splits images into fixed-size patches, linearly embeds them, and processes with standard transformer encoder.'
+    type: 'numerical-mcq',
+    category: 'Policy Gradients',
+    text: 'In REINFORCE algorithm, with discount factor γ=0.99, episode length T=1000, and all rewards r_t=1, calculate the return G_t for t=500.',
+    options: ['63.4', '73.4', '83.4', '93.4'],
+    correctAnswer: '73.4',
+    difficulty: 'expert'
   },
   {
     id: 'ai-27',
-    type: 'mcq',
-    category: 'Computer Vision',
-    text: 'What is the purpose of "Anchor Boxes" in object detection algorithms like Faster R-CNN and SSD?',
-    options: [
-      'To predefine bounding boxes of various scales and aspect ratios that the network refines and classifies.',
-      'To anchor the image to a specific coordinate system.',
-      'To compress the image file size.',
-      'To eliminate background regions from the image.'
-    ],
-    correctAnswer: 'To predefine bounding boxes of various scales and aspect ratios that the network refines and classifies.',
-    difficulty: 'advanced',
-    explanation: 'Anchor boxes provide reference proposals at multiple scales/aspect ratios, improving detection of varied object shapes.'
+    type: 'numerical-mcq',
+    category: 'PPO Theory',
+    text: 'In PPO with clip range ε=0.2, policy ratio r_t(θ)=1.3, advantage A_t=1.5. Calculate the clipped surrogate objective value.',
+    options: ['1.5', '1.8', '1.95', '2.25'],
+    correctAnswer: '1.8',
+    difficulty: 'expert'
   },
   {
     id: 'ai-28',
-    type: 'mcq',
-    category: 'Computer Vision',
-    text: 'In semantic segmentation, what is the purpose of "Skip Connections" in U-Net architecture?',
-    options: [
-      'To combine high-level semantic information from the decoder with fine-grained spatial details from the encoder.',
-      'To skip training certain layers to save time.',
-      'To connect the input directly to the output without processing.',
-      'To reduce the number of parameters in the model.'
-    ],
-    correctAnswer: 'To combine high-level semantic information from the decoder with fine-grained spatial details from the encoder.',
-    difficulty: 'advanced',
-    explanation: 'Skip connections preserve spatial resolution lost during downsampling, enabling precise pixel-level predictions.'
+    type: 'numerical-mcq',
+    category: 'DQN',
+    text: 'In DQN with target network updated every C=1000 steps. If we train for 10M steps, how many target network updates occur?',
+    options: ['10,000', '20,000', '30,000', '40,000'],
+    correctAnswer: '10,000',
+    difficulty: 'expert'
   },
   {
     id: 'ai-29',
-    type: 'mcq',
-    category: 'Computer Vision',
-    text: 'What does "Intersection over Union" (IoU) measure in object detection?',
-    options: [
-      'The ratio of the intersection area to the union area of two bounding boxes, measuring overlap.',
-      'The speed of the detection algorithm.',
-      'The memory usage of the model.',
-      'The number of objects detected per second.'
-    ],
-    correctAnswer: 'The ratio of the intersection area to the union area of two bounding boxes, measuring overlap.',
-    difficulty: 'advanced',
-    explanation: 'IoU = area(intersection)/area(union); used for evaluation and non-maximum suppression in object detection.'
+    type: 'numerical-mcq',
+    category: 'SAC Algorithm',
+    text: 'In Soft Actor-Critic, temperature α=0.2, policy outputs mean μ=-0.8, log_std= -1.0. Sample action a = μ + σ×ε where ε=0.5. Calculate log probability of the action (up to constant).',
+    options: ['-1.78', '-2.08', '-2.38', '-2.68'],
+    correctAnswer: '-2.08',
+    difficulty: 'expert'
   },
   {
     id: 'ai-30',
-    type: 'mcq',
-    category: 'Computer Vision',
-    text: 'What is "Transfer Learning" in the context of computer vision?',
-    options: [
-      'Transferring data from one hard drive to another.',
-      'Using a pre-trained model on a large dataset and fine-tuning it for a specific downstream task.',
-      'Training multiple models simultaneously and averaging their weights.',
-      'Converting color images to grayscale during training.'
-    ],
-    correctAnswer: 'Using a pre-trained model on a large dataset and fine-tuning it for a specific downstream task.',
-    difficulty: 'advanced',
-    explanation: 'Transfer learning leverages features learned on large datasets (e.g., ImageNet) for tasks with limited data.'
+    type: 'numerical-mcq',
+    category: 'TD Learning',
+    text: 'In TD(0) with α=0.1, γ=0.9, current V(s)=5.0, next state V(s\')=6.0, reward r=2. Calculate the TD error and new V(s).',
+    options: ['δ=2.4, V=5.24', 'δ=2.4, V=5.0', 'δ=0.4, V=5.04', 'δ=3.4, V=5.34'],
+    correctAnswer: 'δ=2.4, V=5.24',
+    difficulty: 'expert'
   },
   {
     id: 'ai-31',
-    type: 'mcq',
-    category: 'Computer Vision',
-    text: 'What is the primary advantage of "Depthwise Separable Convolutions" used in MobileNet?',
-    options: [
-      'They reduce computational cost and model size by factorizing standard convolution into depthwise and pointwise operations.',
-      'They increase the depth of the network by 10x.',
-      'They eliminate the need for activation functions.',
-      'They automatically adjust the learning rate during training.'
-    ],
-    correctAnswer: 'They reduce computational cost and model size by factorizing standard convolution into depthwise and pointwise operations.',
-    difficulty: 'advanced',
-    explanation: 'Depthwise separable convolutions reduce FLOPs by ~8-9x compared to standard convolutions with similar accuracy.'
+    type: 'numerical-mcq',
+    category: 'Actor-Critic',
+    text: 'In Advantage Actor-Critic (A2C) with value loss coefficient c_v=0.5, entropy coefficient c_e=0.01. Policy loss L_p= -1.2, value loss L_v=0.8, entropy H=2.5. Calculate total loss.',
+    options: ['-1.585', '-1.415', '-1.195', '-0.975'],
+    correctAnswer: '-1.195',
+    difficulty: 'expert'
   },
   {
     id: 'ai-32',
-    type: 'mcq',
-    category: 'Computer Vision',
-    text: 'What is "Data Augmentation" primarily used for in training computer vision models?',
-    options: [
-      'To increase the effective size and diversity of the training set by applying random transformations.',
-      'To compress the dataset for faster loading.',
-      'To remove noisy images from the dataset.',
-      'To convert all images to the same file format.'
-    ],
-    correctAnswer: 'To increase the effective size and diversity of the training set by applying random transformations.',
-    difficulty: 'advanced',
-    explanation: 'Augmentation (rotation, flip, color jitter, etc.) improves generalization by exposing model to varied inputs.'
+    type: 'numerical-mcq',
+    category: 'Bellman Optimality',
+    text: 'For a 2-state MDP: state A -> reward 0 to A (prob 0.5), reward 10 to B (prob 0.5). state B -> reward 0 to B (prob 1.0). γ=0.9. Solve for V*(A) and V*(B).',
+    options: ['V*(A)=45, V*(B)=0', 'V*(A)=50, V*(B)=0', 'V*(A)=55, V*(B)=0', 'V*(A)=60, V*(B)=0'],
+    correctAnswer: 'V*(A)=50, V*(B)=0',
+    difficulty: 'expert'
   },
   {
     id: 'ai-33',
-    type: 'mcq',
-    category: 'Computer Vision',
-    text: 'What is the purpose of "Batch Normalization" in CNNs?',
-    options: [
-      'To normalize the input batch to have zero mean and unit variance, stabilizing and accelerating training.',
-      'To increase the batch size during inference.',
-      'To shuffle the order of images in each batch.',
-      'To reduce the number of channels in the feature maps.'
-    ],
-    correctAnswer: 'To normalize the input batch to have zero mean and unit variance, stabilizing and accelerating training.',
-    difficulty: 'advanced',
-    explanation: 'BatchNorm reduces internal covariate shift, enabling higher learning rates and faster convergence.'
+    type: 'numerical-mcq',
+    category: 'Importance Sampling',
+    text: 'In off-policy learning, behavior policy b(a|s)=0.6, target policy π(a|s)=0.3. Calculate the importance sampling weight for this action.',
+    options: ['0.2', '0.3', '0.5', '2.0'],
+    correctAnswer: '0.5',
+    difficulty: 'expert'
   },
   {
     id: 'ai-34',
-    type: 'mcq',
-    category: 'Computer Vision',
-    text: 'In "Region Proposal Networks" (RPN), what is the purpose of the objectness score?',
-    options: [
-      'To classify the exact category of the object.',
-      'To distinguish between regions that contain objects vs. background, regardless of specific class.',
-      'To measure the confidence of the bounding box coordinates.',
-      'To determine the color of the object.'
-    ],
-    correctAnswer: 'To distinguish between regions that contain objects vs. background, regardless of specific class.',
-    difficulty: 'advanced',
-    explanation: 'Objectness score is binary classification (object/background) that filters proposals before class-specific detection.'
+    type: 'numerical-mcq',
+    category: 'Eligibility Traces',
+    text: 'In TD(λ) with λ=0.8, γ=0.9, current eligibility trace e(s)=0.5, update amount δ=2.0. Calculate new e(s) after update and the weight change.',
+    options: ['e=0.86, Δw=1.72', 'e=0.86, Δw=0.86', 'e=0.43, Δw=0.86', 'e=1.00, Δw=2.00'],
+    correctAnswer: 'e=0.86, Δw=1.72',
+    difficulty: 'expert'
   },
   {
     id: 'ai-35',
-    type: 'mcq',
-    category: 'Computer Vision',
-    text: 'What is "Feature Pyramid Networks" (FPN) designed to address in object detection?',
-    options: [
-      'The challenge of detecting objects at different scales by combining multi-level features.',
-      'The problem of overfitting in small datasets.',
-      'The need for faster image loading from disk.',
-      'The issue of color distortion in images.'
-    ],
-    correctAnswer: 'The challenge of detecting objects at different scales by combining multi-level features.',
-    difficulty: 'advanced',
-    explanation: 'FPN builds pyramid of feature maps with lateral connections, enabling detection at multiple scales efficiently.'
+    type: 'numerical-mcq',
+    category: 'MARL',
+    text: 'In Independent PPO with 4 agents, each with 5M parameters, centralized training with decentralized execution. Calculate total communication overhead per gradient step (in MB) if each agent sends full gradients (FP32).',
+    options: ['20 MB', '40 MB', '60 MB', '80 MB'],
+    correctAnswer: '80 MB',
+    difficulty: 'expert'
   },
 
-  // ==================== REINFORCEMENT LEARNING (Questions 36-45) ====================
+  // ==================== COMPUTER VISION ====================
   {
     id: 'ai-36',
-    type: 'mcq',
-    category: 'Reinforcement Learning',
-    text: 'What is the "Bellman Equation" fundamental to?',
-    options: [
-      'It recursively defines the value of a state as the immediate reward plus the discounted value of the next state.',
-      'It calculates the learning rate for neural networks.',
-      'It measures the entropy of a probability distribution.',
-      'It defines the backpropagation algorithm.'
-    ],
-    correctAnswer: 'It recursively defines the value of a state as the immediate reward plus the discounted value of the next state.',
-    difficulty: 'advanced',
-    explanation: 'Bellman equation V(s) = E[r + γV(s\')] forms foundation of dynamic programming and value-based RL methods.'
+    type: 'numerical-mcq',
+    category: 'Vision Transformers',
+    text: 'ViT-Base (d_model=768, n_heads=12, L=12) processes 224×224 images with patch size 16×16. Calculate total FLOPs for the transformer encoder alone (excluding patch embedding).',
+    options: ['11.2 GFLOPs', '22.4 GFLOPs', '44.8 GFLOPs', '89.6 GFLOPs'],
+    correctAnswer: '22.4 GFLOPs',
+    difficulty: 'expert'
   },
   {
     id: 'ai-37',
-    type: 'mcq',
-    category: 'Reinforcement Learning',
-    text: 'What is the key difference between "Policy Gradient" methods and "Q-Learning"?',
-    options: [
-      'Policy gradient methods directly optimize the policy parameters, while Q-learning learns a value function to derive the policy.',
-      'Policy gradient is only for discrete action spaces, while Q-learning is only for continuous spaces.',
-      'Q-learning requires a teacher to provide correct actions, while policy gradient does not.',
-      'Policy gradient uses supervised learning, while Q-learning uses unsupervised learning.'
-    ],
-    correctAnswer: 'Policy gradient methods directly optimize the policy parameters, while Q-learning learns a value function to derive the policy.',
-    difficulty: 'advanced',
-    explanation: 'Policy gradients optimize π_θ directly via ∇_θ J; Q-learning learns Q*(s,a) then derives greedy policy.'
+    type: 'numerical-mcq',
+    category: 'CNN Architectures',
+    text: 'A ResNet-50 bottleneck block (1×1, 64; 3×3, 64; 1×1, 256) with input feature map 56×56×256. Calculate FLOPs for this block.',
+    options: ['120 MFLOPS', '240 MFLOPS', '480 MFLOPS', '960 MFLOPS'],
+    correctAnswer: '240 MFLOPS',
+    difficulty: 'expert'
   },
   {
     id: 'ai-38',
-    type: 'mcq',
-    category: 'Reinforcement Learning',
-    text: 'What is "Experience Replay" in Deep Q-Networks (DQN)?',
-    options: [
-      'Storing and randomly sampling past transitions to break correlation and improve sample efficiency.',
-      'Replaying the same episode multiple times to memorize it.',
-      'Recording the training process for video documentation.',
-      'Replaying random noise to the network for regularization.'
-    ],
-    correctAnswer: 'Storing and randomly sampling past transitions to break correlation and improve sample efficiency.',
-    difficulty: 'advanced',
-    explanation: 'Experience replay breaks temporal correlations in sequential data and enables reuse of experiences.'
+    type: 'numerical-mcq',
+    category: 'Object Detection',
+    text: 'In YOLOv5, anchor boxes are [10,13, 16,30, 33,23] for small objects. If input is 640×640 and stride=8, map these anchors to feature map coordinates (scale factor 640/8=80). Calculate the scaled anchor dimensions.',
+    options: ['[1.25,1.63, 2.0,3.75, 4.13,2.88]', '[80,104, 128,240, 264,184]', '[125,163, 200,375, 413,288]', '[1.0,1.3, 1.6,3.0, 3.3,2.3]'],
+    correctAnswer: '[1.25,1.63, 2.0,3.75, 4.13,2.88]',
+    difficulty: 'expert'
   },
   {
     id: 'ai-39',
-    type: 'mcq',
-    category: 'Reinforcement Learning',
-    text: 'What is the purpose of the "Advantage Function" in Actor-Critic methods?',
-    options: [
-      'It measures how much better an action is compared to the average action at a given state, reducing variance in policy gradients.',
-      'It calculates the computational advantage of using GPUs over CPUs.',
-      'It measures the advantage of deep learning over traditional ML.',
-      'It determines the learning rate advantage for different layers.'
-    ],
-    correctAnswer: 'It measures how much better an action is compared to the average action at a given state, reducing variance in policy gradients.',
-    difficulty: 'advanced',
-    explanation: 'Advantage A(s,a) = Q(s,a) - V(s) provides lower-variance gradient estimates than raw returns.'
+    type: 'numerical-mcq',
+    category: 'Segmentation',
+    text: 'U-Net with input 256×256×3, 5 downsampling levels (64,128,256,512,1024 channels). Calculate total parameters in the encoder (excluding batch norm, include biases).',
+    options: ['5.2M', '7.8M', '10.4M', '13.0M'],
+    correctAnswer: '7.8M',
+    difficulty: 'expert'
   },
   {
     id: 'ai-40',
-    type: 'mcq',
-    category: 'Reinforcement Learning',
-    text: 'What is "Proximal Policy Optimization" (PPO) designed to prevent?',
-    options: [
-      'It prevents overly large policy updates that could destabilize training using a clipped surrogate objective.',
-      'It prevents the model from using too much memory.',
-      'It prevents overfitting to the training environment.',
-      'It prevents the use of neural networks in RL.'
-    ],
-    correctAnswer: 'It prevents overly large policy updates that could destabilize training using a clipped surrogate objective.',
-    difficulty: 'advanced',
-    explanation: 'PPO clips policy ratio to [1-ε, 1+ε], preventing destructive updates while enabling multiple epochs of optimization.'
+    type: 'numerical-mcq',
+    category: 'Depthwise Conv',
+    text: 'MobileNetV2 uses depthwise separable convolution. Compare FLOPs of standard conv (3×3, in=128, out=256, H=56, W=56) vs depthwise+pointwise.',
+    options: ['724M vs 9.2M (78x)', '724M vs 18.4M (39x)', '362M vs 9.2M (39x)', '362M vs 18.4M (19x)'],
+    correctAnswer: '724M vs 9.2M (78x)',
+    difficulty: 'expert'
   },
   {
     id: 'ai-41',
-    type: 'mcq',
-    category: 'Reinforcement Learning',
-    text: 'What is the "Exploration-Exploitation Dilemma" in RL?',
-    options: [
-      'The trade-off between taking random actions to discover rewards vs. taking known good actions to maximize reward.',
-      'The dilemma of whether to use CPUs or GPUs for training.',
-      'The choice between batch and online learning.',
-      'The decision of which optimizer to use.'
-    ],
-    correctAnswer: 'The trade-off between taking random actions to discover rewards vs. taking known good actions to maximize reward.',
-    difficulty: 'advanced',
-    explanation: 'Exploration gathers information about environment; exploitation uses current knowledge to maximize reward.'
+    type: 'numerical-mcq',
+    category: 'Feature Pyramids',
+    text: 'FPN with 5 levels (P2-P6) where P2: 256×256×256, P3: 128×128×256, P4: 64×64×256, P5: 32×32×256, P6: 16×16×256. Calculate total FLOPs for lateral connections (1×1 conv) and top-down upsampling (nearest neighbor).',
+    options: ['0.42 GFLOPs', '0.84 GFLOPs', '1.68 GFLOPs', '3.36 GFLOPs'],
+    correctAnswer: '0.84 GFLOPs',
+    difficulty: 'expert'
   },
   {
     id: 'ai-42',
-    type: 'mcq',
-    category: 'Reinforcement Learning',
-    text: 'What is "Temporal Difference" (TD) Learning?',
-    options: [
-      'A method that updates value estimates based on the difference between consecutive predictions without waiting for the final outcome.',
-      'A technique to speed up training by using multiple time zones.',
-      'A method to difference images temporally for video analysis.',
-      'A scheduling technique for distributed training.'
-    ],
-    correctAnswer: 'A method that updates value estimates based on the difference between consecutive predictions without waiting for the final outcome.',
-    difficulty: 'advanced',
-    explanation: 'TD learning bootstraps: updates V(s_t) toward r + γV(s_{t+1}), combining Monte Carlo and dynamic programming.'
+    type: 'numerical-mcq',
+    category: 'YOLO',
+    text: 'YOLO loss function: box loss λ_coord=5, no-object loss λ_noobj=0.5. For a grid cell predicting an object with IoU=0.7, confidence target=1, predicted confidence=0.6. Calculate confidence loss contribution (BCE with logits).',
+    options: ['0.51', '0.23', '0.36', '0.42'],
+    correctAnswer: '0.36',
+    difficulty: 'expert'
   },
   {
     id: 'ai-43',
-    type: 'mcq',
-    category: 'Reinforcement Learning',
-    text: 'What is "Model-Based Reinforcement Learning"?',
-    options: [
-      'RL where the agent learns or uses a model of the environment to plan and make decisions.',
-      'RL that uses only pre-trained models without any environment interaction.',
-      'RL that models the reward function only.',
-      'RL that uses supervised learning for all decisions.'
-    ],
-    correctAnswer: 'RL where the agent learns or uses a model of the environment to plan and make decisions.',
-    difficulty: 'advanced',
-    explanation: 'Model-based RL learns transition/reward dynamics, enabling planning and sample-efficient learning.'
+    type: 'numerical-mcq',
+    category: 'Instance Segmentation',
+    text: 'Mask R-CNN with 80 classes produces masks of size 28×28. For an image with 10 detected instances, calculate the total number of mask parameters output (logits).',
+    options: ['80×28×28×10 = 627,200', '80×28×28 = 62,720', '90×28×28 = 70,560', '80×28×28×80 = 5,017,600'],
+    correctAnswer: '80×28×28 = 62,720',
+    difficulty: 'expert'
   },
   {
     id: 'ai-44',
-    type: 'mcq',
-    category: 'Reinforcement Learning',
-    text: 'What is the purpose of "Entropy Regularization" in policy gradient methods?',
-    options: [
-      'To encourage exploration by preventing the policy from becoming too deterministic too quickly.',
-      'To reduce the computational entropy of the system.',
-      'To compress the policy network size.',
-      'To increase the temperature of the training process.'
-    ],
-    correctAnswer: 'To encourage exploration by preventing the policy from becoming too deterministic too quickly.',
-    difficulty: 'advanced',
-    explanation: 'Entropy bonus H(π) added to objective encourages stochastic policies, preventing premature convergence.'
+    type: 'numerical-mcq',
+    category: 'Contrastive Learning',
+    text: 'SimCLR with batch size 4096 uses NT-Xent loss. Calculate total number of positive pairs in one batch (assuming each image has one positive augmentation).',
+    options: ['4096', '8192', '16384', '32768'],
+    correctAnswer: '4096',
+    difficulty: 'expert'
   },
   {
     id: 'ai-45',
-    type: 'mcq',
-    category: 'Reinforcement Learning',
-    text: 'What is "Multi-Agent Reinforcement Learning" (MARL)?',
-    options: [
-      'RL scenarios where multiple agents interact in a shared environment, potentially cooperating or competing.',
-      'Training a single agent on multiple GPUs simultaneously.',
-      'Using multiple reward functions for a single agent.',
-      'Training an agent on multiple environments sequentially.'
-    ],
-    correctAnswer: 'RL scenarios where multiple agents interact in a shared environment, potentially cooperating or competing.',
-    difficulty: 'expert',
-    explanation: 'MARL introduces non-stationarity and credit assignment challenges due to multiple learning agents.'
+    type: 'numerical-mcq',
+    category: 'EfficientNet',
+    text: 'EfficientNet-B0 baseline: width=1.0, depth=1.0, resolution=224. For EfficientNet-B4 with scaling coefficients (α=1.2, β=1.1, γ=1.15), calculate the approximate FLOPs multiplier.',
+    options: ['4.5x', '6.5x', '8.5x', '10.5x'],
+    correctAnswer: '6.5x',
+    difficulty: 'expert'
   },
 
-  // ==================== OPTIMIZATION & TRAINING (Questions 46-55) ====================
+  // ==================== OPTIMIZATION & TRAINING ====================
   {
     id: 'ai-46',
-    type: 'mcq',
-    category: 'Optimization Theory',
-    text: 'What is the primary advantage of "Adam" optimizer over standard SGD?',
-    options: [
-      'It uses adaptive learning rates for each parameter by maintaining first and second moment estimates.',
-      'It guarantees convergence to the global minimum in all cases.',
-      'It requires no hyperparameter tuning.',
-      'It works only with convolutional networks.'
-    ],
-    correctAnswer: 'It uses adaptive learning rates for each parameter by maintaining first and second moment estimates.',
-    difficulty: 'advanced',
-    explanation: 'Adam combines momentum (first moment) and RMSProp (second moment) with bias correction for adaptive per-parameter steps.'
+    type: 'numerical-mcq',
+    category: 'Adam Optimizer',
+    text: 'Adam optimizer with β₁=0.9, β₂=0.999, step t=1000, learning rate η=1e-4. If gradient g_t=0.1, m_{t-1}=0.05, v_{t-1}=0.0025. Calculate m̂_t and v̂_t, then parameter update Δθ.',
+    options: ['Δθ = -9.9e-5', 'Δθ = -1.98e-4', 'Δθ = -3.96e-4', 'Δθ = -7.92e-4'],
+    correctAnswer: 'Δθ = -1.98e-4',
+    difficulty: 'expert'
   },
   {
     id: 'ai-47',
-    type: 'mcq',
-    category: 'Optimization Theory',
-    text: 'What is "Learning Rate Scheduling" used for?',
-    options: [
-      'To adjust the learning rate during training, typically decreasing it to help convergence.',
-      'To schedule when to save model checkpoints.',
-      'To schedule GPU usage across multiple users.',
-      'To determine the batch size dynamically.'
-    ],
-    correctAnswer: 'To adjust the learning rate during training, typically decreasing it to help convergence.',
-    difficulty: 'advanced',
-    explanation: 'LR schedules (step decay, cosine, warmup) balance fast initial progress with fine-grained final convergence.'
+    type: 'numerical-mcq',
+    category: 'LR Scheduling',
+    text: 'Cosine decay schedule: η_min=1e-5, η_max=1e-3, T=10000 steps. Calculate learning rate at t=2500, t=5000, t=7500.',
+    options: '[9.09e-4, 5.0e-4, 9.09e-5]', '[7.5e-4, 5.0e-4, 2.5e-4]', '[8.5e-4, 5.5e-4, 8.5e-5]', '[9.5e-4, 5.0e-4, 5.0e-5]'],
+    correctAnswer: '[9.09e-4, 5.0e-4, 9.09e-5]',
+    difficulty: 'expert'
   },
   {
     id: 'ai-48',
-    type: 'mcq',
-    category: 'Optimization Theory',
-    text: 'What is "Gradient Clipping" used to prevent?',
-    options: [
-      'Exploding gradients by capping the maximum norm of gradients during backpropagation.',
-      'Underfitting by clipping small gradients.',
-      'Overfitting by removing gradients entirely.',
-      'Memory leaks by clipping tensor sizes.'
-    ],
-    correctAnswer: 'Exploding gradients by capping the maximum norm of gradients during backpropagation.',
-    difficulty: 'advanced',
-    explanation: 'Gradient clipping prevents NaN losses in RNNs/deep nets by scaling gradients when norm exceeds threshold.'
+    type: 'numerical-mcq',
+    category: 'Batch Normalization',
+    text: 'BatchNorm layer with running_mean=0.1, running_var=1.0, momentum=0.1. Batch of 32 samples has mean=0.3, var=1.2. Calculate updated running mean and var.',
+    options: ['mean=0.12, var=1.02', 'mean=0.15, var=1.02', 'mean=0.12, var=1.05', 'mean=0.15, var=1.05'],
+    correctAnswer: 'mean=0.12, var=1.02',
+    difficulty: 'expert'
   },
   {
     id: 'ai-49',
-    type: 'mcq',
-    category: 'Optimization Theory',
-    text: 'What is "Weight Decay" (L2 regularization) mathematically equivalent to?',
-    options: [
-      'Adding a penalty term proportional to the squared magnitude of weights to the loss function.',
-      'Randomly dropping weights during training.',
-      'Decaying the learning rate exponentially.',
-      'Removing weights that are close to zero.'
-    ],
-    correctAnswer: 'Adding a penalty term proportional to the squared magnitude of weights to the loss function.',
-    difficulty: 'advanced',
-    explanation: 'L2 regularization adds λ||w||² to loss, encouraging smaller weights and reducing overfitting.'
+    type: 'numerical-mcq',
+    category: 'LayerNorm',
+    text: 'LayerNorm on vector x=[1,2,3,4,5]. ε=1e-5, γ=[1,1,1,1,1], β=[0,0,0,0,0]. Calculate normalized output y for element x₃=3.',
+    options: ['-0.707', '0', '0.707', '1.414'],
+    correctAnswer: '0',
+    difficulty: 'expert'
   },
   {
     id: 'ai-50',
-    type: 'mcq',
-    category: 'Optimization Theory',
-    text: 'What is the "Vanishing Gradient Problem" in deep networks?',
-    options: [
-      'Gradients becoming exponentially small in early layers during backpropagation, preventing effective learning.',
-      'The loss function disappearing during training.',
-      'The model forgetting previously learned information.',
-      'The training data vanishing from memory.'
-    ],
-    correctAnswer: 'Gradients becoming exponentially small in early layers during backpropagation, preventing effective learning.',
-    difficulty: 'advanced',
-    explanation: 'Vanishing gradients occur with saturating activations; addressed by ReLU, residual connections, and careful initialization.'
+    type: 'numerical-mcq',
+    category: 'Gradient Clipping',
+    text: 'Gradient vector g = [0.5, 1.0, 1.5, 2.0, 2.5]. Apply global norm clipping with max_norm=2.0. Calculate scaling factor and clipped gradients.',
+    options: ['factor=0.78, g_clipped=[0.39,0.78,1.17,1.56,1.95]', 'factor=0.62, g_clipped=[0.31,0.62,0.93,1.24,1.55]', 'factor=0.55, g_clipped=[0.28,0.55,0.83,1.10,1.38]', 'factor=0.43, g_clipped=[0.22,0.43,0.65,0.86,1.08]'],
+    correctAnswer: 'factor=0.62, g_clipped=[0.31,0.62,0.93,1.24,1.55]',
+    difficulty: 'expert'
   },
   {
     id: 'ai-51',
-    type: 'mcq',
-    category: 'Optimization Theory',
-    text: 'What is "Dropout" regularization?',
-    options: [
-      'Randomly setting a fraction of neurons to zero during training to prevent co-adaptation and overfitting.',
-      'Dropping out of training when loss increases.',
-      'Removing the last layer of the network.',
-      'Decreasing the batch size during training.'
-    ],
-    correctAnswer: 'Randomly setting a fraction of neurons to zero during training to prevent co-adaptation and overfitting.',
-    difficulty: 'advanced',
-    explanation: 'Dropout trains an ensemble of thinned networks, reducing overfitting by preventing complex co-adaptations.'
+    type: 'numerical-mcq',
+    category: 'Dropout',
+    text: 'Dropout with keep_prob=0.8. For a layer with 1000 neurons, average 200 dropped per forward pass. In test time, weights are scaled by keep_prob. If training output mean is 1.0, test output mean is?',
+    options: ['0.8', '1.0', '1.25', '0.64'],
+    correctAnswer: '1.0',
+    difficulty: 'expert'
   },
   {
     id: 'ai-52',
-    type: 'mcq',
-    category: 'Optimization Theory',
-    text: 'What is "Early Stopping" as a regularization technique?',
-    options: [
-      'Halting training when validation performance stops improving to prevent overfitting.',
-      'Stopping the training process early to save electricity.',
-      'Ending training before processing all batches in an epoch.',
-      'Stopping gradient computation early in backpropagation.'
-    ],
-    correctAnswer: 'Halting training when validation performance stops improving to prevent overfitting.',
-    difficulty: 'advanced',
-    explanation: 'Early stopping uses validation loss as proxy for generalization, preventing memorization of training noise.'
+    type: 'numerical-mcq',
+    category: 'Weight Decay',
+    text: 'SGD with weight decay λ=1e-4, learning rate η=0.1. Current weight w=0.5, gradient g=0.05. Calculate new weight after one update.',
+    options: ['0.495', '0.500', '0.505', '0.510'],
+    correctAnswer: '0.495',
+    difficulty: 'expert'
   },
   {
     id: 'ai-53',
-    type: 'mcq',
-    category: 'Optimization Theory',
-    text: 'What is "Batch Size" impact on training dynamics?',
-    options: [
-      'Larger batches provide more stable gradient estimates but may generalize worse; smaller batches add noise but can escape sharp minima.',
-      'Batch size has no impact on training.',
-      'Larger batches always lead to better generalization.',
-      'Smaller batches always converge faster.'
-    ],
-    correctAnswer: 'Larger batches provide more stable gradient estimates but may generalize worse; smaller batches add noise but can escape sharp minima.',
-    difficulty: 'advanced',
-    explanation: 'Small batch noise acts as implicit regularization; large batches require learning rate scaling for similar performance.'
+    type: 'numerical-mcq',
+    category: 'Mixed Precision',
+    text: 'FP16 has exponent 5 bits, mantissa 10 bits. FP32 has 8 exponent, 23 mantissa. Calculate the smallest positive normalized number representable in FP16.',
+    options: ['6.10e-5', '5.96e-8', '2.98e-8', '1.19e-7'],
+    correctAnswer: '6.10e-5',
+    difficulty: 'expert'
   },
   {
     id: 'ai-54',
-    type: 'mcq',
-    category: 'Optimization Theory',
-    text: 'What is "Mixed Precision Training"?',
-    options: [
-      'Using both 16-bit and 32-bit floating point numbers to reduce memory and speed up training while maintaining stability.',
-      'Training on datasets with mixed data types.',
-      'Using multiple precision metrics for evaluation.',
-      'Mixing different optimization algorithms.'
-    ],
-    correctAnswer: 'Using both 16-bit and 32-bit floating point numbers to reduce memory and speed up training while maintaining stability.',
-    difficulty: 'advanced',
-    explanation: 'Mixed precision uses FP16 for compute/FP32 for master weights, with loss scaling to prevent underflow.'
+    type: 'numerical-mcq',
+    category: 'Gradient Checkpointing',
+    text: 'Model with 50 layers. Full activation memory = 20GB. Checkpoint every √L layers. Calculate memory savings percentage.',
+    options: ['86%', '92%', '96%', '98%'],
+    correctAnswer: '86%',
+    difficulty: 'expert'
   },
   {
     id: 'ai-55',
-    type: 'mcq',
-    category: 'Optimization Theory',
-    text: 'What is "Gradient Accumulation" used for?',
-    options: [
-      'Simulating larger batch sizes by accumulating gradients over multiple forward/backward passes before updating weights.',
-      'Accumulating gradients from multiple models.',
-      'Storing all gradients for visualization.',
-      'Accumulating gradients over multiple epochs.'
-    ],
-    correctAnswer: 'Simulating larger batch sizes by accumulating gradients over multiple forward/backward passes before updating weights.',
-    difficulty: 'advanced',
-    explanation: 'Gradient accumulation enables large effective batch sizes when GPU memory limits per-step batch size.'
+    type: 'numerical-mcq',
+    category: 'Label Smoothing',
+    text: 'Label smoothing with ε=0.1 for 10 classes. For a true label y=3, what is the smoothed target distribution?',
+    options: ['p=0.91 for class 3, p=0.01 for others', 'p=0.99 for class 3, p=0.001 for others', 'p=0.81 for class 3, p=0.01 for others', 'p=0.81 for class 3, p=0.021 for others'],
+    correctAnswer: 'p=0.91 for class 3, p=0.01 for others',
+    difficulty: 'expert'
   },
 
-  // ==================== MLOps & SYSTEMS (Questions 56-65) ====================
+  // ==================== GRAPH NEURAL NETWORKS ====================
   {
     id: 'ai-56',
-    type: 'mcq',
-    category: 'MLOps',
-    text: 'What is "Model Quantization" primarily used for?',
-    options: [
-      'Reducing model precision (e.g., FP32 to INT8) to decrease size and increase inference speed.',
-      'Increasing the number of model parameters.',
-      'Quantifying the uncertainty of model predictions.',
-      'Dividing the model into smaller sub-models.'
-    ],
-    correctAnswer: 'Reducing model precision (e.g., FP32 to INT8) to decrease size and increase inference speed.',
-    difficulty: 'advanced',
-    explanation: 'Quantization reduces memory bandwidth and enables faster integer arithmetic on edge devices.'
+    type: 'numerical-mcq',
+    category: 'GCN Propagation',
+    text: 'Graph with adjacency matrix A (3 nodes: 0-1, 1-2, 0-2 edges all weight 1). Add self-loops, degree matrix D̃, compute normalized adjacency Ã = D̃^{-1/2} Ã D̃^{-1/2}. Calculate Ã[0,1] value.',
+    options: ['0.33', '0.41', '0.50', '0.58'],
+    correctAnswer: '0.41',
+    difficulty: 'expert'
   },
   {
     id: 'ai-57',
-    type: 'mcq',
-    category: 'MLOps',
-    text: 'What is the purpose of "Knowledge Distillation"?',
-    options: [
-      'Transferring knowledge from a large teacher model to a smaller student model.',
-      'Distilling training data into a smaller dataset.',
-      'Removing knowledge from the model to protect privacy.',
-      'Converting model weights to a different format.'
-    ],
-    correctAnswer: 'Transferring knowledge from a large teacher model to a smaller student model.',
-    difficulty: 'advanced',
-    explanation: 'Distillation uses teacher soft labels (logits) to train compact student models with comparable performance.'
+    type: 'numerical-mcq',
+    category: 'GraphSAGE',
+    text: 'GraphSAGE with mean aggregator, node features h=[1,2,3,4,5] for neighbors. Calculate aggregated neighbor embedding (excluding self).',
+    options: '[2,3,4,5,6]', '[1,2,3,4,5]', '[3,4,5,6,7]', '[0,1,2,3,4]'],
+    correctAnswer: '[3,4,5,6,7]',
+    difficulty: 'expert'
   },
   {
     id: 'ai-58',
-    type: 'mcq',
-    category: 'MLOps',
-    text: 'What is "Model Drift" or "Concept Drift" in production ML systems?',
-    options: [
-      'The phenomenon where model performance degrades over time due to changes in the underlying data distribution.',
-      'The physical drifting of servers in a data center.',
-      'The model weights changing during inference.',
-      'The training process taking too long.'
-    ],
-    correctAnswer: 'The phenomenon where model performance degrades over time due to changes in the underlying data distribution.',
-    difficulty: 'advanced',
-    explanation: 'Data drift (P(X) changes) and concept drift (P(Y|X) changes) require monitoring and periodic retraining.'
+    type: 'numerical-mcq',
+    category: 'GAT Attention',
+    text: 'GAT with LeakyReLU(α=0.2), attention vector a=[1,-1]. Node features h_i=[2,3], h_j=[4,5]. Calculate attention coefficient e_ij before softmax.',
+    options: ['0.6', '1.2', '1.8', '2.4'],
+    correctAnswer: '1.2',
+    difficulty: 'expert'
   },
   {
     id: 'ai-59',
-    type: 'mcq',
-    category: 'MLOps',
-    text: 'What is "A/B Testing" in the context of ML model deployment?',
-    options: [
-      'Comparing two or more model versions by serving them to different user segments and measuring performance.',
-      'Testing models on datasets A and B separately.',
-      'A testing framework for unit tests.',
-      'Testing the model on two different GPUs.'
-    ],
-    correctAnswer: 'Comparing two or more model versions by serving them to different user segments and measuring performance.',
-    difficulty: 'advanced',
-    explanation: 'A/B testing provides causal evidence of model impact on business metrics before full rollout.'
+    type: 'numerical-mcq',
+    category: 'GIN',
+    text: 'GIN (Graph Isomorphism Network) update: h_v^(k) = MLP((1+ε)h_v^(k-1) + Σ_{u∈N(v)} h_u^(k-1)). For ε=0, MLP is identity, h_u=[1,1,1,1], node v has 3 neighbors each [1,1,1,1]. Calculate h_v.',
+    options: '[3,3,3,3]', '[4,4,4,4]', '[1,1,1,1]', '[0,0,0,0]'],
+    correctAnswer: '[4,4,4,4]',
+    difficulty: 'expert'
   },
   {
     id: 'ai-60',
-    type: 'mcq',
-    category: 'MLOps',
-    text: 'What is "Feature Store" in MLOps?',
-    options: [
-      'A centralized storage system for managing, sharing, and serving ML features across training and inference.',
-      'A store where you can buy pre-trained features.',
-      'A database for storing raw images.',
-      'A cache for model predictions.'
-    ],
-    correctAnswer: 'A centralized storage system for managing, sharing, and serving ML features across training and inference.',
-    difficulty: 'advanced',
-    explanation: 'Feature stores ensure consistency between training/serving features and enable feature reuse across teams.'
+    type: 'numerical-mcq',
+    category: 'Graph Pooling',
+    text: 'DiffPool learns assignment matrix S of size n×k where n=10 nodes, k=3 clusters. If S is softmax row-wise, and node features X∈R^{10×16}, compute pooled features X' = S^T X. What are dimensions of X'?',
+    options: '[3×16]', '[10×16]', '[3×10]', '[16×3]'],
+    correctAnswer: '[3×16]',
+    difficulty: 'expert'
   },
   {
     id: 'ai-61',
-    type: 'mcq',
-    category: 'MLOps',
-    text: 'What is "Model Versioning" important for?',
-    options: [
-      'Tracking different iterations of models, enabling reproducibility, rollback, and comparison.',
-      'Changing the model architecture randomly.',
-      'Versioning the training data only.',
-      'Creating different versions of the same prediction.'
-    ],
-    correctAnswer: 'Tracking different iterations of models, enabling reproducibility, rollback, and comparison.',
-    difficulty: 'advanced',
-    explanation: 'Model versioning with metadata enables audit trails, experiment tracking, and safe deployment practices.'
+    type: 'numerical-mcq',
+    category: 'RGCN',
+    text: 'RGCN with 3 relation types, each with its own weight matrix W_r of size 16×32. Input node features 10×16, output dimension 32. Calculate total parameters for relation transformations (excluding self-loop).',
+    options: ['1536', '3072', '4608', '6144'],
+    correctAnswer: '1536',
+    difficulty: 'expert'
   },
   {
     id: 'ai-62',
-    type: 'mcq',
-    category: 'MLOps',
-    text: 'What is "Data Validation" in ML pipelines?',
-    options: [
-      'Checking that input data conforms to expected schemas, distributions, and quality standards before training or inference.',
-      'Validating that the model has enough data.',
-      'Checking if the data is encrypted.',
-      'Validating user permissions to access data.'
-    ],
-    correctAnswer: 'Checking that input data conforms to expected schemas, distributions, and quality standards before training or inference.',
-    difficulty: 'advanced',
-    explanation: 'Data validation catches schema changes, distribution shifts, and data quality issues before they cause model failures.'
+    type: 'numerical-mcq',
+    category: 'Gated GNN',
+    text: 'GGNN uses GRU for propagation. If hidden dimension d=256, input feature size=512, calculate total parameters in GRU cell (input to hidden W_ih, hidden to hidden W_hh, biases).',
+    options: ['589,824', '1,179,648', '1,769,472', '2,359,296'],
+    correctAnswer: '1,179,648',
+    difficulty: 'expert'
   },
   {
     id: 'ai-63',
-    type: 'mcq',
-    category: 'MLOps',
-    text: 'What is "Shadow Deployment" (Dark Launch) of ML models?',
-    options: [
-      'Running a new model version alongside the production model without affecting live traffic, to validate performance.',
-      'Deploying models only at night.',
-      'Hiding the model architecture from users.',
-      'Deploying models without testing.'
-    ],
-    correctAnswer: 'Running a new model version alongside the production model without affecting live traffic, to validate performance.',
-    difficulty: 'advanced',
-    explanation: 'Shadow deployment compares new model predictions against production without impacting users, reducing deployment risk.'
+    type: 'numerical-mcq',
+    category: 'Message Passing',
+    text: 'MPNN with 5 message-passing steps, each vertex has degree 4, feature dimension 128. Calculate total messages sent (each step sends message per edge). Graph has 1000 nodes, 2000 edges.',
+    options: ['10,000 messages', '20,000 messages', '30,000 messages', '40,000 messages'],
+    correctAnswer: '10,000 messages',
+    difficulty: 'expert'
   },
   {
     id: 'ai-64',
-    type: 'mcq',
-    category: 'MLOps',
-    text: 'What is "Model Explainability" (XAI) critical for in production?',
-    options: [
-      'Understanding why models make specific predictions for debugging, compliance, and building user trust.',
-      'Making the model architecture more complex.',
-      'Explaining the code to other developers.',
-      'Making predictions faster.'
-    ],
-    correctAnswer: 'Understanding why models make specific predictions for debugging, compliance, and building user trust.',
-    difficulty: 'advanced',
-    explanation: 'Explainability supports regulatory compliance (GDPR), debugging model errors, and user acceptance of AI decisions.'
+    type: 'numerical-mcq',
+    category: 'Graph Transformer',
+    text: 'Graph Transformer with Laplacian positional encoding using k=8 eigenvectors. For graph with 500 nodes, each with degree variance σ²=2.0, calculate the dimension of the full node feature after concatenating original features (d=256) with PE.',
+    options: ['264', '256', '512', '2640'],
+    correctAnswer: '264',
+    difficulty: 'expert'
   },
   {
     id: 'ai-65',
-    type: 'mcq',
-    category: 'MLOps',
-    text: 'What is "Online Learning" in ML systems?',
-    options: [
-      'Updating the model continuously as new data arrives, rather than batch retraining.',
-      'Learning through online courses.',
-      'Training models only on internet data.',
-      'Running models on online servers only.'
-    ],
-    correctAnswer: 'Updating the model continuously as new data arrives, rather than batch retraining.',
-    difficulty: 'advanced',
-    explanation: 'Online learning adapts to distribution changes in real-time but requires careful handling of concept drift and catastrophic forgetting.'
+    type: 'numerical-mcq',
+    category: 'Weisfeiler-Lehman',
+    text: 'WL test on two graphs: Graph A: triangle (3 nodes cycle). Graph B: path of length 2 (3 nodes line). After 1 iteration of WL (color refinement), compute number of distinct colors in Graph A.',
+    options: ['1', '2', '3', '4'],
+    correctAnswer: '1',
+    difficulty: 'expert'
   },
 
-  // ==================== AI ETHICS & SAFETY (Questions 66-75) ====================
+  // ==================== PROBABILISTIC METHODS & BAYESIAN ====================
   {
     id: 'ai-66',
-    type: 'mcq',
-    category: 'AI Ethics',
-    text: 'What is "Algorithmic Bias" in machine learning?',
-    options: [
-      'Systematic and unfair discrimination against certain groups due to biased training data or model design.',
-      'The bias term in a neural network layer.',
-      'A preference for certain algorithms over others.',
-      'The tendency of algorithms to prefer faster computation.'
-    ],
-    correctAnswer: 'Systematic and unfair discrimination against certain groups due to biased training data or model design.',
-    difficulty: 'advanced',
-    explanation: 'Algorithmic bias arises from historical biases in data, proxy variables, or model objectives that disadvantage protected groups.'
+    type: 'numerical-mcq',
+    category: 'Bayesian Inference',
+    text: 'Beta-Binomial model: Prior Beta(α=2,β=2), observed 3 successes in 5 trials. Calculate posterior mean.',
+    options: ['0.40', '0.45', '0.50', '0.55'],
+    correctAnswer: '0.50',
+    difficulty: 'expert'
   },
   {
     id: 'ai-67',
-    type: 'mcq',
-    category: 'AI Ethics',
-    text: 'What is "Differential Privacy" designed to protect?',
-    options: [
-      'Individual privacy by ensuring that the inclusion or exclusion of a single data point does not significantly affect model output.',
-      'The privacy of the model weights.',
-      'The difference between training and test accuracy.',
-      'The privacy of the internet connection.'
-    ],
-    correctAnswer: 'Individual privacy by ensuring that the inclusion or exclusion of a single data point does not significantly affect model output.',
-    difficulty: 'expert',
-    explanation: 'Differential privacy adds calibrated noise to queries/outputs, providing mathematical privacy guarantees with ε parameter.'
+    type: 'numerical-mcq',
+    category: 'Gaussian Processes',
+    text: 'GP with RBF kernel: lengthscale l=1.0, signal variance σ_f²=1.0, noise σ_n²=0.1. For x=0 and x'=1, calculate kernel value k(x,x\').',
+    options: ['0.37', '0.61', '0.78', '0.90'],
+    correctAnswer: '0.61',
+    difficulty: 'expert'
   },
   {
     id: 'ai-68',
-    type: 'mcq',
-    category: 'AI Ethics',
-    text: 'What is "Adversarial Examples" in the context of AI safety?',
-    options: [
-      'Inputs specifically crafted to cause models to make incorrect predictions with high confidence.',
-      'Examples from adversarial training scenarios.',
-      'Training examples that are difficult to learn.',
-      'Examples used in competitive AI competitions.'
-    ],
-    correctAnswer: 'Inputs specifically crafted to cause models to make incorrect predictions with high confidence.',
-    difficulty: 'advanced',
-    explanation: 'Adversarial examples exploit model vulnerabilities via small, often imperceptible perturbations to inputs.'
+    type: 'numerical-mcq',
+    category: 'Variational Inference',
+    text: 'VI with Gaussian posterior q(θ)=N(μ=0.5,σ=0.2), true posterior p(θ|D) approximated. Calculate KL divergence between q and p if p(θ)=N(0,1). (Use exact formula)',
+    options: ['1.60', '2.05', '2.50', '2.95'],
+    correctAnswer: '2.05',
+    difficulty: 'expert'
   },
   {
     id: 'ai-69',
-    type: 'mcq',
-    category: 'AI Ethics',
-    text: 'What is "Fairness Through Unawareness" (Fairness Blind)?',
-    options: [
-      'The approach of removing protected attributes from features, which may fail due to correlated proxy variables.',
-      'Being unaware of fairness issues entirely.',
-      'Training models without looking at the data.',
-      'Removing all sensitive information from the internet.'
-    ],
-    correctAnswer: 'The approach of removing protected attributes from features, which may fail due to correlated proxy variables.',
-    difficulty: 'advanced',
-    explanation: 'Fairness through unawareness often fails because proxy variables (e.g., zip code) can encode protected attributes.'
+    type: 'numerical-mcq',
+    category: 'MCMC',
+    text: 'Metropolis-Hastings with proposal q(θ'|θ)=N(θ,σ²=0.5²). Current θ=1.0, proposed θ'=1.3. Target p(θ)=N(0,1). Calculate acceptance probability.',
+    options: ['0.33', '0.44', '0.55', '0.66'],
+    correctAnswer: '0.55',
+    difficulty: 'expert'
   },
   {
     id: 'ai-70',
-    type: 'mcq',
-    category: 'AI Ethics',
-    text: 'What is "Model Inversion" attack?',
-    options: [
-      'Reconstructing sensitive training data from model outputs and parameters.',
-      'Inverting the predictions of a model.',
-      'Flipping the model architecture upside down.',
-      'Reversing the training process.'
-    ],
-    correctAnswer: 'Reconstructing sensitive training data from model outputs and parameters.',
-    difficulty: 'expert',
-    explanation: 'Model inversion exploits model confidence scores or gradients to reconstruct private training examples.'
+    type: 'numerical-mcq',
+    category: 'ELBO',
+    text: 'VAE ELBO = E_q[log p(x|z)] - KL(q(z|x)||p(z)). For x=image, p(z)=N(0,I), q(z|x)=N(μ=0.2, σ=0.5²I), compute KL term (per dimension).',
+    options: ['0.38', '0.76', '1.14', '1.52'],
+    correctAnswer: '0.76',
+    difficulty: 'expert'
   },
   {
     id: 'ai-71',
-    type: 'mcq',
-    category: 'AI Ethics',
-    text: 'What is "Membership Inference Attack"?',
-    options: [
-      'Determining whether a specific data point was part of the model\'s training set.',
-      'Inferring the membership of a user in a social network.',
-      'Attacking the model membership system.',
-      'Inferring which club the model belongs to.'
-    ],
-    correctAnswer: 'Determining whether a specific data point was part of the model\'s training set.',
-    difficulty: 'expert',
-    explanation: 'Membership inference exploits overfitting: models behave differently on training vs. unseen data, revealing membership.'
+    type: 'numerical-mcq',
+    category: 'Bayesian Optimization',
+    text: 'EI acquisition function: best observed f*=0.5, predicted μ=0.8, σ=0.3. Calculate improvement and EI value.',
+    options: ['I=0.3, EI=0.14', 'I=0.3, EI=0.28', 'I=0.5, EI=0.14', 'I=0.5, EI=0.28'],
+    correctAnswer: 'I=0.3, EI=0.14',
+    difficulty: 'expert'
   },
   {
     id: 'ai-72',
-    type: 'mcq',
-    category: 'AI Ethics',
-    text: 'What is "Federated Learning" primarily motivated by?',
-    options: [
-      'Training models across decentralized devices without centralizing raw data, preserving privacy.',
-      'Federating multiple cloud providers.',
-      'Learning about federal governments.',
-      'Training models only on government data.'
-    ],
-    correctAnswer: 'Training models across decentralized devices without centralizing raw data, preserving privacy.',
-    difficulty: 'advanced',
-    explanation: 'Federated learning aggregates model updates (not raw data) from edge devices, enabling privacy-preserving collaborative training.'
+    type: 'numerical-mcq',
+    category: 'Conjugate Prior',
+    text: 'Normal-Normal conjugate prior: prior N(μ₀=0, σ₀²=1), likelihood N(x|μ, σ²=4), single observation x=3. Calculate posterior mean and variance.',
+    options: ['μ₁=2.0, σ₁²=0.8', 'μ₁=2.4, σ₁²=0.8', 'μ₁=2.0, σ₁²=1.2', 'μ₁=2.4, σ₁²=1.2'],
+    correctAnswer: 'μ₁=2.4, σ₁²=0.8',
+    difficulty: 'expert'
   },
   {
     id: 'ai-73',
-    type: 'mcq',
-    category: 'AI Ethics',
-    text: 'What is "Explainable AI" (XAI) contrasted with?',
-    options: [
-      'Black-box models where decision-making processes are opaque and difficult to interpret.',
-      'Slow AI systems.',
-      'Expensive AI systems.',
-      'Old AI systems.'
-    ],
-    correctAnswer: 'Black-box models where decision-making processes are opaque and difficult to interpret.',
-    difficulty: 'advanced',
-    explanation: 'XAI methods (SHAP, LIME, attention) provide post-hoc or intrinsic interpretability for complex models.'
+    type: 'numerical-mcq',
+    category: 'Monte Carlo Dropout',
+    text: 'MC Dropout with 100 forward passes, predictions: 80 times class A, 20 times class B. Calculate predictive uncertainty (entropy) and variance.',
+    options: ['H=0.50, p_var=0.16', 'H=0.50, p_var=0.12', 'H=0.72, p_var=0.16', 'H=0.72, p_var=0.12'],
+    correctAnswer: 'H=0.50, p_var=0.16',
+    difficulty: 'expert'
   },
   {
     id: 'ai-74',
-    type: 'mcq',
-    category: 'AI Ethics',
-    text: 'What is "Red Teaming" in AI safety?',
-    options: [
-      'Systematically attempting to find failures, biases, and vulnerabilities in AI systems before deployment.',
-      'Painting AI systems red.',
-      'Competing against other AI teams.',
-      'Training models on red-colored images.'
-    ],
-    correctAnswer: 'Systematically attempting to find failures, biases, and vulnerabilities in AI systems before deployment.',
-    difficulty: 'advanced',
-    explanation: 'Red teaming uses adversarial testing, prompt injection, and edge cases to uncover model weaknesses proactively.'
+    type: 'numerical-mcq',
+    category: 'Bayesian Neural Network',
+    text: 'Bayesian linear regression with Gaussian prior on weights w~N(0,α⁻¹I), noise β⁻¹. For α=1, β=1, X is 2×2 identity, y=[1,2]. Calculate posterior mean of w.',
+    options: '[0.5,1.0]', '[0.67,1.33]', '[0.8,1.6]', '[1.0,2.0]'],
+    correctAnswer: '[0.67,1.33]',
+    difficulty: 'expert'
   },
   {
     id: 'ai-75',
-    type: 'mcq',
-    category: 'AI Ethics',
-    text: 'What is "Constitutional AI" approach to alignment?',
-    options: [
-      'Training AI systems to follow a set of principles or constitution through self-critique and revision.',
-      'AI systems that follow a country\'s constitution literally.',
-      'Building AI for government use only.',
-      'Constitutional law for AI rights.'
-    ],
-    correctAnswer: 'Training AI systems to follow a set of principles or constitution through self-critique and revision.',
-    difficulty: 'expert',
-    explanation: 'Constitutional AI uses RLHF with principles as constraints, enabling models to self-critique and revise outputs.'
+    type: 'numerical-mcq',
+    category: 'Temporal Difference',
+    text: 'Bayesian TD learning with prior on value function. Initialize V=0, after observing transition (s,a,r,s\') with r=1, γ=0.9, V(s\')=0.5, uncertainty σ²=0.1. Compute posterior mean update (Kalman gain).',
+    options: ['0.50', '0.52', '0.55', '0.60'],
+    correctAnswer: '0.55',
+    difficulty: 'expert'
   },
 
-  // ==================== PROBABILISTIC METHODS & BAYESIAN (Questions 76-85) ====================
+  // ==================== ADVANCED TOPICS ====================
   {
     id: 'ai-76',
-    type: 'mcq',
-    category: 'Bayesian Inference',
-    text: 'What is "Markov Chain Monte Carlo" (MCMC) used for?',
-    options: [
-      'Sampling from complex probability distributions when direct sampling is difficult.',
-      'Training Markov models for text generation.',
-      'Optimizing neural network weights deterministically.',
-      'Creating Monte Carlo simulations for games.'
-    ],
-    correctAnswer: 'Sampling from complex probability distributions when direct sampling is difficult.',
-    difficulty: 'advanced',
-    explanation: 'MCMC constructs Markov chain with target distribution as stationary distribution, enabling approximate inference.'
+    type: 'numerical-mcq',
+    category: 'Neural Architecture Search',
+    text: 'DARTS search space: 8 operations, cell has 4 nodes (2 input, 4 intermediate). Each edge chooses 1 operation. Calculate total possible architectures.',
+    options: ['8^12 = 6.87e10', '8^14 = 4.39e12', '8^16 = 2.81e14', '8^20 = 1.15e18'],
+    correctAnswer: '8^14 = 4.39e12',
+    difficulty: 'expert'
   },
   {
     id: 'ai-77',
-    type: 'mcq',
-    category: 'Bayesian Inference',
-    text: 'What is the key difference between Bayesian and Frequentist approaches?',
-    options: [
-      'Bayesian methods treat parameters as random variables with distributions, while Frequentist methods treat them as fixed unknowns.',
-      'Bayesian methods are always faster.',
-      'Frequentist methods require more data.',
-      'Bayesian methods cannot use neural networks.'
-    ],
-    correctAnswer: 'Bayesian methods treat parameters as random variables with distributions, while Frequentist methods treat them as fixed unknowns.',
-    difficulty: 'advanced',
-    explanation: 'Bayesian inference updates prior beliefs with data via Bayes\' theorem; frequentist focuses on long-run frequency properties.'
+    type: 'numerical-mcq',
+    category: 'Meta-Learning',
+    text: 'MAML for 5-way 1-shot classification (5 classes, 1 example each). Inner loop steps=5, outer loop batch size=4 tasks. Calculate total gradient computations per meta-batch.',
+    options: ['20', '40', '60', '80'],
+    correctAnswer: '20',
+    difficulty: 'expert'
   },
   {
     id: 'ai-78',
-    type: 'mcq',
-    category: 'Bayesian Inference',
-    text: 'What is "Posterior Distribution" in Bayesian inference?',
-    options: [
-      'The updated probability distribution of parameters after observing data, combining prior and likelihood.',
-      'The distribution of data before seeing the parameters.',
-      'The distribution of predictions after training.',
-      'The posterior probability of model architecture.'
-    ],
-    correctAnswer: 'The updated probability distribution of parameters after observing data, combining prior and likelihood.',
-    difficulty: 'advanced',
-    explanation: 'Posterior p(θ|D) ∝ p(D|θ)p(θ) combines prior beliefs with observed data likelihood via Bayes\' rule.'
+    type: 'numerical-mcq',
+    category: 'RAG',
+    text: 'RAG with retriever top-k=5, each document length=512 tokens, query length=128, LLM with d_model=4096, n_heads=32. Calculate total attention FLOPs for processing all retrieved documents together (batch size=1).',
+    options: ['23.6 GFLOPs', '47.2 GFLOPs', '94.4 GFLOPs', '188.8 GFLOPs'],
+    correctAnswer: '47.2 GFLOPs',
+    difficulty: 'expert'
   },
   {
     id: 'ai-79',
-    type: 'mcq',
-    category: 'Bayesian Inference',
-    text: 'What is "Variational Inference" an alternative to?',
-    options: [
-      'MCMC methods, providing faster approximate inference by optimizing over a family of distributions.',
-      'Gradient descent optimization.',
-      'Cross-validation.',
-      'Data augmentation.'
-    ],
-    correctAnswer: 'MCMC methods, providing faster approximate inference by optimizing over a family of distributions.',
-    difficulty: 'advanced',
-    explanation: 'VI approximates posterior with tractable distribution q(θ) by minimizing KL(q||p), enabling scalable Bayesian inference.'
+    type: 'numerical-mcq',
+    category: 'Self-Supervised Learning',
+    text: 'SimCLR with batch size 8192 uses temperature τ=0.1. Two positive pairs have cosine similarity 0.8, negative pair similarity 0.2. Calculate contrastive loss numerator and denominator for one positive pair.',
+    options: ['num=exp(8), denom=exp(8)+8190×exp(2)', 'num=exp(8), denom=exp(8)+16382×exp(2)', 'num=exp(8), denom=exp(8)+8190×exp(2)', 'num=exp(8), denom=exp(8)+16382×exp(2)'],
+    correctAnswer: 'num=exp(8), denom=exp(8)+16382×exp(2)',
+    difficulty: 'expert'
   },
   {
     id: 'ai-80',
-    type: 'mcq',
-    category: 'Bayesian Inference',
-    text: 'What is "Gaussian Process"?',
-    options: [
-      'A non-parametric probabilistic model that defines a distribution over functions, commonly used for regression.',
-      'A process for generating Gaussian noise.',
-      'A type of neural network layer.',
-      'A data normalization technique.'
-    ],
-    correctAnswer: 'A non-parametric probabilistic model that defines a distribution over functions, commonly used for regression.',
-    difficulty: 'expert',
-    explanation: 'GPs specify mean and covariance functions, providing uncertainty estimates and flexible function approximation.'
+    type: 'numerical-mcq',
+    category: 'In-Context Learning',
+    text: 'LLM with context length 2048, few-shot examples each 100 tokens. For 32-shot learning, plus query of 50 tokens, calculate if it fits in context and remaining capacity.',
+    options: ['Fits, 148 tokens remaining', 'Fits, 198 tokens remaining', 'Does not fit', 'Fits exactly'],
+    correctAnswer: 'Fits, 198 tokens remaining',
+    difficulty: 'expert'
   },
   {
     id: 'ai-81',
-    type: 'mcq',
-    category: 'Bayesian Inference',
-    text: 'What is "Bayesian Neural Networks\'" key characteristic?',
-    options: [
-      'They place probability distributions over network weights rather than point estimates, capturing uncertainty.',
-      'They use Bayes\' theorem for backpropagation.',
-      'They are trained only on Bayesian statistics datasets.',
-      'They cannot use activation functions.'
-    ],
-    correctAnswer: 'They place probability distributions over network weights rather than point estimates, capturing uncertainty.',
-    difficulty: 'expert',
-    explanation: 'BNNs provide predictive uncertainty by integrating over weight posterior, useful for safety-critical applications.'
+    type: 'numerical-mcq',
+    category: 'Alignment',
+    text: 'RLHF with PPO, KL penalty β=0.01, reward model score r=2.5 for response, reference policy log probability log π_ref=-3.2, current log π=-2.8. Calculate total reward including KL penalty.',
+    options: ['2.504', '2.496', '2.488', '2.512'],
+    correctAnswer: '2.496',
+    difficulty: 'expert'
   },
   {
     id: 'ai-82',
-    type: 'mcq',
-    category: 'Bayesian Inference',
-    text: 'What is "Prior Distribution" in Bayesian methods?',
-    options: [
-      'The initial belief about parameters before observing any data.',
-      'The priority given to certain features.',
-      'The previous model version.',
-      'The prerequisite data required.'
-    ],
-    correctAnswer: 'The initial belief about parameters before observing any data.',
-    difficulty: 'advanced',
-    explanation: 'Priors encode domain knowledge or regularization; choice affects posterior especially with limited data.'
+    type: 'numerical-mcq',
+    category: 'Differential Privacy',
+    text: 'DP-SGD with noise multiplier σ=1.0, batch size 256, dataset size 50,000, epochs=10. Calculate ε for (ε,δ) with δ=1e-5 using moments accountant approximation.',
+    options: ['ε ≈ 2.5', 'ε ≈ 5.0', 'ε ≈ 7.5', 'ε ≈ 10.0'],
+    correctAnswer: 'ε ≈ 5.0',
+    difficulty: 'expert'
   },
   {
     id: 'ai-83',
-    type: 'mcq',
-    category: 'Bayesian Inference',
-    text: 'What is "Monte Carlo Dropout" used for?',
-    options: [
-      'Approximating Bayesian inference in neural networks by using dropout at test time to estimate uncertainty.',
-      'Dropping out Monte Carlo simulations.',
-      'A dropout variant for CNNs only.',
-      'Randomly dropping training data points.'
-    ],
-    correctAnswer: 'Approximating Bayesian inference in neural networks by using dropout at test time to estimate uncertainty.',
-    difficulty: 'advanced',
-    explanation: 'MC Dropout interprets dropout as approximate Bayesian inference, enabling uncertainty estimation via multiple stochastic forward passes.'
+    type: 'numerical-mcq',
+    category: 'Federated Learning',
+    text: 'FedAvg with C=0.1 client fraction, 1000 total clients, E=5 local epochs, batch size=32, local data size=500. Calculate total client updates per round and total SGD steps per round across all selected clients.',
+    options: ['100 clients, 16,000 steps', '100 clients, 12,500 steps', '100 clients, 8,000 steps', '50 clients, 8,000 steps'],
+    correctAnswer: '100 clients, 16,000 steps',
+    difficulty: 'expert'
   },
   {
     id: 'ai-84',
-    type: 'mcq',
-    category: 'Bayesian Inference',
-    text: 'What is "Evidence Lower Bound" (ELBO) in Variational Inference?',
-    options: [
-      'A lower bound on the log-likelihood of the data that is optimized to approximate the posterior.',
-      'The lower bound on model evidence in court.',
-      'A bound on the training error.',
-      'The minimum evidence required for training.'
-    ],
-    correctAnswer: 'A lower bound on the log-likelihood of the data that is optimized to approximate the posterior.',
-    difficulty: 'expert',
-    explanation: 'ELBO = E_q[log p(x,z)] - E_q[log q(z)] is maximized to minimize KL(q||p), enabling tractable variational optimization.'
+    type: 'numerical-mcq',
+    category: 'Model Distillation',
+    text: 'Distillation temperature T=2. Teacher logits for 5 classes: [2, -1, 3, 0, 1]. Calculate softened probabilities for class with logit 3.',
+    options: ['0.37', '0.45', '0.52', '0.60'],
+    correctAnswer: '0.37',
+    difficulty: 'expert'
   },
   {
     id: 'ai-85',
-    type: 'mcq',
-    category: 'Bayesian Inference',
-    text: 'What is "Conjugate Prior"?',
-    options: [
-      'A prior distribution that, when combined with the likelihood, yields a posterior of the same family.',
-      'A prior that agrees with all other priors.',
-      'The previous conjugate model.',
-      'A paired prior distribution.'
-    ],
-    correctAnswer: 'A prior distribution that, when combined with the likelihood, yields a posterior of the same family.',
-    difficulty: 'advanced',
-    explanation: 'Conjugacy enables closed-form posterior updates (e.g., Beta-Binomial, Normal-Normal), simplifying Bayesian inference.'
+    type: 'numerical-mcq',
+    category: 'Pruning',
+    text: 'Magnitude pruning applied to weight tensor [0.5, 0.8, -0.2, 0.1, -0.05, 0.01, 0.3, -0.4, 0.6, 0.7]. Keep 30% sparsity (70% pruned). Calculate sum of kept weights after pruning.',
+    options: ['2.7', '3.2', '3.7', '4.2'],
+    correctAnswer: '3.2',
+    difficulty: 'expert'
   },
-
-  // ==================== GRAPH NEURAL NETWORKS (Questions 86-93) ====================
   {
     id: 'ai-86',
-    type: 'mcq',
-    category: 'Graph Neural Networks',
-    text: 'What is "Message Passing" in Graph Neural Networks?',
-    options: [
-      'The process where nodes exchange information with neighbors to update their representations iteratively.',
-      'Sending messages between different GPUs.',
-      'Passing error messages during debugging.',
-      'Transmitting training data between servers.'
-    ],
-    correctAnswer: 'The process where nodes exchange information with neighbors to update their representations iteratively.',
-    difficulty: 'advanced',
-    explanation: 'Message passing framework: h_v^{(l+1)} = UPDATE(h_v^{(l)}, AGGREGATE({h_u^{(l)} : u ∈ N(v)})).'
+    type: 'numerical-mcq',
+    category: 'Knowledge Distillation',
+    text: 'Teacher model 100GB, student 10GB. Distillation reduces inference cost by factor of 10. If teacher takes 100ms per inference, student takes 10ms, and distillation training costs 100× teacher training time, calculate break-even point for number of inferences.',
+    options: ['10,000 inferences', '50,000 inferences', '100,000 inferences', '500,000 inferences'],
+    correctAnswer: '100,000 inferences',
+    difficulty: 'expert'
   },
   {
     id: 'ai-87',
-    type: 'mcq',
-    category: 'Graph Neural Networks',
-    text: 'What is the primary challenge of "Graph Convolutional Networks" (GCNs) that "Graph Attention Networks" (GATs) address?',
-    options: [
-      'GCNs use uniform aggregation weights, while GATs learn attention weights for neighbor importance.',
-      'GCNs are too fast and need to be slowed down.',
-      'GCNs use too much attention already.',
-      'GCNs cannot handle weighted graphs.'
-    ],
-    correctAnswer: 'GCNs use uniform aggregation weights, while GATs learn attention weights for neighbor importance.',
-    difficulty: 'advanced',
-    explanation: 'GATs compute attention coefficients α_ij for each edge, allowing adaptive neighbor weighting based on feature relevance.'
+    type: 'numerical-mcq',
+    category: 'Quantization-Aware Training',
+    text: 'QAT with fake quantization for INT8. Scale factor Δ=0.01, zero point z=0. For tensor values [0.005, 0.015, 0.025], compute quantized integer values and dequantized values.',
+    options: ['q=[0,1,2], deq=[0,0.01,0.02]', 'q=[1,2,3], deq=[0.01,0.02,0.03]', 'q=[0,2,3], deq=[0,0.02,0.03]', 'q=[1,2,4], deq=[0.01,0.02,0.04]'],
+    correctAnswer: 'q=[1,2,3], deq=[0.01,0.02,0.03]',
+    difficulty: 'expert'
   },
   {
     id: 'ai-88',
-    type: 'mcq',
-    category: 'Graph Neural Networks',
-    text: 'What is "Over-smoothing" in deep GNNs?',
-    options: [
-      'The phenomenon where node representations become indistinguishable as the number of layers increases.',
-      'Making graphs too smooth for visualization.',
-      'Overfitting to smooth data distributions.',
-      'Using too much smoothing in image preprocessing.'
-    ],
-    correctAnswer: 'The phenomenon where node representations become indistinguishable as the number of layers increases.',
-    difficulty: 'expert',
-    explanation: 'Over-smoothing occurs when repeated message passing causes all node embeddings to converge to similar values.'
+    type: 'numerical-mcq',
+    category: 'Adversarial Training',
+    text: 'PGD adversarial training: epsilon=0.1, step size=0.02, iterations=7. For original x=0.5, gradient sign = +1. Calculate adversarial example after 7 steps (clamp to [0,1]).',
+    options: ['0.5', '0.64', '0.78', '0.92'],
+    correctAnswer: '0.64',
+    difficulty: 'expert'
   },
   {
     id: 'ai-89',
-    type: 'mcq',
-    category: 'Graph Neural Networks',
-    text: 'What is "Inductive Learning" capability in GNNs?',
-    options: [
-      'The ability to generalize to unseen graphs or nodes not present during training.',
-      'Learning through inductive reasoning logic.',
-      'Training on induced subgraphs only.',
-      'Using inductive biases from physics.'
-    ],
-    correctAnswer: 'The ability to generalize to unseen graphs or nodes not present during training.',
-    difficulty: 'advanced',
-    explanation: 'Inductive GNNs (e.g., GraphSAGE) learn aggregation functions that generalize to new nodes/graphs, unlike transductive methods.'
+    type: 'numerical-mcq',
+    category: 'Fairness Metrics',
+    text: 'Demographic parity: Model predicts positive for 80% of group A (n=100) and 60% of group B (n=100). Calculate demographic parity difference and ratio.',
+    options: ['diff=0.20, ratio=1.33', 'diff=0.20, ratio=0.75', 'diff=0.25, ratio=1.25', 'diff=0.25, ratio=0.80'],
+    correctAnswer: 'diff=0.20, ratio=0.75',
+    difficulty: 'expert'
   },
   {
     id: 'ai-90',
-    type: 'mcq',
-    category: 'Graph Neural Networks',
-    text: 'What is "Graph Pooling" used for?',
-    options: [
-      'Reducing graph size by coarsening nodes to create hierarchical representations.',
-      'Pooling GPU resources for graph training.',
-      'Storing graphs in memory pools.',
-      'Pooling multiple graphs into one.'
-    ],
-    correctAnswer: 'Reducing graph size by coarsening nodes to create hierarchical representations.',
-    difficulty: 'advanced',
-    explanation: 'Graph pooling (e.g., DiffPool, SAGPool) enables hierarchical graph representation learning for graph classification tasks.'
+    type: 'numerical-mcq',
+    category: 'Explainable AI',
+    text: 'SHAP values for 4 features: contribution of feature A = 0.3, B = -0.1, C = 0.2, D = 0.1. Base value = 0.5. Calculate final model prediction and sum of SHAP values.',
+    options: ['pred=1.0, sum=0.5', 'pred=1.0, sum=1.0', 'pred=0.8, sum=0.5', 'pred=0.8, sum=0.3'],
+    correctAnswer: 'pred=1.0, sum=0.5',
+    difficulty: 'expert'
   },
   {
     id: 'ai-91',
-    type: 'mcq',
-    category: 'Graph Neural Networks',
-    text: 'What is "Link Prediction" in graph learning?',
-    options: [
-      'Predicting the existence of edges between nodes that are not yet connected.',
-      'Predicting website links.',
-      'Linking different neural network layers.',
-      'Predicting the strength of hyperlinks.'
-    ],
-    correctAnswer: 'Predicting the existence of edges between nodes that are not yet connected.',
-    difficulty: 'advanced',
-    explanation: 'Link prediction uses node embeddings to score potential edges, applied in recommendation and knowledge graph completion.'
+    type: 'numerical-mcq',
+    category: 'Causal Inference',
+    text: 'Double ML for treatment effect: residualized outcome Y~ = -2, residualized treatment T~ = 1, second stage coefficient β = -2. Calculate ATE and standard deviation if variance of residuals σ²=4.',
+    options: ['ATE=-2, se=2', 'ATE=-2, se=4', 'ATE=2, se=2', 'ATE=2, se=4'],
+    correctAnswer: 'ATE=-2, se=2',
+    difficulty: 'expert'
   },
   {
     id: 'ai-92',
-    type: 'mcq',
-    category: 'Graph Neural Networks',
-    text: 'What is "Graph Isomorphism" and why does it matter for GNNs?',
-    options: [
-      'Two graphs are isomorphic if they have the same structure; GNNs must be invariant to node ordering.',
-      'Creating isomorphic copies of graphs for data augmentation.',
-      'Making graphs look identical.',
-      'Isolating graphs during training.'
-    ],
-    correctAnswer: 'Two graphs are isomorphic if they have the same structure; GNNs must be invariant to node ordering.',
-    difficulty: 'expert',
-    explanation: 'GNNs must produce same output for isomorphic graphs; expressiveness bounded by Weisfeiler-Lehman test.'
+    type: 'numerical-mcq',
+    category: 'Multi-Task Learning',
+    text: 'Multi-task loss: L = L₁ + w₂·L₂, with uncertainty weighting. Task 1 homoscedastic uncertainty σ₁²=0.25, Task 2 σ₂²=1.0. Calculate learned weights w₁, w₂.',
+    options: ['w₁=2.0, w₂=0.5', 'w₁=0.5, w₂=2.0', 'w₁=4.0, w₂=1.0', 'w₁=1.0, w₂=4.0'],
+    correctAnswer: 'w₁=2.0, w₂=0.5',
+    difficulty: 'expert'
   },
   {
     id: 'ai-93',
-    type: 'mcq',
-    category: 'Graph Neural Networks',
-    text: 'What is "Weisfeiler-Lehman Test" relevance to GNNs?',
-    options: [
-      'It provides a theoretical framework for testing the expressiveness of GNNs in distinguishing graph structures.',
-      'Testing if graphs are well-feeler (sensitive).',
-      'A test for graph compression.',
-      'A performance benchmark for GNN speed.'
-    ],
-    correctAnswer: 'It provides a theoretical framework for testing the expressiveness of GNNs in distinguishing graph structures.',
-    difficulty: 'expert',
-    explanation: 'WL test iteratively refines node colors; GNNs cannot distinguish graphs that WL test cannot distinguish.'
+    type: 'numerical-mcq',
+    category: 'Continual Learning',
+    text: 'EWC with Fisher information F=0.5 for weight θ, optimal θ* from previous task=1.0, current task loss gradient gives Δθ=0.2, λ=10. Calculate regularization term and total update.',
+    options: ['reg=5.0, total=5.2', 'reg=5.0, total=4.8', 'reg=10.0, total=10.2', 'reg=10.0, total=9.8'],
+    correctAnswer: 'reg=5.0, total=4.8',
+    difficulty: 'expert'
   },
-
-  // ==================== ADVANCED TOPICS (Questions 94-100) ====================
   {
     id: 'ai-94',
-    type: 'mcq',
-    category: 'Neural Architecture',
-    text: 'What is "Neural Architecture Search" (NAS)?',
-    options: [
-      'Automating the design of neural network architectures using optimization algorithms.',
-      'Searching through neural network weights.',
-      'Searching for neurons in the brain.',
-      'Manual architecture design by experts.'
-    ],
-    correctAnswer: 'Automating the design of neural network architectures using optimization algorithms.',
-    difficulty: 'expert',
-    explanation: 'NAS uses RL, evolutionary algorithms, or gradient-based methods to discover high-performing architectures automatically.'
+    type: 'numerical-mcq',
+    category: 'Self-Attention',
+    text: 'Self-attention with relative position bias. Sequence length 128, add relative bias matrix of size 128×128. Calculate extra memory in MB for FP16.',
+    options: ['0.016 MB', '0.032 MB', '0.064 MB', '0.128 MB'],
+    correctAnswer: '0.032 MB',
+    difficulty: 'expert'
   },
   {
     id: 'ai-95',
-    type: 'mcq',
-    category: 'Optimization Theory',
-    text: 'What is "Meta-Learning" (Learning to Learn)?',
-    options: [
-      'Training models that can quickly adapt to new tasks with few examples by leveraging prior learning experience.',
-      'Learning about metadata management.',
-      'Training models to learn faster by using better hardware.',
-      'Learning the meta-physics of AI.'
-    ],
-    correctAnswer: 'Training models that can quickly adapt to new tasks with few examples by leveraging prior learning experience.',
-    difficulty: 'expert',
-    explanation: 'Meta-learning (e.g., MAML) optimizes model initialization or learning algorithm for fast adaptation to new tasks.'
+    type: 'numerical-mcq',
+    category: 'Sparse Attention',
+    text: 'BigBird sparse attention with random, window, and global tokens. For sequence length 4096, block size 64, 3 global tokens, window size 3 blocks. Calculate number of attended tokens per query.',
+    options: ['256', '448', '576', '768'],
+    correctAnswer: '576',
+    difficulty: 'expert'
   },
   {
     id: 'ai-96',
-    type: 'mcq',
-    category: 'Large Language Models',
-    text: 'What is "Retrieval-Augmented Generation" (RAG)?',
-    options: [
-      'Combining parametric knowledge from LLMs with non-parametric knowledge from external retrieval systems.',
-      'Augmenting training data by retrieving more from the internet.',
-      'Generating text about retrieval systems.',
-      'Retrieving the best generation seeds.'
-    ],
-    correctAnswer: 'Combining parametric knowledge from LLMs with non-parametric knowledge from external retrieval systems.',
-    difficulty: 'advanced',
-    explanation: 'RAG retrieves relevant documents from external knowledge base and conditions generation on them, reducing hallucination.'
+    type: 'numerical-mcq',
+    category: 'Linear Attention',
+    text: 'Linear attention with feature map φ(x)=elu(x)+1. Input dimension d=256, sequence length L=2048. Calculate FLOPs reduction ratio compared to standard O(L²d) complexity.',
+    options: ['128×', '256×', '512×', '1024×'],
+    correctAnswer: '256×',
+    difficulty: 'expert'
   },
   {
     id: 'ai-97',
-    type: 'mcq',
-    category: 'Computer Vision',
-    text: 'What is "Self-Supervised Learning" in computer vision?',
-    options: [
-      'Creating supervisory signals from the data itself without human labels, such as predicting image rotations.',
-      'Training models to supervise themselves without any data.',
-      'Supervised learning with automated supervisors.',
-      'Learning without any loss function.'
-    ],
-    correctAnswer: 'Creating supervisory signals from the data itself without human labels, such as predicting image rotations.',
-    difficulty: 'advanced',
-    explanation: 'Self-supervised methods (e.g., contrastive learning, masked autoencoding) learn representations from unlabeled data.'
+    type: 'numerical-mcq',
+    category: 'Longformer',
+    text: 'Longformer with sliding window w=512 and dilated window with dilation d=2 every other layer. For sequence length 8192, layer 5 (dilated). Calculate attention span per token.',
+    options: ['1024', '2048', '4096', '8192'],
+    correctAnswer: '1024',
+    difficulty: 'expert'
   },
   {
     id: 'ai-98',
-    type: 'mcq',
-    category: 'Transformer Architecture',
-    text: 'What is "Flash Attention" optimization?',
-    options: [
-      'An IO-aware algorithm that reduces memory reads/writes for attention computation, speeding up training.',
-      'Making attention mechanisms run faster by using flash memory.',
-      'A technique to flash (display) attention weights.',
-      'Attention that lasts for a very short time.'
-    ],
-    correctAnswer: 'An IO-aware algorithm that reduces memory reads/writes for attention computation, speeding up training.',
-    difficulty: 'expert',
-    explanation: 'Flash Attention uses tiling and recomputation to compute attention in O(1) memory with exact gradients, 2-4x faster.'
+    type: 'numerical-mcq',
+    category: 'Infini-attention',
+    text: 'Infini-attention with compressive memory of size M=1024, segment length S=2048. For sequence of 100 segments, calculate total memory compressed and retrievals needed.',
+    options: ['102kB, 100 retrievals', '204kB, 100 retrievals', '102kB, 99 retrievals', '204kB, 99 retrievals'],
+    correctAnswer: '102kB, 99 retrievals',
+    difficulty: 'expert'
   },
   {
     id: 'ai-99',
-    type: 'mcq',
-    category: 'Large Language Models',
-    text: 'What is "In-Context Learning" capability of LLMs?',
-    options: [
-      'Learning to perform tasks from examples provided in the prompt without gradient updates.',
-      'Learning about the context of conversations.',
-      'Training models within a specific context window.',
-      'Context-aware pretraining objectives.'
-    ],
-    correctAnswer: 'Learning to perform tasks from examples provided in the prompt without gradient updates.',
-    difficulty: 'advanced',
-    explanation: 'In-context learning emerges at scale: LLMs infer task from few-shot examples in prompt, adapting behavior without fine-tuning.'
+    type: 'numerical-mcq',
+    category: 'Memory Efficient Attention',
+    text: 'Memory efficient attention recomputes QK^T during backward pass. For L=8192, d_head=128, batch=32, n_heads=16, calculate memory saved (in GB) compared to standard attention.',
+    options: ['8 GB', '16 GB', '32 GB', '64 GB'],
+    correctAnswer: '16 GB',
+    difficulty: 'expert'
   },
   {
     id: 'ai-100',
-    type: 'mcq',
-    category: 'AI Ethics',
-    text: 'What is "Alignment" in the context of advanced AI systems?',
-    options: [
-      'Ensuring AI systems pursue intended goals and behave in accordance with human values and intentions.',
-      'Aligning text in the training data.',
-      'Memory alignment for efficient GPU usage.',
-      'Aligning model layers in parallel.'
-    ],
-    correctAnswer: 'Ensuring AI systems pursue intended goals and behave in accordance with human values and intentions.',
-    difficulty: 'expert',
-    explanation: 'AI alignment addresses the challenge of making powerful AI systems robustly beneficial, avoiding specification gaming and unintended behaviors.'
+    type: 'numerical-mcq',
+    category: 'Transformer Scaling Laws',
+    text: 'According to scaling laws, compute-optimal model for 1e21 FLOPs has N≈ (C/6)⁰·⁵. For C=1e21, calculate optimal parameter count N (in billions).',
+    options: ['4.1B', '8.2B', '16.4B', '32.8B'],
+    correctAnswer: '16.4B',
+    difficulty: 'expert'
   }
 ];
 
-// Verify we have exactly 100 unique questions
-console.assert(AI_ML_QUESTIONS.length === 100, 
-  `Expected 100 questions, got ${AI_ML_QUESTIONS.length}`);
+console.assert(AI_ML_QUESTIONS.length === 100, `Expected 100 questions, got ${AI_ML_QUESTIONS.length}`);
 
-// Verify no duplicate IDs
 const ids = AI_ML_QUESTIONS.map(q => q.id);
 const uniqueIds = new Set(ids);
 console.assert(ids.length === uniqueIds.size, 'Duplicate question IDs detected!');
-
-// Optional: Helper function to get questions by difficulty
-export const getQuestionsByDifficulty = (difficulty: 'advanced' | 'expert'): Question[] => {
-  return AI_ML_QUESTIONS.filter(q => q.difficulty === difficulty);
-};
-
-// Optional: Helper to get questions by category
-export const getQuestionsByCategory = (category: string): Question[] => {
-  return AI_ML_QUESTIONS.filter(q => q.category === category);
-};
-
-// Optional: Get random subset for exams with deterministic seeding
-export const getRandomQuestions = (count: number, seed?: number): Question[] => {
-  const shuffled = [...AI_ML_QUESTIONS];
-  
-  // Seeded shuffle using linear congruential generator
-  if (seed !== undefined) {
-    let randomSeed = seed;
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      randomSeed = (randomSeed * 9301 + 49297) % 233280;
-      const j = Math.floor((randomSeed / 233280) * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-  } else {
-    // Standard Fisher-Yates shuffle
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-  }
-  return shuffled.slice(0, count);
-};
-
-export default AI_ML_QUESTIONS;
