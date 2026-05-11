@@ -68,6 +68,8 @@ export default function App() {
   const [studentName, setStudentName] = useState('');
   const [dialogStep, setDialogStep] = useState<'info' | 'instructions'>('info');
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [markedForReview, setMarkedForReview] = useState<Record<string, boolean>>({});
+  const [viewedQuestions, setViewedQuestions] = useState<Record<number, boolean>>({ 0: true });
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [startTime, setStartTime] = useState<number>(0);
   const [timeLeft, setTimeLeft] = useState(ENTRANCE_EXAM.durationMinutes * 60);
@@ -234,11 +236,27 @@ export default function App() {
     await startCamera();
     await enterFullScreen();
     resetProctoring();
+    setAnswers({});
+    setMarkedForReview({});
+    setViewedQuestions({ 0: true });
     setCurrentQuestionIndex(0);
     setStartTime(Date.now());
     setLastActivity(Date.now());
     setShowInactivityPrompt(false);
     setAppState('exam');
+  };
+
+  useEffect(() => {
+    if (appState === 'exam') {
+      setViewedQuestions(prev => ({ ...prev, [currentQuestionIndex]: true }));
+    }
+  }, [currentQuestionIndex, appState]);
+
+  const toggleMarkForReview = (questionId: string) => {
+    setMarkedForReview(prev => ({
+      ...prev,
+      [questionId]: !prev[questionId]
+    }));
   };
 
   const getTimerStatus = () => {
@@ -1061,27 +1079,52 @@ export default function App() {
                   <div className="space-y-4">
                     <h3 className="text-[10px] font-black uppercase tracking-widest text-neutral-400 pb-2 border-b border-neutral-100">Quick Navigation</h3>
                     <div className="grid grid-cols-5 gap-2.5">
-                      {currentExam.questions.map((_, idx) => (
-                        <button 
-                          key={idx}
-                          onClick={() => setCurrentQuestionIndex(idx)}
-                          className={`w-full aspect-square rounded-xl flex items-center justify-center font-black text-xs transition-all relative group ${
-                            currentQuestionIndex === idx 
-                            ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-110 z-10' 
-                            : answers[currentExam.questions[idx].id] 
-                              ? 'bg-emerald-500 text-white' 
-                              : 'bg-white border border-neutral-100 text-neutral-400 hover:border-primary hover:text-primary hover:bg-primary/5'
-                          }`}
-                        >
-                          {idx + 1}
-                          {currentQuestionIndex === idx && (
-                            <motion.div 
-                              layoutId="active-indicator"
-                              className="absolute -bottom-1 w-1/2 h-1 bg-white rounded-full"
-                            />
-                          )}
-                        </button>
-                      ))}
+                      {currentExam.questions.map((_, idx) => {
+                        const qId = currentExam.questions[idx].id;
+                        const isAnswered = !!answers[qId];
+                        const isMarked = markedForReview[qId];
+                        const isViewed = viewedQuestions[idx];
+                        const isActive = currentQuestionIndex === idx;
+
+                        let bgColor = 'bg-white border-neutral-100 text-neutral-400';
+                        if (isActive) {
+                          bgColor = 'bg-primary text-white shadow-lg shadow-primary/20 scale-110 z-10';
+                        } else if (isMarked) {
+                          bgColor = 'bg-purple-500 text-white border-purple-500';
+                        } else if (isAnswered) {
+                          bgColor = 'bg-emerald-500 text-white border-emerald-500';
+                        } else if (isViewed) {
+                          bgColor = 'bg-red-500 text-white border-red-500';
+                        } else {
+                          bgColor = 'bg-amber-400 text-white border-amber-400'; // Not read
+                        }
+
+                        return (
+                          <button 
+                            key={idx}
+                            onClick={() => setCurrentQuestionIndex(idx)}
+                            className={`w-full aspect-square rounded-xl flex items-center justify-center font-black text-xs transition-all relative group ${bgColor} ${!isActive && 'hover:scale-105 active:scale-95'}`}
+                          >
+                            {idx + 1}
+                            {isActive && (
+                              <motion.div 
+                                layoutId="active-indicator"
+                                className="absolute -bottom-1 w-1/2 h-1 bg-white rounded-full"
+                              />
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 pt-4 border-t border-neutral-100">
+                    <h3 className="text-[9px] font-black uppercase tracking-widest text-neutral-400">Legend</h3>
+                    <div className="grid grid-cols-2 gap-2">
+                       <div className="flex items-center gap-2"><div className="w-3 h-3 rounded bg-emerald-500" /> <span className="text-[10px] font-bold text-neutral-500 uppercase">Attempted</span></div>
+                       <div className="flex items-center gap-2"><div className="w-3 h-3 rounded bg-red-500" /> <span className="text-[10px] font-bold text-neutral-500 uppercase">Unattempted</span></div>
+                       <div className="flex items-center gap-2"><div className="w-3 h-3 rounded bg-purple-500" /> <span className="text-[10px] font-bold text-neutral-500 uppercase">Review</span></div>
+                       <div className="flex items-center gap-2"><div className="w-3 h-3 rounded bg-amber-400" /> <span className="text-[10px] font-bold text-neutral-500 uppercase">Not Read</span></div>
                     </div>
                   </div>
 
@@ -1127,7 +1170,7 @@ export default function App() {
                       >
                         <Card className="border-none shadow-[0_32px_64px_-12px_rgba(0,0,0,0.1)] rounded-[3rem] overflow-hidden bg-white">
                           <div className="p-8 lg:p-14 space-y-10">
-                            <div className="space-y-6">
+                            <div className="flex items-center justify-between">
                               <div className="flex items-center gap-4">
                                 <span className="flex items-center justify-center w-14 h-14 rounded-2xl bg-neutral-900 text-white text-2xl font-black shadow-2xl">
                                   {currentQuestionIndex + 1}
@@ -1139,8 +1182,21 @@ export default function App() {
                                   <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest px-1">Selected Domain Context</p>
                                 </div>
                               </div>
-                              <h3 className="text-3xl lg:text-4xl font-black tracking-tight leading-[1.1] text-neutral-900">{q.text}</h3>
+
+                              <Button
+                                variant="outline"
+                                className={`h-12 px-6 rounded-2xl font-black gap-2 transition-all ${
+                                  markedForReview[q.id] 
+                                    ? 'bg-purple-50 border-purple-200 text-purple-600' 
+                                    : 'border-neutral-100 text-neutral-400 hover:text-purple-600 hover:border-purple-200'
+                                }`}
+                                onClick={() => toggleMarkForReview(q.id)}
+                              >
+                                <Star className={`w-4 h-4 ${markedForReview[q.id] ? 'fill-purple-600 shadow-xl' : ''}`} />
+                                {markedForReview[q.id] ? 'Marked for Review' : 'Mark for Review'}
+                              </Button>
                             </div>
+                            <h3 className="text-3xl lg:text-4xl font-black tracking-tight leading-[1.1] text-neutral-900">{q.text}</h3>
 
                             <RadioGroup 
                               value={answers[q.id] || ''}
