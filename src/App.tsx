@@ -401,9 +401,9 @@ export default function App() {
               <section className="relative pt-20 pb-32 px-4 overflow-hidden">
                 <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
                   <motion.div 
-                    initial={{ x: -40, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    initial={{ y: 40, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                     className="space-y-10 relative z-10"
                   >
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 glass rounded-full text-primary font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/5">
@@ -413,7 +413,7 @@ export default function App() {
                       </span>
                       Admission Open: Summer 2026 Batch
                     </div>
-                    <h1 className="text-7xl md:text-[9rem] font-black tracking-tight leading-[0.85] text-balance">
+                    <h1 className="text-6xl md:text-8xl font-black tracking-tight leading-[0.9] text-balance">
                       Your Career <br />
                       <span className="text-gradient italic">Starts Here.</span>
                     </h1>
