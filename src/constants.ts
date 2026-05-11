@@ -86,7 +86,7 @@ export const ENTRANCE_EXAM: Exam = {
   id: 'entrance-test-2026',
   title: 'Internship Entrance Examination',
   description: 'A comprehensive 60-question assessment covering Aptitude, GK, OS, DBMS, DAA, DSA, CN, JAVA, AI, ML, Cloud, GIT, AFL, and COA.',
-  durationMinutes: 90,
+  durationMinutes: 30,
   questions: INTERNSHIP_QUESTIONS
 };
 
@@ -95,42 +95,42 @@ export const DOMAIN_EXAMS: Record<string, Exam> = {
     id: 'exam-web-dev',
     title: 'Advanced Web Development Assessment',
     description: '100 High-level questions on React, Node.js, Architecture, and Performance.',
-    durationMinutes: 30,
+    durationMinutes: 40,
     questions: WEB_DEV_QUESTIONS
   },
   'ai-ml': {
     id: 'exam-ai-ml',
     title: 'Advanced AI & ML Assessment',
     description: '100 High-level questions on Deep Learning, Transformers, and Optimization.',
-    durationMinutes: 30,
+    durationMinutes: 40,
     questions: AI_ML_QUESTIONS
   },
   'data-analyst': {
     id: 'exam-data-analyst',
     title: 'Advanced Data Analysis Assessment',
     description: '100 High-level questions on Statistics, SQL, and Visualization.',
-    durationMinutes: 30,
+    durationMinutes: 40,
     questions: DATA_ANALYST_QUESTIONS
   },
   'data-science': {
     id: 'exam-data-science',
     title: 'Advanced Data Science Assessment',
     description: '100 High-level questions on Big Data, Predictive Modeling, and Ensemble Learning.',
-    durationMinutes: 30,
+    durationMinutes: 40,
     questions: DATA_SCIENCE_QUESTIONS
   },
   'cyber-security': {
     id: 'exam-cyber-security',
     title: 'Advanced Cyber Security Assessment',
     description: '100 High-level questions on Network Security, Cryptography, and Ethical Hacking.',
-    durationMinutes: 30,
+    durationMinutes: 40,
     questions: CYBER_SECURITY_QUESTIONS
   },
   'patent-research': {
     id: 'exam-patent-research',
     title: 'Advanced Patent & Research Assessment',
     description: '100 High-level questions on IP Law, Research Methodology, and Scientific Writing.',
-    durationMinutes: 30,
+    durationMinutes: 40,
     questions: PATENT_RESEARCH_QUESTIONS
   }
 };
